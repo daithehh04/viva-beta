@@ -15,10 +15,10 @@ function TravelStyleMb({ data, title, lang }) {
             >
               <div className='w-[17.3vw] h-[17.3vw] rounded-full border border-solid border-primaryColor flex items-center justify-center bg-[#FFFBE9]'>
                 <Image
-                  src={item?.banner?.travelStyleInfo?.travelStyleImage?.sourceUrl}
+                  src={item?.banner?.travelStyleInfo?.travelStyleImage?.sourceUrl || 'https://res.cloudinary.com/asiavivatravel/images/v1699955233/Ile-Koh-Rong-Cambodge/Ile-Koh-Rong-Cambodge.jpg?_i=AA'}
                   width={50}
                   height={50}
-                  alt={item?.image?.altText}
+                  alt={item?.image?.altText || 'style travel'}
                   className='w-[10.8vw] h-[10.8vw] object-center object-contain'
                 />
               </div>
