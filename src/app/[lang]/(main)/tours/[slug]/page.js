@@ -23,23 +23,13 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 export default async function page({ params: { lang, slug } }) {
-  const idEnBook = 'cG9zdDoxNDIy'
-  const idFrBook = 'cG9zdDoxNDIy'
-  const idItBook = 'cG9zdDoxNDIy'
-
-  const getBookTour = async () => {
-    return lang === 'en'
-      ? await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idEnBook, lang)
-      : lang === 'it'
-        ? await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idItBook, lang)
-        : await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idFrBook, lang)
-  }
+  const id = 'cG9zdDoxNDIy'
   const [headerData, result, res, result4, dataBookTour] = await Promise.all([
     getTourDetailHeader(lang),
     getTourDetail(GET_TOUR_DETAIL, slug, lang),
     getRandomTour(GET_RANDOM_TOUR, lang),
     getDataPost(lang, GET_ALL_REVIEWS),
-    getBookTour()
+    getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, id, lang)
   ])
 
   const styleTourArr = result?.data?.tours?.translation?.tourStyle?.nodes
