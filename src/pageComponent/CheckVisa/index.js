@@ -9,26 +9,15 @@ import { DataProvider } from './DataContext'
 import getDataFormBookTour from '@/data/formBookTour/getDataFormBookTour'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 
-const idEnBook = 'cG9zdDoxNDIy'
-const idFrBook = 'cG9zdDoxNDIy'
-const idItBook = 'cG9zdDoxNDIy'
+const id = 'cG9zdDoxNDIy'
 async function index({ lang }) {
-  let dataBookTour
-
-  if(lang === 'en'){
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idEnBook, lang)
-  }
-  if(lang === 'it'){
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idItBook, lang)
-  }
-  if(lang === 'fr'){
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idFrBook, lang)
-  }
-
-  let data = await getDataPost(lang, GET_DATA_CHECKVISA2)
+  const [dataBookTour,data,dataCountryFrom,dataCountryTo] = await Promise.all([
+    getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, id, lang),
+    getDataPost(lang, GET_DATA_CHECKVISA2),
+    getDataPost(lang, COUNTRY_FROM),
+    getDataPost(lang, COUNTRY_TO)
+  ])
   const dataCheckVisa = data?.data?.page?.translation
-  const dataCountryFrom = await getDataPost(lang, COUNTRY_FROM)
-  const dataCountryTo = await getDataPost(lang, COUNTRY_TO)
   function handleTaxonomies(data) {
     const newArrDataTaxonomies = []
     data?.map((item) => {

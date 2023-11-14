@@ -55,7 +55,7 @@ async function Footer({ lang }) {
                 viewBox='0 0 43 43'
                 fill='none'
               >
-                <circle cx='21.4091' cy='21.4091' r='21.0523' stroke='#171717' stroke-width='0.713636' />
+                <circle cx='21.4091' cy='21.4091' r='21.0523' stroke='#171717' strokeWidth='0.713636' />
                 <path
                   d='M23.2026 18.7315V16.5928C23.2026 16.2962 23.3054 16.0424 23.5109 15.8314C23.7165 15.6203 23.9677 15.5148 24.2645 15.5148H25.3435V12.8456H23.2026C22.6203 12.8456 22.0837 12.9882 21.5927 13.2734C21.1017 13.5585 20.7106 13.9464 20.4195 14.4369C20.1283 14.9274 19.9827 15.4635 19.9827 16.0452V18.7315H17.8418V21.4007H19.9827V29.9729H23.2026V21.4007H25.3435L26.4054 18.7315H23.2026Z'
                   fill='#171717'
@@ -63,7 +63,7 @@ async function Footer({ lang }) {
               </svg>
             </Link>
             <Link
-              href={col1?.linkLinked ?? ''}
+              href={col1?.linkLinked ?? '/'}
               className='w-[2.67vw] h-[2.67vw] max-md:w-[9.6vw] max-md:h-[9.6vw] rounded-full flex items-center justify-center border border-solid border-[#000] linked'
             >
               <svg
@@ -88,7 +88,7 @@ async function Footer({ lang }) {
               </svg>
             </Link>
             <Link
-              href={col1?.linkInstargram ?? ''}
+              href={col1?.linkInstargram ?? '/'}
               className='w-[2.67vw] h-[2.67vw] max-md:w-[9.6vw] max-md:h-[9.6vw] rounded-full flex items-center justify-center border border-solid border-[#000] instar'
             >
               <svg
@@ -106,7 +106,7 @@ async function Footer({ lang }) {
               </svg>
             </Link>
             <Link
-              href={col1?.linkYoutube ?? ''}
+              href={col1?.linkYoutube ?? '/'}
               className='w-[2.67vw] h-[2.67vw] max-md:w-[9.6vw] max-md:h-[9.6vw] rounded-full flex items-center justify-center border border-solid border-[#000] ytb'
             >
               <svg
