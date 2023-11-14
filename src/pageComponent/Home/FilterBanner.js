@@ -13,7 +13,6 @@ import Button from '@/components/Common/Button'
 import { useRouter } from 'next/navigation'
 import { createTheme } from '@mui/material'
 function FilterBanner({ lang, dataFilter, onClose }) {
-  // const refLink = useRef()
   const [destination, setDestination] = useState('')
   const [travelStyle, setTravelStyle] = useState('')
   const [duration, setDuration] = useState('')
@@ -435,7 +434,6 @@ function FilterBanner({ lang, dataFilter, onClose }) {
         </div>
       </div>
       <Button
-        // ref={refLink}
         onClick={handleSearch}
         className='btn-primary max-lg:w-max max-lg:px-[7.37vw] max-lg:mt-[6.4vw] max-lg:ml-auto max-lg:mr-auto'
       >

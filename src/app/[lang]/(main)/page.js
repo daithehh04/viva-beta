@@ -1,4 +1,4 @@
-import Home from '../../pageComponent/Home'
+import Home from '../../../pageComponent/Home'
 import getDataPage, { idEn, idFr, idIt } from '@/data/getDataPage'
 import getDataPost from '@/data/getDataPost'
 import { getMeta } from '@/data/metaData/getMeta'

@@ -183,15 +183,15 @@ function FilterPopup({ lang, dataFilter, slug }) {
               d='M10.5413 19.2502C15.3508 19.2502 19.2497 15.3513 19.2497 10.5418C19.2497 5.73235 15.3508 1.8335 10.5413 1.8335C5.73186 1.8335 1.83301 5.73235 1.83301 10.5418C1.83301 15.3513 5.73186 19.2502 10.5413 19.2502Z'
               stroke='#171717'
               strokeWidth='1.5'
-              stroke-linecap='round'
-              stroke-linejoin='round'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
             <path
               d='M20.1663 20.1668L18.333 18.3335'
               stroke='#171717'
               strokeWidth='1.5'
-              stroke-linecap='round'
-              stroke-linejoin='round'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
           </svg>
         </div>

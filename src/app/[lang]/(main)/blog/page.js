@@ -42,8 +42,10 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, featuredImage)
 }
 async function Page({ params: { lang } }) {
-  const data = await getDataPost(lang?.toUpperCase(), GET_ALL_TOURS_BESTSELLER)
-  const dataInit = await getDataPost(lang?.toUpperCase(), GET_INITIAL_FILTER)
+  const [data,dataInit] = await Promise.all([
+    getDataPost(lang?.toUpperCase(), GET_ALL_TOURS_BESTSELLER),
+    getDataPost(lang?.toUpperCase(), GET_INITIAL_FILTER)
+  ])
   return (
     <div>
       <Blog

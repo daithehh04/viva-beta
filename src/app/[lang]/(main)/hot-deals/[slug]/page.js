@@ -23,35 +23,26 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 export default async function page({ params: { lang, slug } }) {
-  const idEnBook = 'cG9zdDoxNDIy'
-  const idFrBook = 'cG9zdDoxNDIy'
-  const idItBook = 'cG9zdDoxNDIy'
-
-  const result = await getTourDetail(GET_TOUR_DETAIL, slug, lang)
-  const headerData = await getTourDetailHeader(lang)
-  const res = await getListPromotionTour(lang)
+  const ID = cG9zdDoxNDIy
+  const [
+    result,
+    headerData,
+    res,
+    result4,
+    dataBookTour
+  ] = await Promise.all([
+    getTourDetail(GET_TOUR_DETAIL, slug, lang),
+    getTourDetailHeader(lang),
+    getListPromotionTour(lang),
+    getDataPost(lang, GET_ALL_REVIEWS),
+    getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, ID, lang)
+  ])
   const promotionList = res?.data?.page?.hotDeals?.promotionList
-
   // get Default list Reviews
-  const result4 = await getDataPost(lang, GET_ALL_REVIEWS)
   const reviewsList = result4?.data?.allCustomerReview?.nodes
-
   const otherPromotionTours = promotionList?.filter(
     (item) => item.translation.id != result?.data?.tours?.translation?.id
   )
-
-  let dataBookTour
-  // get Data form book tour
-  if (lang === 'en') {
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idEnBook, lang)
-  }
-  if (lang === 'it') {
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idItBook, lang)
-  }
-  if (lang === 'fr') {
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idFrBook, lang)
-  }
-
   if (!result?.data?.tours?.translation?.tourDetail) {
     notFound()
   }

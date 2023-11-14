@@ -5,13 +5,11 @@ import Destination from '@/pageComponent/Destination'
 
 export async function generateMetadata({ params: { lang, slug } }) {
   const res = await getMetaDataTour(GET_META_DATA, lang, slug)
-  // if (!res) return
   const meta = res?.data?.countries?.translation?.country?.meta
   const title = meta?.title
   const excerpt = meta?.description
   return getMeta(title, excerpt)
 }
-
 function page({ params: { lang, slug } }) {
   return (
     <div>

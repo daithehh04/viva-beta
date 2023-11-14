@@ -27,23 +27,19 @@ export default async function page({ params: { lang, slug } }) {
   const idFrBook = 'cG9zdDoxNDIy'
   const idItBook = 'cG9zdDoxNDIy'
 
-  const headerReq = await getTourDetailHeader(lang)
-  const tourReq = await getTourDetail(GET_TOUR_DETAIL, slug, lang)
-  const randomTourReq = await getRandomTour(GET_RANDOM_TOUR, lang)
-  const reviewReq = await getDataPost(lang, GET_ALL_REVIEWS)
-  const booktourReq =
-    lang === 'en'
+  const getBookTour = async () => {
+    return lang === 'en'
       ? await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idEnBook, lang)
       : lang === 'it'
         ? await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idItBook, lang)
         : await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idFrBook, lang)
-
+  }
   const [headerData, result, res, result4, dataBookTour] = await Promise.all([
-    headerReq,
-    tourReq,
-    randomTourReq,
-    reviewReq,
-    booktourReq
+    getTourDetailHeader(lang),
+    getTourDetail(GET_TOUR_DETAIL, slug, lang),
+    getRandomTour(GET_RANDOM_TOUR, lang),
+    getDataPost(lang, GET_ALL_REVIEWS),
+    getBookTour()
   ])
 
   const styleTourArr = result?.data?.tours?.translation?.tourStyle?.nodes

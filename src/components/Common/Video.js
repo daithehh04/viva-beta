@@ -84,8 +84,8 @@ export default function AboutVideo({ data = {} }) {
             fill='none'
           >
             <path
-              fill-rule='evenodd'
-              clip-rule='evenodd'
+              fillRule='evenodd'
+              clipRule='evenodd'
               d='M140 24.0345C125.16 9.18528 104.652 0 82 0C36.7127 0 0 36.7127 0 82C0 127.287 36.7127 164 82 164C104.652 164 125.16 154.815 140 139.965V138.542C125.288 153.631 104.738 163 82 163C37.2649 163 1 126.735 1 82C1 37.2649 37.2649 1 82 1C104.738 1 125.288 10.3693 140 25.4579V24.0345Z'
               fill='white'
             />

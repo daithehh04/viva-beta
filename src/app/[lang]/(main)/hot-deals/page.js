@@ -6,7 +6,6 @@ import { getMeta } from '@/data/metaData/getMeta'
 
 export async function generateMetadata({ params: { lang } }) {
   const res = await getMetaDataPages(GET_META_DATA, lang)
-
   const { hotDeals } = res?.data?.page?.translation
   const featuredImage = res?.data?.page?.translation?.featuredImage
 
@@ -16,10 +15,8 @@ export async function generateMetadata({ params: { lang } }) {
 }
 
 async function page({ params: { lang } }) {
-  //get header of page
   const result = await getHotDealHeader(lang)
   const hotDeals = result?.data?.page?.translation?.hotDeals
-
   return (
     <HotDeal
       hotDeals={hotDeals}

@@ -25,9 +25,9 @@ export default function Promotion({
   const reviews = reviewsList?.filter((item) => item?.customerReview?.tours?.slug === slug)
   const { bannerHeaders, content: contentHeader, relatedTour: relatedTourHeader } = headerData
   return (
-    <div className='md:mt-[10.8125vw] relative'>
-      <header className='relative'>
-        <div className='content flex justify-between'>
+    <header className='md:mt-[10.8125vw] relative'>
+      <div className='relative'>
+        <div className='flex justify-between content'>
           <h2 className='md:block hidden heading-1 w-[51.125vw]'>{banner?.title}</h2>
           <Price
             type='promo'
@@ -42,7 +42,7 @@ export default function Promotion({
         <div className='md:block hidden z-10 relative pt-[3.75vw] pb-[7.44vw]'>
           <Banner data={banner} />
         </div>
-        <div className='md:hidden block'>
+        <div className='block md:hidden'>
           <TourDetailBannerMobile
             data={banner || {}}
             headerData={bannerHeaders}
@@ -54,10 +54,10 @@ export default function Promotion({
           alt='promoBg'
           className='md:block hidden w-full h-full absolute top-0 left-0 -z-[1]'
         />
-      </header>
+      </div>
       {/* main content */}
       <main className='relative'>
-        <div className='md:block hidden'>
+        <div className='hidden md:block'>
           <Image
             src={tour}
             alt='tour'
@@ -98,6 +98,6 @@ export default function Promotion({
           </div>
         </ModalCustom>
       )}
-    </div>
+    </header>
   )
 }
