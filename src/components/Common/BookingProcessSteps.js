@@ -146,7 +146,7 @@ export default function BookingProcessSteps({ data = {} }) {
                   onMouseOver={() => handleHover(index)}
                   key={index}
                   sx={{ WebkitTextFillColor: index === activeIndex ? 'unset' : '' }}
-                  id={index === activeIndex ? 'active-step' : ''}
+                  id={index === activeIndex ? 'active-step' : 'active-step'}
                 >
                   <StepLabel
                     StepIconComponent={ColorlibStepIcon}
