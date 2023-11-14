@@ -74,17 +74,17 @@ export async function generateMetadata({ params: { lang } }) {
 }
 
 async function Page({ params: { lang, slug } }) {
-  const data = await getDataPost(lang?.toUpperCase(), GET_ALL_TOURS_BESTSELLER)
-
-  const dataInit = await getDataPost(lang?.toUpperCase(), GET_INITIAL_FILTER)
-
-  const slugRcm = await getDataWithTaxonomy(
-    {
-      taxonomyValue: slug,
-      lang
-    },
-    GET_SLUG_RCM
-  )
+  const [data, dataInit, slugRcm] = await Promise.all([
+    getDataPost(lang?.toUpperCase(), GET_ALL_TOURS_BESTSELLER),
+    getDataPost(lang?.toUpperCase(), GET_INITIAL_FILTER),
+    getDataWithTaxonomy(
+      {
+        taxonomyValue: slug,
+        lang
+      },
+      GET_SLUG_RCM
+    )
+  ])
 
   return (
     <Service lang={lang}

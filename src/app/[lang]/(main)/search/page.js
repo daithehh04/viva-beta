@@ -17,14 +17,19 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, res?.data?.page?.translation?.featuredImage)
 }
 async function page({ params: { lang } }) {
-  const travelStylesList = await getDataWithTaxonomy({ lang: lang || 'EN' }, GET_LIST_TRAVEL_STYLE_NAME)
-  const dataTaxonomiesBudget = await getDataPost(lang, DATA_TAXONOMIES_BUDGET)
-  const dataMenuCountry = await getDataPost(lang, DATA_MENU_COUNTRY)
-  const resListBlog = await getDataPost(lang, GET_ALL_POST)
+  const [travelStylesList,
+    dataTaxonomiesBudget,
+    dataMenuCountry,
+    resListBlog,
+    searchInfoData] = await Promise.all([
+    getDataWithTaxonomy({ lang: lang || 'EN' }, GET_LIST_TRAVEL_STYLE_NAME),
+    getDataPost(lang, DATA_TAXONOMIES_BUDGET),
+    getDataPost(lang, DATA_MENU_COUNTRY),
+    getDataPost(lang, GET_ALL_POST),
+    getDataPost(lang, GET_SEARCH_INFO)
+  ])
   const listBlog = resListBlog?.data?.posts?.nodes
-  let searchInfo = await getDataPost(lang, GET_SEARCH_INFO)
-  searchInfo = searchInfo?.data?.page?.translation?.search
-
+  const searchInfo = searchInfoData?.data?.page?.translation?.search
   return (
     <div>
       <Search

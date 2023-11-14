@@ -65,7 +65,7 @@ export default function TourDetailStep({ data: tourDetailData,iconsDefault }) {
                       <div key={index} className='flex items-center gap-[0.5vw] max-md:gap-[1.5vw]'>
                         <Image
                           alt='icon'
-                          src={icon?.img?.sourceUrl}
+                          src={icon?.img?.sourceUrl || 'icon'}
                           width={40}
                           height={40}
                           className='md:w-[3.5vw] w-[8.5vw] md:h-[3.5vw] h-[8.5vw] md:p-[0.55vw] p-[1.8vw] bg-[#FFF2BD] md:rounded-[5px] rounded-[4px]'
