@@ -49,11 +49,11 @@ export default async function page({ params: { lang } }) {
     dataTaxonomiesBudget,
     dataTaxonomiesDuration
   ] = await Promise.all([
-    fetchData(GET_NEXT_STEP, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_BUDGET, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_DURATION, { language: params.lang?.toUpperCase() }),
+    fetchData(GET_NEXT_STEP, { language: lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_COUNTRY, { language: lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_BUDGET, { language: lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_DURATION, { language: lang?.toUpperCase() }),
   ])
   return (
     <main>

@@ -1,13 +1,13 @@
-import logo from '@/assets/images/viva-logo.png'
 import location from '@/assets/images/route-squareB.svg'
-import Image from 'next/image'
-import SlidePartners from './SlidePartners'
-import getDataPost from '@/data/getDataPost'
+import logo from '@/assets/images/viva-logo.png'
+import fetchData from '@/data/fetchData'
 import { GET_FOOTER } from '@/graphql/home/queries'
+import Image from 'next/image'
 import Link from 'next/link'
+import SlidePartners from './SlidePartners'
 
 async function Footer({ lang }) {
-  const data = await getDataPost(lang?.toUpperCase(), GET_FOOTER)
+  const data = await fetchData(GET_FOOTER, { language: lang?.toUpperCase() })
   const footerData = data?.data?.page?.translation?.home?.footer
   const logoPartner = footerData?.logoPartner
   const col1 = footerData?.column1
@@ -199,12 +199,12 @@ async function Footer({ lang }) {
             {col4?.imgsForum?.map((item, index) => (
               <Link key={index} href={`${item?.link}`} target='_blank'>
                 <Image
-                src={item?.img?.sourceUrl}
-                width={100}
-                height={100}
-                alt={item?.img?.altText || 'forum'}
-                className='h-[3.125vw] w-[3.125vw] object-contain max-md:w-[13.13vw] max-md:h-[13.13vw]'
-              />
+                  src={item?.img?.sourceUrl}
+                  width={100}
+                  height={100}
+                  alt={item?.img?.altText || 'forum'}
+                  className='h-[3.125vw] w-[3.125vw] object-contain max-md:w-[13.13vw] max-md:h-[13.13vw]'
+                />
               </Link>
             ))}
           </div>

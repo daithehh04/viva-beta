@@ -65,7 +65,7 @@ export default async function MainLayout({ children, params }) {
     dataTaxonomiesDuration
   ] = await Promise.all([
     fetchData(DATA_HEADER, { id: LANGUAGE_IDS['en'] }),
-    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS?.[params?.lang], language: params?.lang?.toUpperCase() }),
     fetchData(DATA_MENU_COUNTRY, { language: params.lang?.toUpperCase() }),
     fetchData(GET_SERVICE_BY_CATEGORY, { language: params.lang?.toUpperCase() }),
     fetchData(GET_SOCIAL_MOBILE, { language: params.lang?.toUpperCase() }),
