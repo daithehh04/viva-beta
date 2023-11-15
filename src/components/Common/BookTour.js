@@ -12,7 +12,7 @@ import { useRef, useState } from 'react'
 import Notification from './Notification'
 import { useClickOutside } from '@/helpers/customHooks'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
@@ -359,7 +359,7 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                             <div className='flex flex-col md:gap-[0.5vw] gap-[2.13vw] max-md:w-full'>
                               <h4 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.time}` }}></h4>
                               {/* <DatePickerCustom name='date' /> */}
-                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
                                   name='date'
                                   views={['month', 'year']}
