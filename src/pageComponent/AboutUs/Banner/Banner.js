@@ -38,7 +38,7 @@ export default function Banner({ data = {} }) {
             src={arrowBottom}
             width={22}
             height={22}
-            alt=''
+            alt='arrow icon'
             className='arrow-down xl:w-[1.375vw] md:w-[1.8vw] md:h-[1.8vw] xl:h-[1.375vw] w-[4.26vw] h-[4.26vw]'
           />
           <div className='hidden md:flex text-center xl:text-[1.4vw] text-[0.875vw] font-semibold leading-[1.125vw] uppercase tracking-[0.75px]'>

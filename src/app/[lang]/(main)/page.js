@@ -22,6 +22,8 @@ export async function generateMetadata({ params: { lang } }) {
   const excerpt = home?.meta?.description
   return getMeta(title, excerpt, featuredImage)
 }
+
+ 
 export default async function page({ params: { lang } }) {
   const data = await fetchData(GET_HOME_PAGE, { id: LANGUAGE_IDS[lang] })
   const dataBookTour = await fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })

@@ -93,8 +93,8 @@ export default async function MainLayout({ children, params }) {
   const dataPopupVoucher = await fetchData(DATA_POPUP_VOUCHER, { language: params.lang?.toUpperCase() })
   const isPopup = dataPopupVoucher?.data?.page?.translation?.popupPromotion?.thumbPopup === null
   return (
-    <ApolloClientProvider>
-      <ThemeRegistry>
+    <ThemeRegistry>
+        <ApolloClientProvider>
         <Navbar
           socialMobile={socialMobile}
           dataTaxonomiesCountry={dataTaxonomiesCountry}
@@ -121,8 +121,8 @@ export default async function MainLayout({ children, params }) {
         {params.lang === 'it' && <ChatTawkto url={linkChatIt} />}
         {children}
         <Footer lang={params.lang} />
-      </ThemeRegistry>
-    </ApolloClientProvider>
+      </ApolloClientProvider>
+    </ThemeRegistry>
 
   )
 }
