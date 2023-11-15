@@ -46,6 +46,52 @@ query durationTaxonomies {
   }
 }`
 
+export const DATA_TAXONOMIES_COUNTRY_GQL = gql`
+query countriesTaxonomies($language: LanguageCodeFilterEnum) {
+  allCountries(where: {language: $language}) {
+    nodes {
+      name
+      slug
+      country {
+        priority
+      }
+    }
+  }
+}`
+
+export const DATA_TAXONOMIES_TOUR_STYLE_GQL = gql`
+query countriesTaxonomies($language: LanguageCodeFilterEnum) {
+  allTourStyle(where: {language: $language}) {
+    nodes {
+      name
+      slug
+      banner {
+        travelStyleInfo {
+          priority
+        }
+      }
+    }
+  }
+}`
+
+export const DATA_TAXONOMIES_BUDGET_GQL = gql`
+query budgetTaxonomies {
+  allBudget {
+    nodes {
+      name
+    }
+  }
+}`
+
+export const DATA_TAXONOMIES_DURATION_GQL = gql`
+query durationTaxonomies {
+  allDuration {
+    nodes {
+      name
+    }
+  }
+}`
+
 const DATA_BEST_TOUR = gql`
   query GetFilterTour($language: LanguageCodeEnum!, $countrySlug: [String!], $styleTourSlug: [String!]) {
     allTours(

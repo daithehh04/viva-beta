@@ -1,5 +1,10 @@
+import fetchData from '@/data/fetchData'
 import ListAction from './ListAction'
-function SectionActions({ listActions,infoCountry }) {
+import { DATA_ICONS_COUNTRY } from '@/graphql/country/queries'
+async function SectionActions({ infoCountry, lang }) {
+  const dataIcons = await fetchData(DATA_ICONS_COUNTRY, { language: lang.toUpperCase(), slug: "cG9zdDozMDQ1" })
+  const listActions = dataIcons?.data?.page?.translation
+
   const arrInfoCountry = []
   arrInfoCountry.push(infoCountry?.population)
   arrInfoCountry.push(infoCountry?.area)

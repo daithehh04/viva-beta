@@ -9,10 +9,12 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { useEffect, useRef, useState } from 'react'
 import Button from '@/components/Common/Button'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useClickOutside } from '@/helpers/customHooks'
 import { createTheme } from '@mui/material'
-function FilterPopup({ lang, dataFilter, slug }) {
+import { DATA_TAXONOMIES_BUDGET, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
+import { useQuery } from '@apollo/client'
+function FilterPopup() {
   // const refLink = useRef(null)
   const searchRef = useRef()
   const popUp = useRef(null)
@@ -21,8 +23,38 @@ function FilterPopup({ lang, dataFilter, slug }) {
   const [travelStyle, setTravelStyle] = useState('')
   const [duration, setDuration] = useState('')
   const [budget, setBudget] = useState('')
-  const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
+
+  const { lang, slug } = useParams()
+
+  const { data: dataTaxonomiesStyleTour } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+  const { data: dataTaxonomiesBudget } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+  const { data: dataTaxonomiesDuration } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+  const { data: dataTaxonomiesCountry } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+  // ==== Get name filter ====
+  const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.data?.allBudget?.nodes
+  const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.data?.allDuration?.nodes
+  const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.data?.allTourStyle?.nodes
+  const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.data?.allCountries?.nodes
+
+  const dataFilter = {
+    style: arrDataTaxonomiesStyleTour,
+    budget: arrDataTaxonomiesBudget,
+    duration: arrDataTaxonomiesDuration,
+    country: arrDataTaxonomiesCountry
+  }
 
   const handleChangeTravelStyle = (event) => {
     setTravelStyle(event.target.value)
@@ -35,7 +67,7 @@ function FilterPopup({ lang, dataFilter, slug }) {
   }
 
   const handleSort = (fn) => {
-    fn?.sort(function(a, b) {
+    fn?.sort(function (a, b) {
       var numA = parseInt(a?.name.split('-')[0]);
       var numB = parseInt(b?.name.split('-')[0]);
       return numA - numB;
@@ -47,15 +79,15 @@ function FilterPopup({ lang, dataFilter, slug }) {
   const arrDuration = dataFilter?.duration
   handleSort(arrDuration)
 
-  const arrCountry = dataFilter?.countries
-  arrCountry?.sort(function(a, b) {
+  const arrCountry = dataFilter?.country
+  arrCountry?.sort(function (a, b) {
     var numA = parseInt(a?.country?.priority);
     var numB = parseInt(b?.country?.priority);
     return numA - numB;
   });
 
   const arrStyle = dataFilter?.style
-  arrStyle?.sort(function(a, b) {
+  arrStyle?.sort(function (a, b) {
     var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
     var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
     return numA - numB;
@@ -135,7 +167,7 @@ function FilterPopup({ lang, dataFilter, slug }) {
 
   const option = {
     destination: 'Destination',
-    budget : 'Budget',
+    budget: 'Budget',
     style: 'Travel Style',
     duration: 'Duration',
     day: 'day',
@@ -143,21 +175,21 @@ function FilterPopup({ lang, dataFilter, slug }) {
     search: 'Search',
     filter: 'Filter tour'
   }
-  if(lang === 'fr') {
+  if (lang === 'fr') {
     option.duration = 'Durée'
-    option.style =' Types de voyages'
-    option.day ='Jours'
-    option.price= '€'
+    option.style = ' Types de voyages'
+    option.day = 'Jours'
+    option.price = '€'
     option.search = 'Rechercher'
     option.filter = 'Visite guidée des filtres'
   }
-  if(lang === 'it') {
+  if (lang === 'it') {
     option.style = 'Tipo di viaggio'
-    option.duration ='Durata'
+    option.duration = 'Durata'
     option.budget = 'Budget'
     option.destination = 'Destinazione'
-    option.day ='Giorni'
-    option.price= '€'
+    option.day = 'Giorni'
+    option.price = '€'
     option.search = 'Cerca'
     option.filter = 'Filtra tour'
   }
@@ -209,7 +241,7 @@ function FilterPopup({ lang, dataFilter, slug }) {
         className='md:grid hidden z-20 grid-cols-2 filterPopUp gap-y-[2.12vw] gap-x-[2.25vw] justify-items-end rounded-[1vw] shadow-lg bg-white fixed bottom-[8.94vw] right-[6.13vw] items-center w-[28.6vw] pt-[2.5vw] pr-[2.125vw] pb-[2.18vw] pl-[2.1875vw]'
       >
         <div className='flex flex-col select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.style}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.style}</span>
           <div className='flex items-center select-mobile'>
             <Image
               src={styleIcon}
@@ -244,8 +276,8 @@ function FilterPopup({ lang, dataFilter, slug }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.style
-                  if(travelStyle !== "") {
-                    const nameCountry = arrStyle?.find((item,index) => item?.slug === travelStyle)
+                  if (travelStyle !== "") {
+                    const nameCountry = arrStyle?.find((item, index) => item?.slug === travelStyle)
                     name = nameCountry?.name
                   }
                   return name
@@ -277,7 +309,7 @@ function FilterPopup({ lang, dataFilter, slug }) {
         </div>
 
         <div className='flex flex-col select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.duration}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.duration}</span>
           <div className='flex items-center select-mobile'>
             <Image
               src={calendar}
@@ -312,9 +344,9 @@ function FilterPopup({ lang, dataFilter, slug }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.duration
-                  if(duration !== "") {
-                    const nameCountry = arrDuration?.find((item,index) => item?.name === duration)
-                    name = nameCountry?.name+" "+ option.day
+                  if (duration !== "") {
+                    const nameCountry = arrDuration?.find((item, index) => item?.name === duration)
+                    name = nameCountry?.name + " " + option.day
                   }
                   return name
                 }}
@@ -345,7 +377,7 @@ function FilterPopup({ lang, dataFilter, slug }) {
         </div>
 
         <div className='flex flex-col select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.budget}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.budget}</span>
           <div className='flex items-center select-mobile'>
             <Image
               src={wallet}
@@ -380,9 +412,9 @@ function FilterPopup({ lang, dataFilter, slug }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.budget
-                  if(budget !== "") {
-                    const nameCountry = arrBudget?.find((item,index) => item?.name === budget)
-                    name = nameCountry?.name+" "+ option.price
+                  if (budget !== "") {
+                    const nameCountry = arrBudget?.find((item, index) => item?.name === budget)
+                    name = nameCountry?.name + " " + option.price
                   }
                   return name
                 }}

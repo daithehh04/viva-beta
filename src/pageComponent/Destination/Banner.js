@@ -1,19 +1,22 @@
-'use client'
+import fetchData from '@/data/fetchData'
+import { DATA_COUNTRY } from '@/graphql/country/queries'
+import ScrollNextSection from '@/sections/our-tour/banner/scroll-next-section'
 import Box from '@mui/material/Box'
 import Image from 'next/image'
-import { useRef } from 'react'
-import scrollDown from '@/helpers/scrollDown'
 import FilterBanner from './FilterBanner'
 
-function Banner({ data, dataFilter, slug, lang }) {
-  const scrollRef = useRef()
-  let explore = 'Explore now'
-  if(lang === 'fr') {
-    explore ='Explorez maintenant'
-  }
-  if(lang === 'it') {
-    explore = 'Esplora ora'
-  }
+const Banner = async ({ slug, lang }) => {
+  const [
+    dataCountry,
+  ] = await Promise.all([
+    fetchData(DATA_COUNTRY, {
+      language: lang?.toUpperCase(),
+      taxonomyValue: slug
+    }),
+  ])
+
+  const data = dataCountry?.data?.countries?.translation?.country?.banner
+
   return (
     <Box
       sx={{
@@ -37,37 +40,9 @@ function Banner({ data, dataFilter, slug, lang }) {
           </span>
 
           <div className='filter-tour hidden md:flex gap-x-[1.75vw] ml-auto mr-auto mt-[1.94vw] bg-white w-max py-[1.5vw] pl-[2.87vw] pr-[2vw] rounded-[1.125vw]'>
-            <FilterBanner
-              dataFilter={dataFilter}
-              slug={slug}
-              lang={lang}
-            />
+            <FilterBanner />
           </div>
-          <div
-            onClick={() => scrollDown(scrollRef, 'start')}
-            className='flex flex-col gap-[0.94vw] text-center cursor-pointer items-center justify-center md:mt-[2.19vw] mt-[4.8vw]'
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='arrow-down md:w-[1.375vw] md:h-[1.35vw] w-[3.2vw] h-[3.2vw]'
-              viewBox='0 0 24 25'
-              fill='none'
-            >
-              <path
-                d='M1 1L12 12L23 1'
-                stroke='white'
-                strokeWidth='2'
-              />
-              <path
-                d='M1 12L12 23L23 12'
-                stroke='white'
-                strokeWidth='2'
-              />
-            </svg>
-            <span className='md:block hidden text-center font-manrope text-[0.875vw] not-italic font-semibold tracking-[0.04375vw] uppercase text-[#fff] '>
-              {explore}
-            </span>
-          </div>
+          <ScrollNextSection lang={lang} />
         </div>
         <Image
           src={data?.img?.sourceUrl}
@@ -87,7 +62,7 @@ function Banner({ data, dataFilter, slug, lang }) {
           className='absolute bottom-0 h-[12.4vw] w-full hidden md:flex flex-shrink-0 items-center bg-overlayBanner2 py-[4vw] pr-[3.31vw] '
         ></div>
       </div>
-      <div ref={scrollRef}></div>
+
     </Box>
   )
 }

@@ -1,21 +1,58 @@
 'use client'
-import searchIcon from '@/assets/images/search-normal.svg'
 import calendar from '@/assets/images/calendarFilter.svg'
-import wallet from '@/assets/images/wallet.svg'
+import searchIcon from '@/assets/images/search-normal.svg'
 import styleIcon from '@/assets/images/style-travel.svg'
-import Image from 'next/image'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
-import { useRef, useState } from 'react'
+import wallet from '@/assets/images/wallet.svg'
 import Button from '@/components/Common/Button'
-import { useRouter } from 'next/navigation'
+import { DATA_TAXONOMIES_BUDGET, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
+import { gql, useQuery } from '@apollo/client'
 import { createTheme } from '@mui/material'
-function FilterBanner({ lang, dataFilter,slug }) {
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import Image from 'next/image'
+import { useParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
+function FilterBanner() {
   const [travelStyle, setTravelStyle] = useState('')
   const [duration, setDuration] = useState('')
   const [budget, setBudget] = useState('')
   const router = useRouter()
+  const { lang, slug } = useParams()
+
+  const { data: dataTaxonomiesStyleTour } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+  const { data: dataTaxonomiesBudget } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+  const { data: dataTaxonomiesDuration } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+  const { data: dataTaxonomiesCountry } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
+    variables: { language: lang?.toUpperCase() }
+  })
+
+
+
+  // ==== Get name filter ====
+  const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.allBudget?.nodes
+  const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.allDuration?.nodes
+  const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.allTourStyle?.nodes
+  const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.allCountries?.nodes
+
+
+  console.log("dataTaxonomiesBudget", dataTaxonomiesBudget);
+  console.log("arrDataTaxonomiesBudget=====", typeof arrDataTaxonomiesBudget);
+  const dataFilter = {
+    style: arrDataTaxonomiesStyleTour,
+    budget: arrDataTaxonomiesBudget,
+    duration: arrDataTaxonomiesDuration,
+    country: arrDataTaxonomiesCountry
+  }
 
   const handleChangeTravelStyle = (event) => {
     setTravelStyle(event.target.value)
@@ -27,45 +64,39 @@ function FilterBanner({ lang, dataFilter,slug }) {
     setBudget(event.target.value)
   }
 
-  const handleSort = (fn) => {
-    fn?.sort(function(a, b) {
+  const handleSort = (fn = []) => {
+    const clone = [...fn]
+    clone?.sort(function (a, b) {
       var numA = parseInt(a?.name.split('-')[0]);
       var numB = parseInt(b?.name.split('-')[0]);
       return numA - numB;
     });
   }
   const arrBudget = dataFilter?.budget
-  handleSort(arrBudget)
+  // handleSort(arrBudget)
 
   const arrDuration = dataFilter?.duration
-  handleSort(arrDuration)
-
-  const arrCountry = dataFilter?.countries
-  arrCountry?.sort(function(a, b) {
-    var numA = parseInt(a?.country?.priority);
-    var numB = parseInt(b?.country?.priority);
-    return numA - numB;
-  });
+  // handleSort(arrDuration)
 
   const arrStyle = dataFilter?.style
-  arrStyle?.sort(function(a, b) {
-    var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-    var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-    return numA - numB;
-  });
+  // arrStyle?.sort(function (a, b) {
+  //   var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
+  //   var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
+  //   return numA - numB;
+  // });
 
   function handleSearch(e) {
     const arrParams = []
-    if(travelStyle || duration || budget) {
-    
-      if(travelStyle) {
-        arrParams.push({'style':travelStyle})
+    if (travelStyle || duration || budget) {
+
+      if (travelStyle) {
+        arrParams.push({ 'style': travelStyle })
       }
-      if(duration) {
-        arrParams.push({'duration':duration})
+      if (duration) {
+        arrParams.push({ 'duration': duration })
       }
-      if(budget) {
-        arrParams.push({'budget':budget})
+      if (budget) {
+        arrParams.push({ 'budget': budget })
       }
       const resultObject = {};
       arrParams.forEach(obj => {
@@ -77,7 +108,7 @@ function FilterBanner({ lang, dataFilter,slug }) {
       });
       const queryString = new URLSearchParams(resultObject).toString();
       var link = `/search?&country=${slug}&${queryString}`
-      if(lang !== 'en') {
+      if (lang !== 'en') {
         link = `/search?&country=${slug}&${queryString}`
       }
       router.push(link)
@@ -88,28 +119,28 @@ function FilterBanner({ lang, dataFilter,slug }) {
 
   const option = {
     destination: 'Destination',
-    budget : 'Budget',
+    budget: 'Budget',
     style: 'Travel Style',
     duration: 'Duration',
     day: 'day',
     search: 'Search',
     price: '$'
   }
-  if(lang === 'fr') {
+  if (lang === 'fr') {
     option.duration = 'Durée'
-    option.style =' Types de voyages'
-    option.day ='Jour'
+    option.style = ' Types de voyages'
+    option.day = 'Jour'
     option.search = 'Rechercher'
-    option.price= '€'
+    option.price = '€'
   }
-  if(lang === 'it') {
+  if (lang === 'it') {
     option.style = 'Tipo di viaggio'
-    option.duration ='Durata'
+    option.duration = 'Durata'
     option.budget = 'Budget'
     option.destination = 'Destinazione'
-    option.day ='Giorno'
+    option.day = 'Giorno'
     option.search = 'Cerca'
-    option.price= '€'
+    option.price = '€'
   }
 
   const theme = createTheme({
@@ -123,7 +154,7 @@ function FilterBanner({ lang, dataFilter,slug }) {
     <div className='flex gap-x-[1.75vw]'>
       <div className='flex max-md:grid max-md:grid-cols-2 max-md:gap-[2.67vw] md:gap-x-[1.87vw] gap-y-[3.2vw] gap-x-[2.67vw] md:flex-nowrap flex-wrap md:justify-normal justify-between'>
         <div className='flex items-start flex-col select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.style}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.style}</span>
           <div className='flex items-center select-mobile'>
             <Image
               src={styleIcon}
@@ -158,8 +189,8 @@ function FilterBanner({ lang, dataFilter,slug }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.style
-                  if(travelStyle !== "") {
-                    const nameCountry = arrStyle?.find((item,index) => item?.slug === travelStyle)
+                  if (travelStyle !== "") {
+                    const nameCountry = arrStyle?.find((item, index) => item?.slug === travelStyle)
                     name = nameCountry?.name
                   }
                   return name
@@ -226,8 +257,8 @@ function FilterBanner({ lang, dataFilter,slug }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.duration
-                  if(duration !== "") {
-                    const nameCountry = arrDuration?.find((item,index) => item?.name === duration)
+                  if (duration !== "") {
+                    const nameCountry = arrDuration?.find((item, index) => item?.name === duration)
                     name = nameCountry?.name + " " + option?.day
                   }
                   return name
@@ -259,7 +290,7 @@ function FilterBanner({ lang, dataFilter,slug }) {
         </div>
 
         <div className='flex items-start flex-col select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.budget}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.budget}</span>
           <div className='flex items-center select-mobile'>
             <Image
               src={wallet}
@@ -294,8 +325,8 @@ function FilterBanner({ lang, dataFilter,slug }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.budget
-                  if(budget !== "") {
-                    const nameCountry = arrBudget?.find((item,index) => item?.name === budget)
+                  if (budget !== "") {
+                    const nameCountry = arrBudget?.find((item, index) => item?.name === budget)
                     name = nameCountry?.name + " " + option.price
                   }
                   return name
