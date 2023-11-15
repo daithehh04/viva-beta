@@ -73,7 +73,7 @@ function SlideRepresent({ data }) {
                     src={item?.img?.sourceUrl}
                     width={500}
                     height={500}
-                    alt={item?.img?.altText}
+                    alt={item?.img?.altText || item?.img?.altText || 'thumb'}
                     className='w-full h-[54.4vw] md:h-[29.14588vw] block object-cover rounded-[1.6vw] presentative-img'
                   />
                   <div className='flex contact absolute top-0 right-0 pt-[1.5vw] pr-[1.42vw]  flex-col gap-[0.75vw]'>
@@ -83,7 +83,7 @@ function SlideRepresent({ data }) {
                           src={callIcon}
                           width={50}
                           height={50}
-                          alt='img'
+                          alt='icon'
                           className='w-[1.5vw] h-[1.5vw] max-md:w-[3.5vw] max-md:h-[3.5vw] object-cover cursor-pointer '
                         />
                       </a>
@@ -97,7 +97,7 @@ function SlideRepresent({ data }) {
                           src={directIcon}
                           width={50}
                           height={50}
-                          alt='img'
+                          alt='icon'
                           className='w-[1.5vw] h-[1.5vw] max-md:w-[3.5vw] max-md:h-[3.5vw] object-cover  cursor-pointer'
                         />
                       </a>
@@ -112,7 +112,7 @@ function SlideRepresent({ data }) {
                         src={icon}
                         width={50}
                         height={50}
-                        alt='img'
+                        alt='icon'
                         className='md:w-[1.5625vw] md:h-[1.5625vw] w-[2.66vw] h-[2.66vw] object-cover'
                       />
                       <span className='text-white md:text-[1.19vw] text-[2.66vw] leading-normal'>{item?.role}</span>

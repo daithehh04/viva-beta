@@ -1,5 +1,6 @@
 export const getMeta = (title, excerpt, featuredImage) => {
   return {
+    metadataBase: new URL('http://localhost:3000'),
     title: title,
     description: excerpt,
     applicationName: process.env.SITE_NAME,
@@ -10,8 +11,8 @@ export const getMeta = (title, excerpt, featuredImage) => {
       siteName: process.env.SITE_NAME,
       images: [
         {
-          url: featuredImage?.node?.sourceUrl || '',
-          alt: featuredImage?.node?.altText || featuredImage?.node?.title || ''
+          url: featuredImage?.node?.sourceUrl || 'https://res.cloudinary.com/asiavivatravel/images/v1699352552/Viet-Nam-1/Viet-Nam-1.png',
+          alt: featuredImage?.node?.altText || featuredImage?.node?.title || 'openGraph'
         }
       ],
       locale: 'en_US',
@@ -24,8 +25,8 @@ export const getMeta = (title, excerpt, featuredImage) => {
       creator: process.env.SITE_NAME,
       images: [
         {
-          url: featuredImage?.node?.sourceUrl || '',
-          alt: featuredImage?.node?.altText || featuredImage?.node?.title || ''
+          url: featuredImage?.node?.sourceUrl || 'https://res.cloudinary.com/asiavivatravel/images/v1699352552/Viet-Nam-1/Viet-Nam-1.png',
+          alt: featuredImage?.node?.altText || featuredImage?.node?.title || 'twitter'
         }
       ]
     },

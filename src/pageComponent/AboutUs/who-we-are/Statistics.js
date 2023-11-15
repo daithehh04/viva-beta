@@ -170,7 +170,7 @@ export default function Statistics({ data }) {
           <div className='slogan-img'>
             <Image
               src={data?.slogan?.image?.sourceUrl || sloganBg}
-              alt={data?.slogan?.image?.altText}
+              alt={data?.slogan?.image?.altText || 'slogan'}
               width={1000}
               height={1000}
               className='slogan-img max-md:w-[73.32vw] max-md:h-[73.32vw] object-cover'
