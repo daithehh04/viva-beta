@@ -33,9 +33,9 @@ import { DATA_HEADER, GET_INFO_CONTACT, GET_SOCIAL_MOBILE } from '@/graphql/home
 import { DATA_POPUP_VOUCHER, GET_HOT_DEAL_DATA } from '@/graphql/hotDeal/queries'
 import { GET_LIST_TRAVEL_STYLE_NAME } from '@/graphql/travelStyle/queries'
 import SearchButton from '@/pageComponent/Home/SearchButton'
-import '../../../assets/fonts/stylesheet.css'
-import '../../../scss/main.scss'
-import ApolloClientProvider from '../../apolloProvider'
+import '@/assets/fonts/stylesheet.css'
+import '@/scss/main.scss'
+import ApolloClientProvider from '@/components/apolloProvider'
 
 const IDS = {
   en: 'cG9zdDoxNDIy',
