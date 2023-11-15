@@ -39,7 +39,7 @@ export default async function page({ params: { lang, slug } }) {
   // get Default list Reviews
   const reviewsList = result4?.data?.allCustomerReview?.nodes
   const otherPromotionTours = promotionList?.filter(
-    (item) => item.translation.id != result?.data?.tours?.translation?.id
+    (item) => item?.translation?.id != result?.data?.tours?.translation?.id
   )
   if (!result?.data?.tours?.translation?.tourDetail) {
     notFound()
