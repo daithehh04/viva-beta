@@ -1,11 +1,12 @@
-import getHotDealHeader from '@/data/hotDeal'
 import HotDeal from '@/components/Common/HotDeal'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
-import { GET_META_DATA } from '@/graphql/hotDeal/queries'
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { GET_META_DATA } from '@/graphql/hotDeal/queries'
 
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA, lang)
+  const res = await fetchData(GET_META_DATA, {
+    language: lang?.toUpperCase()
+  })
   const { hotDeals } = res?.data?.page?.translation
   const featuredImage = res?.data?.page?.translation?.featuredImage
 
@@ -15,7 +16,7 @@ export async function generateMetadata({ params: { lang } }) {
 }
 
 async function page({ params: { lang } }) {
-  const result = await getHotDealHeader(lang)
+  const result = await fetchData(GET_HOT_DEAL_DATA, { language: lang?.toUpperCase() })
   const hotDeals = result?.data?.page?.translation?.hotDeals
   return (
     <HotDeal

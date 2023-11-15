@@ -1,14 +1,15 @@
-import Statistics from '@/pageComponent/AboutUs/who-we-are/Statistics'
-import Staffs from '@/pageComponent/AboutUs/who-we-are/staffs/Staffs'
 import AboutVideo from '@/components/Common/Video'
+import fetchData from '@/data/fetchData'
+import { getMeta } from '@/data/metaData/getMeta'
 import { GET_META_DATA, GET_WHO_WE_ARE_DATA } from '@/graphql/aboutUs/who-we-are/queries'
 import Banner from '@/pageComponent/AboutUs/Banner/Banner'
-import getAboutUsData from '@/data/aboutUs/getAboutUsData'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
-import { getMeta } from '@/data/metaData/getMeta'
+import Statistics from '@/pageComponent/AboutUs/who-we-are/Statistics'
+import Staffs from '@/pageComponent/AboutUs/who-we-are/staffs/Staffs'
 
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA, lang)
+  const res = await fetchData(GET_META_DATA, {
+    language: lang?.toUpperCase()
+  })
 
   const { who_we_are } = res?.data?.page?.translation
   const featuredImage = res?.data?.page?.translation?.featuredImage
@@ -18,7 +19,7 @@ export async function generateMetadata({ params: { lang } }) {
 }
 
 async function page({ params: { lang } }) {
-  const res = await getAboutUsData(GET_WHO_WE_ARE_DATA, lang)
+  const res = await fetchData(GET_WHO_WE_ARE_DATA, {language: lang?.toUpperCase()})
   const bannerData = res?.data?.page?.translation?.who_we_are?.banner
   const contentData = res?.data?.page?.translation?.who_we_are?.content
 

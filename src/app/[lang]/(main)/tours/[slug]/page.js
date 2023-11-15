@@ -1,20 +1,19 @@
+import NotFound from '@/components/Common/NotFound'
+import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
+import fetchData from '@/data/fetchData'
 import getDataPost from '@/data/getDataPost'
 import { getMeta } from '@/data/metaData/getMeta'
-import getMetaDataTour from '@/data/metaData/getMetaData'
-import getRandomTour from '@/data/tourDetail/getRandomTour'
-import getRelatedTour from '@/data/tourDetail/getRelatedTour'
-import getTourDetail from '@/data/tourDetail/getTourDetail'
-import getTourDetailHeader from '@/data/tourDetail/getTourDetailHeader'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
-import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
-import { GET_RANDOM_TOUR, GET_TOUR_DETAIL } from '@/graphql/tourDetail/queries'
-import TourDetail from '@/pageComponent/TourDetail'
-import getDataFormBookTour from '@/data/formBookTour/getDataFormBookTour'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
-import NotFound from '@/components/Common/NotFound'
+import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
+import { GET_RANDOM_TOUR, GET_RELATED_TOUR, GET_TOUR_DETAIL, GET_TOUR_DETAIL_HEADER } from '@/graphql/tourDetail/queries'
+import TourDetail from '@/pageComponent/TourDetail'
 
 export async function generateMetadata({ params: { slug, lang } }) {
-  const res = await getMetaDataTour(GET_TOUR_META_DATA, lang, slug)
+  const res = await fetchData(GET_TOUR_META_DATA, {
+    language: lang?.toUpperCase(),
+    slug
+  })
   const tourDetail = res?.data?.tours?.translation?.tourDetail
   const featuredImage = res?.data?.tours?.translation?.featuredImage
   const title = tourDetail?.meta?.title
@@ -23,13 +22,14 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 export default async function page({ params: { lang, slug } }) {
-  const id = 'cG9zdDoxNDIy'
   const [headerData, result, res, result4, dataBookTour] = await Promise.all([
-    getTourDetailHeader(lang),
-    getTourDetail(GET_TOUR_DETAIL, slug, lang),
-    getRandomTour(GET_RANDOM_TOUR, lang),
+    fetchData(GET_TOUR_DETAIL_HEADER, { language: lang?.toUpperCase() }),
+    fetchData(GET_TOUR_DETAIL, { slug: slug, language: lang?.toUpperCase() }),
+    fetchData(GET_RANDOM_TOUR, {
+      language: lang?.toUpperCase()
+    }),
     getDataPost(lang, GET_ALL_REVIEWS),
-    getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, id, lang)
+    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
   ])
 
   const styleTourArr = result?.data?.tours?.translation?.tourStyle?.nodes
@@ -41,7 +41,11 @@ export default async function page({ params: { lang, slug } }) {
   const reviewsList = result4?.data?.allCustomerReview?.nodes
   const randomTour = res?.data?.allTours?.nodes.filter((item, index) => item?.translation?.id !== tourId)
 
-  const result2 = await getRelatedTour(country, 'COUNTRIES', lang)
+  const result2 = await fetchData(GET_RELATED_TOUR, {
+    taxonomyValue: country,
+    taxonomyName: 'COUNTRIES',
+    language: lang?.toUpperCase()
+  })
   const relatedTours = result2?.data?.allTours?.nodes?.filter((item) => item?.translation?.id !== tourId)
   if (!tourId) {
     return <NotFound lang={lang} />

@@ -1,26 +1,24 @@
-import Banner from './Banner'
-import SlideDestination from './SlideDestination'
-import SectionActions from './SectionActions'
-import CustomerReview from './CustomerReview'
-import OurBlog from './OurBlog'
-import FilterPopup from './FilterPopup'
+import NotFound from '@/components/Common/NotFound'
+import fetchData from '@/data/fetchData'
 import {
   DATA_COUNTRY,
+  DATA_ICONS_COUNTRY,
   DATA_SLIDE_OTHER_TOUR,
   GET_DATA_BEST_SELLER_OURTOUR
 } from '@/graphql/country/queries'
-import getDataWithTaxonomy from '@/data/getDataWithTaxonomy'
-import getDataPost from '@/data/getDataPost'
+import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import {
   DATA_TAXONOMIES_BUDGET,
   DATA_TAXONOMIES_COUNTRY,
   DATA_TAXONOMIES_DURATION,
   DATA_TAXONOMIES_TOUR_STYLE
 } from '@/graphql/filter/queries'
-import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
-import NotFound from '@/components/Common/NotFound'
-import { DATA_ICONS_COUNTRY } from '@/graphql/country/queries'
-import getDataDetail from '@/data/getDataDetail'
+import Banner from './Banner'
+import CustomerReview from './CustomerReview'
+import FilterPopup from './FilterPopup'
+import OurBlog from './OurBlog'
+import SectionActions from './SectionActions'
+import SlideDestination from './SlideDestination'
 async function index({ lang, slug }) {
   const [
     dataCountry,
@@ -33,37 +31,26 @@ async function index({ lang, slug }) {
     dataTaxonomiesDuration,
     dataTaxonomiesCountry
   ] = await Promise.all([
-    getDataWithTaxonomy(
-      {
-        taxonomyValue: slug,
-        lang: lang?.toUpperCase()
-      },
-      DATA_COUNTRY
-    ),
-    getDataDetail(lang?.toUpperCase(),
-      "cG9zdDozMDQ1", DATA_ICONS_COUNTRY
-    ),
-    getDataWithTaxonomy(
-      {
-        taxonomyValue: slug,
-        taxonomyName: 'COUNTRIES',
-        lang: lang
-      },
-      DATA_SLIDE_OTHER_TOUR
-    ),
-    getDataPost(lang, GET_ALL_REVIEWS),
-    getDataWithTaxonomy(
-      {
-        taxonomyValue: slug,
-        taxonomyName: 'COUNTRIES',
-        lang: lang
-      },
-      GET_DATA_BEST_SELLER_OURTOUR
-    ),
-    getDataPost(lang, DATA_TAXONOMIES_TOUR_STYLE),
-    getDataPost(lang, DATA_TAXONOMIES_BUDGET),
-    getDataPost(lang, DATA_TAXONOMIES_DURATION),
-    getDataPost(lang, DATA_TAXONOMIES_COUNTRY),
+    fetchData(DATA_COUNTRY, {
+      language: lang?.toUpperCase(),
+      taxonomyValue: slug
+    }),
+    fetchData(DATA_ICONS_COUNTRY, { language: lang.toUpperCase(), slug: "cG9zdDozMDQ1" }),
+    fetchData(DATA_SLIDE_OTHER_TOUR, {
+      language: lang?.toUpperCase(),
+      taxonomyValue: slug,
+      taxonomyName: 'COUNTRIES',
+    }),
+    fetchData(GET_ALL_REVIEWS, { language: params.lang?.toUpperCase() }),
+    fetchData(GET_DATA_BEST_SELLER_OURTOUR, {
+      language: lang?.toUpperCase(),
+      taxonomyValue: slug,
+      taxonomyName: 'COUNTRIES',
+    }),
+    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_BUDGET, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_DURATION, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() }),
   ])
 
   const dataOtherTypeTripNotNull = dataOtherTypeTrip?.data?.allTours?.nodes.filter(item => {
@@ -75,7 +62,6 @@ async function index({ lang, slug }) {
   const dataReviews = reviewsList?.filter((item) =>
     item?.translation?.customerReview?.tours?.countries?.nodes?.some((subItem) => subItem?.slug === slug)
   )
-  // const dataBestSeller = await getDataPost(lang, GET_DATA_BEST_SELLER_OURTOUR)
   const dataBestSellerNoNull = dataBestSeller?.data?.allTours?.nodes?.filter(item => {
     return item?.translation !== null && item?.translation?.slug !== null
   })

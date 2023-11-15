@@ -1,21 +1,19 @@
 import { GET_DATA_CHECKVISA2 } from '@/graphql/page/queries'
 
+import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
+import { COUNTRY_FROM, COUNTRY_TO } from '@/graphql/checkVisa/queries'
+import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import Banner from './Banner'
 import BestSellerTour from './BestSellerTour'
-import Information from './Information'
-import getDataPost from '@/data/getDataPost'
-import { COUNTRY_FROM, COUNTRY_TO } from '@/graphql/checkVisa/queries'
 import { DataProvider } from './DataContext'
-import getDataFormBookTour from '@/data/formBookTour/getDataFormBookTour'
-import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
+import Information from './Information'
 
-const id = 'cG9zdDoxNDIy'
 async function index({ lang }) {
   const [dataBookTour,data,dataCountryFrom,dataCountryTo] = await Promise.all([
-    getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, id, lang),
-    getDataPost(lang, GET_DATA_CHECKVISA2),
-    getDataPost(lang, COUNTRY_FROM),
-    getDataPost(lang, COUNTRY_TO)
+    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    fetchData(GET_DATA_CHECKVISA2, { language: params.lang?.toUpperCase() }),
+    fetchData(COUNTRY_FROM, { language: params.lang?.toUpperCase() }),
+    fetchData(COUNTRY_TO, { language: params.lang?.toUpperCase() }),
   ])
   const dataCheckVisa = data?.data?.page?.translation
   function handleTaxonomies(data) {

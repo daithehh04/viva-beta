@@ -1,21 +1,20 @@
+import NotFound from '@/components/Common/NotFound'
+import fetchData from '@/data/fetchData'
+import { DATA_BLOG_DETAIL, GET_ARTICLE_NEWS } from '@/graphql/detail/queries'
 import HeaderBlog from './HeaderBlog'
 import OtherArticle from './OtherArticle'
 import TextBlogDetail from './TextBlogDetail'
-import { DATA_BLOG_DETAIL, GET_ARTICLE_NEWS } from '@/graphql/detail/queries'
-import getDataDetail from '@/data/getDataDetail'
-import getDataPost from '@/data/getDataPost'
-import NotFound from '@/components/Common/NotFound'
 
 async function index({ lang, slug }) {
-  const [data,dataNews] = await Promise.all([
-    getDataDetail(lang.toUpperCase(), slug, DATA_BLOG_DETAIL),
-    getDataPost(lang.toUpperCase(), GET_ARTICLE_NEWS)
+  const [data, dataNews] = await Promise.all([
+    fetchData(DATA_BLOG_DETAIL, { language: lang.toUpperCase(), slug }),
+    fetchData(GET_ARTICLE_NEWS, { language: params.lang?.toUpperCase() }),
   ])
 
   const dataBlog = data?.data?.postBy
 
   if (!dataBlog || !data || !dataNews) {
-    return <NotFound lang={lang}/>
+    return <NotFound lang={lang} />
   }
 
   return (

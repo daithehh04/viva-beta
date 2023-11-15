@@ -1,19 +1,18 @@
-import getHotDealHeader from "@/data/hotDeal"
+import fetchData from "@/data/fetchData"
 import { getMeta } from "@/data/metaData/getMeta"
-import getTourDetail from "@/data/tourDetail/getTourDetail"
 import { DATA_VOUCHER_DETAIL } from "@/graphql/hotDeal/queries"
 import DetailVocher from "@/pageComponent/HotDeal/DetailVoucher"
 
 
 export async function generateMetadata({ params: { slug, lang } }) {
-  const data = await getTourDetail(DATA_VOUCHER_DETAIL,slug,lang)
-  const title = data?.data?.vouchers?.translation?.title + " | Asia Viva Travel" 
+  const data = await fetchData(DATA_VOUCHER_DETAIL, { slug, language: lang?.toUpperCase() })
+  const title = data?.data?.vouchers?.translation?.title + " | Asia Viva Travel"
   return getMeta(title, null, null)
 }
 async function page({ params: { lang, slug } }) {
-  const [result,data] = await Promise.all([
-    getHotDealHeader(lang),
-    getTourDetail(DATA_VOUCHER_DETAIL,slug,lang)
+  const [result, data] = await Promise.all([
+    fetchData(GET_HOT_DEAL_DATA, { language: lang?.toUpperCase() }),
+    fetchData(DATA_VOUCHER_DETAIL, { slug: slug, language: lang?.toUpperCase() })
   ])
   const hotDeals = result?.data?.page?.translation?.hotDeals
   const dataVoucher = data?.data?.vouchers?.translation?.voucher
@@ -22,7 +21,7 @@ async function page({ params: { lang, slug } }) {
       <DetailVocher
         headerData={hotDeals?.voucherHeader?.detailHeader}
         data={dataVoucher}
-        lang ={lang}
+        lang={lang}
       />
     </div>
   )

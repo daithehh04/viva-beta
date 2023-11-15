@@ -1,7 +1,5 @@
-import getDataPost from '@/data/getDataPost'
-import getDataWithTaxonomy from '@/data/getDataWithTaxonomy'
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
 import { DATA_MENU_COUNTRY } from '@/graphql/country/queries'
 import { DATA_TAXONOMIES_BUDGET } from '@/graphql/filter/queries'
 import { GET_ALL_POST } from '@/graphql/post/queries'
@@ -10,7 +8,9 @@ import { GET_LIST_TRAVEL_STYLE_NAME } from '@/graphql/travelStyle/queries'
 import Search from '@/pageComponent/Search/Search'
 
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA, lang)
+  const res = await fetchData(GET_META_DATA, {
+    language: lang?.toUpperCase()
+  })
 
   const title = res?.data?.page?.translation?.search?.meta?.title
   const excerpt = res?.data?.page?.translation?.search?.meta?.description
@@ -22,12 +22,14 @@ async function page({ params: { lang } }) {
     dataMenuCountry,
     resListBlog,
     searchInfoData] = await Promise.all([
-    getDataWithTaxonomy({ lang: lang || 'EN' }, GET_LIST_TRAVEL_STYLE_NAME),
-    getDataPost(lang, DATA_TAXONOMIES_BUDGET),
-    getDataPost(lang, DATA_MENU_COUNTRY),
-    getDataPost(lang, GET_ALL_POST),
-    getDataPost(lang, GET_SEARCH_INFO)
-  ])
+      fetchData(GET_LIST_TRAVEL_STYLE_NAME, {
+        language: lang?.toUpperCase() || 'EN'
+      }),
+      fetchData(DATA_TAXONOMIES_BUDGET, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+      fetchData(DATA_MENU_COUNTRY, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+      fetchData(GET_ALL_POST, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+      fetchData(GET_SEARCH_INFO, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
+    ])
   const listBlog = resListBlog?.data?.posts?.nodes
   const searchInfo = searchInfoData?.data?.page?.translation?.search
   return (

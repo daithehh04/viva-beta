@@ -1,4 +1,4 @@
-import getDataSiteMap from '@/data/getDataSiteMap'
+import fetchData from "@/data/fetchData"
 
 const GET_POSTS = `{
   posts(first: 100){
@@ -64,12 +64,12 @@ const GET_HOT_DEAL = `
 `
 
 export default async function sitemap() {
-  const posts = await getDataSiteMap(GET_POSTS)
-  const tours = await getDataSiteMap(GET_TOURS)
-  const countries = await getDataSiteMap(GET_COUNTRIES)
-  const tourStyles = await getDataSiteMap(GET_TOUR_STYLE)
-  const categories = await getDataSiteMap(GET_CATEGORIES)
-  const hotDeals = await getDataSiteMap(GET_HOT_DEAL)
+  const posts = await fetchData(GET_POSTS)
+  const tours = await fetchData(GET_TOURS)
+  const countries = await fetchData(GET_COUNTRIES)
+  const tourStyles = await fetchData(GET_TOUR_STYLE)
+  const categories = await fetchData(GET_CATEGORIES)
+  const hotDeals = await fetchData(GET_HOT_DEAL)
 
   const arrPosts = posts?.data?.posts?.nodes?.map((e) => {
     return {

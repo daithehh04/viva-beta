@@ -1,9 +1,6 @@
-import Blog from '@/pageComponent/Blog'
-import getDataPost from '@/data/getDataPost'
-import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
-import getDataWithTaxonomy from '@/data/getDataWithTaxonomy'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
 import Service from '@/pageComponent/Service'
 const GET_INITIAL_FILTER = `
 query($language : LanguageCodeFilterEnum!){
@@ -62,7 +59,9 @@ const GET_META_DATA_RCM_SERVICE = `
   `
 
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA_RCM_SERVICE, lang)
+  const res = await fetchData(GET_META_DATA_RCM_SERVICE, {
+    language: lang?.toUpperCase()
+  })
   if (!res) return
   const dataMeta = res?.data?.page?.translation
   const recommendService = dataMeta?.recommendService
@@ -75,15 +74,12 @@ export async function generateMetadata({ params: { lang } }) {
 
 async function Page({ params: { lang, slug } }) {
   const [data, dataInit, slugRcm] = await Promise.all([
-    getDataPost(lang?.toUpperCase(), GET_ALL_TOURS_BESTSELLER),
-    getDataPost(lang?.toUpperCase(), GET_INITIAL_FILTER),
-    getDataWithTaxonomy(
-      {
-        taxonomyValue: slug,
-        lang
-      },
-      GET_SLUG_RCM
-    )
+    fetchData(GET_ALL_TOURS_BESTSELLER, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    fetchData(GET_INITIAL_FILTER, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    fetchData(GET_SLUG_RCM, {
+      language: lang?.toUpperCase() || 'EN',
+      taxonomyValue: slug
+    }),
   ])
 
   return (

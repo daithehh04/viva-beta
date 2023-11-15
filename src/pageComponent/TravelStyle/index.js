@@ -1,37 +1,32 @@
-import Banner from './Banner'
-import HotTour from './HotTour'
-import TourSlide from './TourSlide'
-import { DATA_WHY_TRAVEL, GET_INFO_PAGE_TRAVEL_STYLE } from '@/graphql/travelStyle/queries'
-import getDataWithTaxonomy from '@/data/getDataWithTaxonomy'
-import getDataPost from '@/data/getDataPost'
+import NotFound from '@/components/Common/NotFound'
 import {
   DATA_TAXONOMIES_BUDGET,
   DATA_TAXONOMIES_COUNTRY,
   DATA_TAXONOMIES_DURATION,
   DATA_TAXONOMIES_TOUR_STYLE
 } from '@/graphql/filter/queries'
-import NotFound from '@/components/Common/NotFound'
+import { DATA_WHY_TRAVEL, GET_INFO_PAGE_TRAVEL_STYLE } from '@/graphql/travelStyle/queries'
+import Banner from './Banner'
+import HotTour from './HotTour'
+import TourSlide from './TourSlide'
 
 async function index({ lang, slug }) {
-  const getPageInfo = await getDataWithTaxonomy(
-    {
-      taxonomyValue: slug,
-      lang
-    },
-    GET_INFO_PAGE_TRAVEL_STYLE
-  )
+  const getPageInfo = await fetchData(GET_INFO_PAGE_TRAVEL_STYLE, {
+    language: lang?.toUpperCase(),
+    taxonomyValue: slug,
+  })
 
-  const dataWhyTravel = await getDataPost(lang?.toUpperCase(), DATA_WHY_TRAVEL)
+  const dataWhyTravel = await fetchData(DATA_WHY_TRAVEL, { language: params.lang?.toUpperCase() })
   const dataWhy = dataWhyTravel?.data?.page?.translation?.tourStyle?.whytravel
 
   if (!getPageInfo?.data?.tourStyle?.translation?.banner) {
     return <NotFound lang={lang} />
   }
 
-  const dataTaxonomiesCountry = await getDataPost(lang, DATA_TAXONOMIES_COUNTRY)
-  const dataTaxonomiesStyleTour = await getDataPost(lang, DATA_TAXONOMIES_TOUR_STYLE)
-  const dataTaxonomiesBudget = await getDataPost(lang, DATA_TAXONOMIES_BUDGET)
-  const dataTaxonomiesDuration = await getDataPost(lang, DATA_TAXONOMIES_DURATION)
+  const dataTaxonomiesCountry = await fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() })
+  const dataTaxonomiesStyleTour = await fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: params.lang?.toUpperCase() })
+  const dataTaxonomiesBudget = await fetchData(DATA_TAXONOMIES_BUDGET, { language: params.lang?.toUpperCase() })
+  const dataTaxonomiesDuration = await fetchData(DATA_TAXONOMIES_DURATION, { language: params.lang?.toUpperCase() })
   return (
     <div>
       <Banner data={getPageInfo?.data?.tourStyle?.translation?.banner?.banner} />

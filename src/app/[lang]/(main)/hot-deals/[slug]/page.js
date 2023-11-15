@@ -1,20 +1,19 @@
-import Promotion from '@/pageComponent/HotDeal'
-import getTourDetail from '@/data/tourDetail/getTourDetail'
-import getTourDetailHeader from '@/data/tourDetail/getTourDetailHeader'
-import { GET_TOUR_DETAIL } from '@/graphql/tourDetail/queries'
-import getListPromotionTour from '@/data/hotDeal/getListPromotionTour'
-import getMetaDataTour from '@/data/metaData/getMetaData'
-import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
+import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import getDataPost from '@/data/getDataPost'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
-import getDataFormBookTour from '@/data/formBookTour/getDataFormBookTour'
+import { GET_LIST_PROMOTION_TOUR } from '@/graphql/hotDeal/queries'
+import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
+import { GET_TOUR_DETAIL, GET_TOUR_DETAIL_HEADER } from '@/graphql/tourDetail/queries'
+import Promotion from '@/pageComponent/HotDeal'
 import { notFound } from 'next/navigation'
 
 export async function generateMetadata({ params: { slug, lang } }) {
-  const res = await getMetaDataTour(GET_TOUR_META_DATA, lang, slug)
-
+  const res = await fetchData(GET_TOUR_META_DATA, {
+    language: lang?.toUpperCase(),
+    slug
+  })
   const tourDetail = res?.data?.tours?.translation?.tourDetail
   const featuredImage = res?.data?.page?.translation?.featuredImage
   const title = tourDetail?.meta?.title
@@ -23,7 +22,6 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 export default async function page({ params: { lang, slug } }) {
-  const ID = cG9zdDoxNDIy
   const [
     result,
     headerData,
@@ -31,11 +29,11 @@ export default async function page({ params: { lang, slug } }) {
     result4,
     dataBookTour
   ] = await Promise.all([
-    getTourDetail(GET_TOUR_DETAIL, slug, lang),
-    getTourDetailHeader(lang),
-    getListPromotionTour(lang),
-    getDataPost(lang, GET_ALL_REVIEWS),
-    getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, ID, lang)
+    fetchData(GET_TOUR_DETAIL, { slug: slug, language: lang?.toUpperCase() }),
+    fetchData(GET_TOUR_DETAIL_HEADER, { language: lang?.toUpperCase() }),
+    fetchData(GET_LIST_PROMOTION_TOUR, { language: lang?.toUpperCase() }),
+    fetchData(GET_ALL_REVIEWS, { language: lang?.toUpperCase() }),
+    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
   ])
   const promotionList = res?.data?.page?.hotDeals?.promotionList
   // get Default list Reviews

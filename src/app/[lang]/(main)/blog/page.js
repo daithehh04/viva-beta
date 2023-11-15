@@ -1,10 +1,8 @@
-import Blog from '@/pageComponent/Blog'
-import getDataPost from '@/data/getDataPost'
-import { GET_ALL_POST, GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
-import getDataPage from '@/data/getDataPage'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
-import { GET_META_DATA_BLOG } from '@/graphql/metaData/queries'
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { GET_META_DATA_BLOG } from '@/graphql/metaData/queries'
+import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
+import Blog from '@/pageComponent/Blog'
 const GET_INITIAL_FILTER = `
 query($language : LanguageCodeFilterEnum!){
   allTopic(where:{language: $language}){
@@ -33,7 +31,9 @@ query($language : LanguageCodeFilterEnum!){
 
 
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA_BLOG, lang)
+  const res = await fetchData(GET_META_DATA_BLOG, {
+    language: lang?.toUpperCase()
+  })
   if (!res) return
   const { ourblog } = res?.data?.page?.translation
   const featuredImage = res?.data?.page?.translation?.featuredImage
@@ -42,9 +42,9 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, featuredImage)
 }
 async function Page({ params: { lang } }) {
-  const [data,dataInit] = await Promise.all([
-    getDataPost(lang?.toUpperCase(), GET_ALL_TOURS_BESTSELLER),
-    getDataPost(lang?.toUpperCase(), GET_INITIAL_FILTER)
+  const [data, dataInit] = await Promise.all([
+    fetchData(GET_ALL_TOURS_BESTSELLER, { language: params.lang?.toUpperCase() }),
+    fetchData(GET_INITIAL_FILTER, { language: params.lang?.toUpperCase() })
   ])
   return (
     <div>

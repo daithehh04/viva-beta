@@ -1,8 +1,5 @@
-import getAboutUsData from '@/data/aboutUs/getAboutUsData'
-import getDataPost from '@/data/getDataPost'
-import getDataYear from '@/data/getDataYear'
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
 import { GET_META_DATA, GET_REVIEWS_DATA } from '@/graphql/aboutUs/reviews/queries'
 import { DATA_TAXONOMIES_COUNTRY } from '@/graphql/filter/queries'
 import IndexAboutUs from '@/pageComponent/AboutUs'
@@ -15,7 +12,9 @@ const getYearReview = `query {
   }
 }`
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA, lang)
+  const res = await fetchData(GET_META_DATA, {
+    language: lang?.toUpperCase()
+  })
 
   const { aboutUsReviews } = res?.data?.page?.translation
 
@@ -26,9 +25,9 @@ export async function generateMetadata({ params: { lang } }) {
 }
 
 export default async function page({ params: { lang } }) {
-  const res = await getAboutUsData(GET_REVIEWS_DATA, lang)
-  const dataCountry = await getDataPost(lang, DATA_TAXONOMIES_COUNTRY)
-  const dataYear = await getDataYear(getYearReview)
+  const res = await fetchData(GET_REVIEWS_DATA, {language: lang?.toUpperCase()})
+  const dataCountry = await fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() })
+  const dataYear = await fetchData(getYearReview)
   const arrCountry = dataCountry?.data?.allCountries?.nodes
   arrCountry?.sort(function(a, b) {
     var numA = parseInt(a?.country?.priority);

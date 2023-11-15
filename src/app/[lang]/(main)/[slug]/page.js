@@ -1,5 +1,5 @@
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import getMetaDataTour from '@/data/metaData/getMetaData'
 import BlogDetail from '@/pageComponent/BlogDetail'
 
 const GET_META_DATA_BLOG_DETAIL = `
@@ -24,7 +24,10 @@ query ($language: LanguageCodeEnum!, $slug: String!) {
 }`
 
 export async function generateMetadata({ params: { lang, slug } }) {
-  const res = await getMetaDataTour(GET_META_DATA_BLOG_DETAIL, lang, slug)
+  const res = await fetchData(GET_META_DATA_BLOG_DETAIL, {
+    language: lang?.toUpperCase(),
+    slug
+  })
   if (!res) return
   const { excerpt, blogdetail } = res?.data?.postBy?.translation || ''
   const featuredImage = res?.data?.postBy?.translation?.featuredImage

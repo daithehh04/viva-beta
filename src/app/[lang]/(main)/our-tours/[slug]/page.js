@@ -1,10 +1,13 @@
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import getMetaDataTour from '@/data/metaData/getMetaData'
 import { GET_META_DATA } from '@/graphql/country/queries'
 import Destination from '@/pageComponent/Destination'
 
 export async function generateMetadata({ params: { lang, slug } }) {
-  const res = await getMetaDataTour(GET_META_DATA, lang, slug)
+  const res = await fetchData(GET_META_DATA, {
+    language: lang?.toUpperCase(),
+    slug
+  })
   const meta = res?.data?.countries?.translation?.country?.meta
   const title = meta?.title
   const excerpt = meta?.description

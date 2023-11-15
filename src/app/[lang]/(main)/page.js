@@ -1,24 +1,20 @@
-import Home from '../../../pageComponent/Home'
-import getDataPage, { idEn, idFr, idIt } from '@/data/getDataPage'
-import getDataPost from '@/data/getDataPost'
+import { LANGUAGE_BOOK_IDS, LANGUAGE_IDS } from '@/configs/global-config'
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
 import {
   DATA_TAXONOMIES_BUDGET,
   DATA_TAXONOMIES_COUNTRY,
   DATA_TAXONOMIES_DURATION,
   DATA_TAXONOMIES_TOUR_STYLE
 } from '@/graphql/filter/queries'
-import { GET_HOME_PAGE, GET_META_DATA, GET_NEXT_STEP, GET_DATA_iNSEPECT, GET_INITIAL_FILTER } from '@/graphql/home/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
-import getDataFormBookTour from '@/data/formBookTour/getDataFormBookTour'
-
-const idEnBook = 'cG9zdDoxNDIy'
-const idFrBook = 'cG9zdDoxNDIy'
-const idItBook = 'cG9zdDoxNDIy'
+import { GET_HOME_PAGE, GET_INITIAL_FILTER, GET_META_DATA, GET_NEXT_STEP } from '@/graphql/home/queries'
+import Home from '../../../pageComponent/Home'
 
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA, lang)
+  const res = await fetchData(GET_META_DATA, {
+    language: lang?.toUpperCase()
+  })
 
   const home = res?.data?.page?.translation?.home
   const featuredImage = res?.data?.page?.translation?.featuredImage
@@ -27,21 +23,10 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, featuredImage)
 }
 export default async function page({ params: { lang } }) {
-  let data
-  let dataBookTour
-  if (lang === 'en') {
-    data = await getDataPage(idEn, GET_HOME_PAGE)
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idEnBook, lang)
-  }
-  if (lang === 'it') {
-    data = await getDataPage(idIt, GET_HOME_PAGE)
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idItBook, lang)
-  }
-  if (lang === 'fr') {
-    data = await getDataPage(idFr, GET_HOME_PAGE)
-    dataBookTour = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, idFrBook, lang)
-  }
-  const dataInit = await getDataPost(lang?.toUpperCase(), GET_INITIAL_FILTER)
+  const data = await fetchData(GET_HOME_PAGE, { id: LANGUAGE_IDS[lang] })
+  const dataBookTour = await fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
+
+  const dataInit = await fetchData(GET_INITIAL_FILTER, { language: lang?.toUpperCase() })
 
   const metaDestination = dataInit?.data?.allCountries?.nodes
   const metaCategories = dataInit?.data?.categories?.nodes
@@ -62,11 +47,11 @@ export default async function page({ params: { lang } }) {
     dataTaxonomiesBudget,
     dataTaxonomiesDuration
   ] = await Promise.all([
-    getDataPost(lang, GET_NEXT_STEP),
-    getDataPost(lang, DATA_TAXONOMIES_COUNTRY),
-    getDataPost(lang, DATA_TAXONOMIES_TOUR_STYLE),
-    getDataPost(lang, DATA_TAXONOMIES_BUDGET),
-    getDataPost(lang, DATA_TAXONOMIES_DURATION)
+    fetchData(GET_NEXT_STEP, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_BUDGET, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_DURATION, { language: params.lang?.toUpperCase() }),
   ])
   return (
     <main>

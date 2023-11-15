@@ -1,13 +1,8 @@
 import BookTour from '@/components/Common/BookTour'
-import getDataFormBookTour from '@/data/formBookTour/getDataFormBookTour'
+import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 async function page({ params: { lang } }) {
-  const IDs = {
-    it: 'cG9zdDoxODQz',
-    fr: 'cG9zdDoxODQ1',
-    en: 'cG9zdDoxNDIy'
-  }
-  const data = await getDataFormBookTour(GET_DATA_FORM_BOOKTOUR, IDs[lang], lang)
+  const data = await fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
  
   return <BookTour data={data} lang={lang}/>
 }

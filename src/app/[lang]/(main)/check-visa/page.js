@@ -1,5 +1,5 @@
+import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import getMetaDataPages from '@/data/metaData/getMetaDataPages'
 import CheckVisa from '@/pageComponent/CheckVisa'
 
 const GET_META_DATA_CHECK_VISA = `
@@ -25,7 +25,9 @@ const GET_META_DATA_CHECK_VISA = `
 `
 
 export async function generateMetadata({ params: { lang } }) {
-  const res = await getMetaDataPages(GET_META_DATA_CHECK_VISA, lang)
+  const res = await fetchData(GET_META_DATA_CHECK_VISA, {
+    language: lang?.toUpperCase()
+  })
   const { checkvisa } = res?.data?.page?.translation
   const featuredImage = res?.data?.page?.translation?.featuredImage
   const title = checkvisa?.meta?.title
