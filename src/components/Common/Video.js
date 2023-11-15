@@ -9,7 +9,7 @@ export default function AboutVideo({ data = {} }) {
 
   const [isPlay, setIsPlay] = useState(false)
   return (
-    <section className='relative videoReview w-full'>
+    <section className='relative w-full videoReview'>
       {/* video for PC */}
       <video
         controls={isPlay}
@@ -19,7 +19,7 @@ export default function AboutVideo({ data = {} }) {
         ref={videoRef}
         muted
       >
-        <source src={data?.video?.mediaItemUrl} type={data?.video?.mimeType} className=' w-full h-full' />
+        <source src={data?.video?.mediaItemUrl} type={data?.video?.mimeType} className='w-full h-full ' />
       </video>
       {/* video for mobile */}
 
@@ -39,21 +39,21 @@ export default function AboutVideo({ data = {} }) {
       </video>
       <div ref={imageRef} className={`${isPlay && 'hidden'} absolute top-0 left-0 z-10 w-full h-full`}>
         <Image
-          src={data?.thumbnail?.sourceUrl}
-          alt={data?.thumbnail?.altText}
+          src={data?.thumbnail?.sourceUrl || "https://res.cloudinary.com/asiavivatravel/images/v1699861252/Cascade-de-Thac-Bac-a-Sapa-Vietnam-1/Cascade-de-Thac-Bac-a-Sapa-Vietnam-1.jpg?_i=AA"}
+          alt={data?.thumbnail?.altText || "thumb"}
           width={1000}
           height={1000}
           priority
-          className='md:block hidden object-cover w-full h-full'
+          className='hidden object-cover w-full h-full md:block'
         />
 
         <Image
-          src={data?.thumbnailMb?.sourceUrl || data?.thumbnailmb?.sourceUrl}
-          alt={data?.thumbnailMb?.altText || data?.thumbnailmb?.altText}
+          src={data?.thumbnailMb?.sourceUrl || data?.thumbnailmb?.sourceUrl || "https://res.cloudinary.com/asiavivatravel/images/v1699861252/Cascade-de-Thac-Bac-a-Sapa-Vietnam-1/Cascade-de-Thac-Bac-a-Sapa-Vietnam-1.jpg?_i=AA"}
+          alt={data?.thumbnailMb?.altText || data?.thumbnailmb?.altText || "thumb"}
           width={1000}
           height={1000}
           priority
-          className='md:hidden object-cover w-full h-full'
+          className='object-cover w-full h-full md:hidden'
         />
         <div
           className='w-full h-full absolute top-0 left-0 z-[1]'

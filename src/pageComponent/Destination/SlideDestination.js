@@ -41,7 +41,7 @@ async function SlideDestination({ dataTitle, lang, slug }) {
   return (
     <div className='relative'>
       <div className='absolute inset-0 z-[-1] slideDestination md:block hidden'></div>
-      <div className="flex flex-col md:mt-[6.94vw] w-full md:content">
+      <div className="flex flex-col md:mt-[6.94vw] content">
         <span className='heading-1 md:mb-[3vw] md:pl-0 pl-[4.27vw]'>{dataTitle?.ourTour?.titleTrips}</span>
         <div className='max-md:mt-[6.4vw]'>
           <SlideTour

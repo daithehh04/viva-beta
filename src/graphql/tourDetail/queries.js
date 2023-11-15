@@ -172,6 +172,12 @@ export const GET_RELATED_TOUR = `query($language: LanguageCodeEnum!, $taxonomyVa
       translation(language: $language) {
         id
         slug
+        bestSeller {
+          nodes {
+            name
+            id
+          }
+        }
         tourDetail {
           priceTour
           banner {

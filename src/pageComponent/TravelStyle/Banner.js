@@ -1,13 +1,16 @@
-'use client'
-
-import { Box, useMediaQuery, useTheme } from '@mui/material'
+import { Box } from '@mui/material'
 import Image from 'next/image'
 import scrollDown from '@/helpers/scrollDown'
-import React, { useRef } from 'react'
-function Banner({ data }) {
-  const scrollDownRef = useRef()
-  const theme = useTheme()
-  const imageSrc = data?.banner?.sourceUrl
+import fetchData from '@/data/fetchData'
+import { GET_BANNER_TRAVEL_STYLE } from '@/graphql/travelStyle/queries'
+async function Banner({ slug,lang }) {
+  // const scrollDownRef = useRef()
+  const getPageInfo = await fetchData(GET_BANNER_TRAVEL_STYLE, {
+    language: lang?.toUpperCase(),
+    taxonomyValue: slug,
+  })
+  const data = getPageInfo?.data?.tourStyle?.translation?.banner?.banner
+  const imageSrc = data?.banner
   return (
     <Box
       sx={{
@@ -20,8 +23,8 @@ function Banner({ data }) {
     >
       <div className='travel-style-banner relative h-[100%] flex justify-center items-center'>
         <Image
-          alt={data?.banner?.altText || 'img-travel-style'}
-          src={imageSrc}
+          alt={imageSrc?.altText || 'img-travel-style'}
+          src={imageSrc?.sourceUrl}
           quality={100}
           fill
           className='w-[100%] h-screen object-cover z-[-1]'
@@ -41,7 +44,7 @@ function Banner({ data }) {
           </span>
 
           <div
-            onClick={() => scrollDown(scrollDownRef, 'start')}
+            // onClick={() => scrollDown(scrollDownRef, 'start')}
             className='flex flex-col gap-[0.94vw] text-center items-center justify-center explore cursor-pointer '
           >
             <svg
@@ -68,7 +71,7 @@ function Banner({ data }) {
         </div>
         <div className='absolute bottom-[0] h-[12.4vw] left-[0] right-[0] md:flex hidden flex-shrink-0 bg-overlayBanner2'></div>
       </div>
-      <div ref={scrollDownRef}></div>
+      {/* <div ref={scrollDownRef}></div> */}
     </Box>
   )
 }

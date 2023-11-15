@@ -45,8 +45,6 @@ function FilterBanner() {
   const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.allCountries?.nodes
 
 
-  console.log("dataTaxonomiesBudget", dataTaxonomiesBudget);
-  console.log("arrDataTaxonomiesBudget=====", typeof arrDataTaxonomiesBudget);
   const dataFilter = {
     style: arrDataTaxonomiesStyleTour,
     budget: arrDataTaxonomiesBudget,
