@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import TravelStyleItem from './TravelStyleItem'
-import coconut from '@/assets/images/coconut.svg'
+import coconut from '@/assets/images/coconut.png'
 // import coconut2 from '@/assets/images/coconut2.svg'
 import coconut2 from '@/assets/images/coconut2.png'
 import Image from 'next/image'

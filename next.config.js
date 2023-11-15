@@ -23,7 +23,8 @@ const nextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './loader.js'
-  }
+  },
+  staticPageGenerationTimeout: 1000,
 }
 
 module.exports = nextConfig

@@ -1,7 +1,7 @@
 import HotDeal from '@/components/Common/HotDeal'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import { GET_META_DATA } from '@/graphql/hotDeal/queries'
+import { GET_HOT_DEAL_DATA, GET_META_DATA } from '@/graphql/hotDeal/queries'
 
 export async function generateMetadata({ params: { lang } }) {
   const res = await fetchData(GET_META_DATA, {

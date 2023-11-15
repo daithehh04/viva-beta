@@ -154,7 +154,7 @@ export default function Loader() {
           </defs>
         </svg>
 
-        <div className='loading-title text-white relative z-0'>Asia Viva Travel</div>
+        <div className='relative z-0 text-white loading-title'>Asia Viva Travel</div>
       </div>
     </div>
   )
