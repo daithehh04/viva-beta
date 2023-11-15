@@ -1,10 +1,19 @@
-'use client'
-
 import TourSlides from '@/components/Common/SlideTour'
 import Reason from './Reason'
 import Button from '@/components/Common/Button'
 import Link from 'next/link'
-function HotTour({ hotTour, reason, data, lang }) {
+import { DATA_WHY_TRAVEL, GET_HOT_TOUR_TRAVEL_STYLE } from '@/graphql/travelStyle/queries'
+import fetchData from '@/data/fetchData'
+async function HotTour({slug, lang }) {
+  const getPageInfo = await fetchData(GET_HOT_TOUR_TRAVEL_STYLE, {
+    language: lang?.toUpperCase(),
+    taxonomyValue: slug,
+  })
+  const hotTour=getPageInfo?.data?.tourStyle?.translation?.banner?.hotTour
+  const data = getPageInfo?.data?.tourStyle?.translation?.banner?.groupbutton?.buttonseemore
+
+  const dataWhyTravel = await fetchData(DATA_WHY_TRAVEL, { language: lang?.toUpperCase() })
+  const reason = dataWhyTravel?.data?.page?.translation?.tourStyle?.whytravel
   return (
     <div className='w-[83.75%] ml-auto mr-auto max-md:w-full'>
       <div className='md:mt-[3.12vw] mt-[14.67vw]'>

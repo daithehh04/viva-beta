@@ -39,7 +39,7 @@ export default async function page({ params: { lang } }) {
   metaDestination?.map((des, index) => {
     arrayDesInit.push(des?.slug)
   })
-  metaCategories.map((cate, index) => {
+  metaCategories?.map((cate, index) => {
     arrayCateInit.push(cate?.slug)
   })
 

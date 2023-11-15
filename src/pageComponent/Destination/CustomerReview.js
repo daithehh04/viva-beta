@@ -24,7 +24,7 @@ async function CustomerReview({ dataInfo, lang, slug }) {
         src={bannerReview}
         className='z-[-1] object-cover top-[-40%] absolute hidden md:block w-full'
       />
-      <div className="flex flex-col md:mt-[7.06vw] mt-[14.93vw] w-full md:content">
+      <div className="flex flex-col md:mt-[7.06vw] mt-[14.93vw] content">
         <span className='heading-1 md:mb-[3vw] mb-[5.33vw] md:pl-0 pl-[4.27vw]'>{dataInfo?.titleReviews}</span>
         <div className='md:grid grid-cols-2 md:gap-x-[2.5vw] md:gap-y-[2.5vw] hidden-scroll max-md:overflow-x-auto flex gap-0'>
           {data?.map((item, index) => (
