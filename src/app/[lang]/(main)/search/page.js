@@ -1,3 +1,4 @@
+import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
 import { DATA_MENU_COUNTRY } from '@/graphql/country/queries'

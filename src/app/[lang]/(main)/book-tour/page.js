@@ -1,5 +1,6 @@
 import BookTour from '@/components/Common/BookTour'
 import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
+import fetchData from '@/data/fetchData'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 async function page({ params: { lang } }) {
   const data = await fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
