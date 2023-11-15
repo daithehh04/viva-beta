@@ -80,7 +80,7 @@ export default function Notification(props) {
       <div className='bg-white w-full h-full md:py-[3vw] py-[5vw] md:px-[3.12vw] px-[5.5vw] flex flex-col items-center rounded-[1vw]'>
         <Image
           src={successIcon}
-          alt=''
+          alt='icon'
           width={200}
           height={200}
           className='md:w-[8.25vw] w-[16vw] md:h-[8.25vw] h-[16vw]'
@@ -108,7 +108,7 @@ export default function Notification(props) {
       <div className='bg-white w-full h-full md:py-[3vw] py-[5vw] md:px-[3.12vw] px-[5.5vw] flex flex-col items-center rounded-[1vw]'>
         <Image
           src={errorIcon}
-          alt=''
+          alt='icon'
           width={200}
           height={200}
           className='md:w-[8.25vw] w-[16vw] md:h-[8.25vw] h-[16vw]'
@@ -141,7 +141,7 @@ export default function Notification(props) {
         <div className='relative'>
           <Image
             src={notiIcon}
-            alt=''
+            alt='icon'
             width={100}
             height={1000}
             className='md:w-[9.1875vw] w-[14vw] md:h-[4.9375vw] h-[8vw] absolute md:bottom-[0.94vw] bottom-[2vw] md:right-[1.31vw] right-[2.2vw]'

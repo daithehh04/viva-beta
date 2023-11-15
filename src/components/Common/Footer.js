@@ -187,7 +187,7 @@ async function Footer({ lang }) {
                 src={item?.sourceUrl}
                 width={100}
                 height={100}
-                alt={item?.altText}
+                alt={item?.altText || 'payment'}
                 className='h-[2.5vw] w-[3.3vw] object-contain max-md:w-[14.15vw] max-md:h-[10.25vw]'
               />
             ))}
@@ -202,7 +202,7 @@ async function Footer({ lang }) {
                 src={item?.img?.sourceUrl}
                 width={100}
                 height={100}
-                alt={item?.img?.altText}
+                alt={item?.img?.altText || 'forum'}
                 className='h-[3.125vw] w-[3.125vw] object-contain max-md:w-[13.13vw] max-md:h-[13.13vw]'
               />
               </Link>

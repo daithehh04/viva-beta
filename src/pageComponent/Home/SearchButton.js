@@ -44,7 +44,7 @@ export default function SearchButton({ lang }) {
             src={searchIcon}
             width={50}
             height={50}
-            alt={search}
+            alt="search icon"
             className='w-[1.25vw] h-[1.25vw]'
           />
           {/* {search} */}

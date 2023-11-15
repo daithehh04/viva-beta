@@ -35,7 +35,7 @@ function ReviewDetail({data,lang,dataTour}) {
         <div className="flex items-end justify-between max-md:flex-col">
           <h3 className="mt-[8.5vw] max-md:mt-[23vw] uppercase text-[2.625vw] max-md:text-[5.86vw] max-md:w-full font-bold w-[70%]"><span className="text-[#138140]">{review}:</span> <span>{dataReview?.tours?.title}</span></h3>
           <Link href={`/${lang}/tours/${dataReview?.tours?.slug}`} className="max-md:hidden">
-            <Button className='btn-primary' content="View tour"><span>{view}</span> </Button>
+            <Button className='btn-primary' content={view}><span>{view}</span> </Button>
           </Link>
         </div>
         <div className="flex items-center mt-[1.12vw]">

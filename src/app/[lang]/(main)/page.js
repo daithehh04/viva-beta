@@ -16,7 +16,6 @@ import getDataFormBookTour from '@/data/formBookTour/getDataFormBookTour'
 const idEnBook = 'cG9zdDoxNDIy'
 const idFrBook = 'cG9zdDoxNDIy'
 const idItBook = 'cG9zdDoxNDIy'
-
 export async function generateMetadata({ params: { lang } }) {
   const res = await getMetaDataPages(GET_META_DATA, lang)
 
@@ -26,6 +25,8 @@ export async function generateMetadata({ params: { lang } }) {
   const excerpt = home?.meta?.description
   return getMeta(title, excerpt, featuredImage)
 }
+
+ 
 export default async function page({ params: { lang } }) {
   let data
   let dataBookTour
