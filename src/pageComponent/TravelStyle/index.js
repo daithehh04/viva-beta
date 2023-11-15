@@ -9,6 +9,7 @@ import { DATA_WHY_TRAVEL, GET_INFO_PAGE_TRAVEL_STYLE } from '@/graphql/travelSty
 import Banner from './Banner'
 import HotTour from './HotTour'
 import TourSlide from './TourSlide'
+import fetchData from '@/data/fetchData'
 
 async function index({ lang, slug }) {
   const getPageInfo = await fetchData(GET_INFO_PAGE_TRAVEL_STYLE, {

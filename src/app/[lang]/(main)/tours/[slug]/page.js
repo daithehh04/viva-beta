@@ -1,7 +1,6 @@
 import NotFound from '@/components/Common/NotFound'
 import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
-import getDataPost from '@/data/getDataPost'
 import { getMeta } from '@/data/metaData/getMeta'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
@@ -28,7 +27,7 @@ export default async function page({ params: { lang, slug } }) {
     fetchData(GET_RANDOM_TOUR, {
       language: lang?.toUpperCase()
     }),
-    getDataPost(lang, GET_ALL_REVIEWS),
+    fetchData(GET_ALL_REVIEWS, { language: lang?.toUpperCase() }),
     fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
   ])
 
