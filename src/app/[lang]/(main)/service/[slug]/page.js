@@ -1,3 +1,4 @@
+import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
 import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
@@ -74,8 +75,8 @@ export async function generateMetadata({ params: { lang } }) {
 
 async function Page({ params: { lang, slug } }) {
   const [data, dataInit, slugRcm] = await Promise.all([
-    fetchData(GET_ALL_TOURS_BESTSELLER, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
-    fetchData(GET_INITIAL_FILTER, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    fetchData(GET_ALL_TOURS_BESTSELLER, { id: LANGUAGE_BOOK_IDS?.[lang], language: lang?.toUpperCase() }),
+    fetchData(GET_INITIAL_FILTER, { id: LANGUAGE_BOOK_IDS?.[lang], language: lang?.toUpperCase() }),
     fetchData(GET_SLUG_RCM, {
       language: lang?.toUpperCase() || 'EN',
       taxonomyValue: slug

@@ -43,8 +43,8 @@ export async function generateMetadata({ params: { lang } }) {
 }
 async function Page({ params: { lang } }) {
   const [data, dataInit] = await Promise.all([
-    fetchData(GET_ALL_TOURS_BESTSELLER, { language: params.lang?.toUpperCase() }),
-    fetchData(GET_INITIAL_FILTER, { language: params.lang?.toUpperCase() })
+    fetchData(GET_ALL_TOURS_BESTSELLER, { language: lang?.toUpperCase() }),
+    fetchData(GET_INITIAL_FILTER, { language: lang?.toUpperCase() })
   ])
   return (
     <div>

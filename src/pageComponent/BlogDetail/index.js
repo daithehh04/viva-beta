@@ -8,7 +8,7 @@ import TextBlogDetail from './TextBlogDetail'
 async function index({ lang, slug }) {
   const [data, dataNews] = await Promise.all([
     fetchData(DATA_BLOG_DETAIL, { language: lang.toUpperCase(), slug }),
-    fetchData(GET_ARTICLE_NEWS, { language: params.lang?.toUpperCase() }),
+    fetchData(GET_ARTICLE_NEWS, { language: lang?.toUpperCase() }),
   ])
 
   const dataBlog = data?.data?.postBy

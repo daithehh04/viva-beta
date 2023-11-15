@@ -7,13 +7,14 @@ import Banner from './Banner'
 import BestSellerTour from './BestSellerTour'
 import { DataProvider } from './DataContext'
 import Information from './Information'
+import fetchData from '@/data/fetchData'
 
 async function index({ lang }) {
   const [dataBookTour,data,dataCountryFrom,dataCountryTo] = await Promise.all([
     fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
-    fetchData(GET_DATA_CHECKVISA2, { language: params.lang?.toUpperCase() }),
-    fetchData(COUNTRY_FROM, { language: params.lang?.toUpperCase() }),
-    fetchData(COUNTRY_TO, { language: params.lang?.toUpperCase() }),
+    fetchData(GET_DATA_CHECKVISA2, { language: lang?.toUpperCase() }),
+    fetchData(COUNTRY_FROM, { language: lang?.toUpperCase() }),
+    fetchData(COUNTRY_TO, { language: lang?.toUpperCase() }),
   ])
   const dataCheckVisa = data?.data?.page?.translation
   function handleTaxonomies(data) {

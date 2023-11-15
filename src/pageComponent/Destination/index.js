@@ -41,16 +41,16 @@ async function index({ lang, slug }) {
       taxonomyValue: slug,
       taxonomyName: 'COUNTRIES',
     }),
-    fetchData(GET_ALL_REVIEWS, { language: params.lang?.toUpperCase() }),
+    fetchData(GET_ALL_REVIEWS, { language: lang?.toUpperCase() }),
     fetchData(GET_DATA_BEST_SELLER_OURTOUR, {
       language: lang?.toUpperCase(),
       taxonomyValue: slug,
       taxonomyName: 'COUNTRIES',
     }),
-    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_BUDGET, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_DURATION, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_BUDGET, { language: lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_DURATION, { language: lang?.toUpperCase() }),
+    fetchData(DATA_TAXONOMIES_COUNTRY, { language: lang?.toUpperCase() }),
   ])
 
   const dataOtherTypeTripNotNull = dataOtherTypeTrip?.data?.allTours?.nodes.filter(item => {

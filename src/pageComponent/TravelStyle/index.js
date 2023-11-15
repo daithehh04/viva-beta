@@ -17,17 +17,17 @@ async function index({ lang, slug }) {
     taxonomyValue: slug,
   })
 
-  const dataWhyTravel = await fetchData(DATA_WHY_TRAVEL, { language: params.lang?.toUpperCase() })
+  const dataWhyTravel = await fetchData(DATA_WHY_TRAVEL, { language: lang?.toUpperCase() })
   const dataWhy = dataWhyTravel?.data?.page?.translation?.tourStyle?.whytravel
 
   if (!getPageInfo?.data?.tourStyle?.translation?.banner) {
     return <NotFound lang={lang} />
   }
 
-  const dataTaxonomiesCountry = await fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() })
-  const dataTaxonomiesStyleTour = await fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: params.lang?.toUpperCase() })
-  const dataTaxonomiesBudget = await fetchData(DATA_TAXONOMIES_BUDGET, { language: params.lang?.toUpperCase() })
-  const dataTaxonomiesDuration = await fetchData(DATA_TAXONOMIES_DURATION, { language: params.lang?.toUpperCase() })
+  const dataTaxonomiesCountry = await fetchData(DATA_TAXONOMIES_COUNTRY, { language: lang?.toUpperCase() })
+  const dataTaxonomiesStyleTour = await fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: lang?.toUpperCase() })
+  const dataTaxonomiesBudget = await fetchData(DATA_TAXONOMIES_BUDGET, { language: lang?.toUpperCase() })
+  const dataTaxonomiesDuration = await fetchData(DATA_TAXONOMIES_DURATION, { language: lang?.toUpperCase() })
   return (
     <div>
       <Banner data={getPageInfo?.data?.tourStyle?.translation?.banner?.banner} />

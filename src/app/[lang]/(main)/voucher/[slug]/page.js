@@ -1,6 +1,6 @@
 import fetchData from "@/data/fetchData"
 import { getMeta } from "@/data/metaData/getMeta"
-import { DATA_VOUCHER_DETAIL } from "@/graphql/hotDeal/queries"
+import { DATA_VOUCHER_DETAIL, GET_HOT_DEAL_DATA } from "@/graphql/hotDeal/queries"
 import DetailVocher from "@/pageComponent/HotDeal/DetailVoucher"
 
 
