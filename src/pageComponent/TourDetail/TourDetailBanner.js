@@ -6,7 +6,7 @@ import locationIcon from '@/assets/images/location.svg'
 import star from '@/assets/images/tourDetail/star.svg'
 import btnDown2 from '@/assets/images/tourDetail/btnDown2.svg'
 import { Slider as SlideBar } from '@mui/material'
-import videoBG from '@/assets/images/about/videoBG.png'
+import videoBG from '@/assets/images/about/videoBG.jpg'
 import smallPlayBtn from '@/assets/images/smallPlayBtn.svg'
 import playBtn from '@/assets/images/about/playBtn.svg'
 
