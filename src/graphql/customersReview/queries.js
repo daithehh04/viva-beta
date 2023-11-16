@@ -11,6 +11,7 @@ query GetDataPageReview($language: LanguageCodeEnum!, $offset: Int!, $size: Int!
         slug
         customerReview {
           content
+          time
           authorInformation {
             name
             country

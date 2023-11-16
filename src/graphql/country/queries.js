@@ -24,40 +24,22 @@ query country($language: LanguageCodeFilterEnum){
 const DATA_COUNTRY = `
 query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
   countries(id: $taxonomyValue, idType: SLUG) {
-    name
-    slug
     translation(language: $language) {
       name
       slug
-      description
+    }
+  }
+}
+`
+
+export const DATA_COUNTRY_BLOG = `
+query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
+  countries(id: $taxonomyValue, idType: SLUG) {
+    translation(language: $language) {
       ourTour{
-        subtitle
-        btn
         titleBlogs
-        titleReviews
-        titleTours
-        titleTrips
       }
       country {
-        flag {
-          sourceUrl
-        }
-        banner {
-          img {
-            sourceUrl
-          }
-          explore
-          nameCountry
-          text
-        }
-        info {
-          population
-          area
-          language
-          currency
-          wheather
-          timze
-        }
         blogs {
           ... on Post {
             title
@@ -78,6 +60,44 @@ query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
   }
 }
 `
+
+export const DATA_COUNTRY_BANNER = `query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
+  countries(id: $taxonomyValue, idType: SLUG) {
+    name
+    slug
+    translation(language: $language) {
+      country {
+        flag {
+          sourceUrl
+        }
+        banner {
+          img {
+            sourceUrl
+          }
+          explore
+          nameCountry
+          text
+        }
+      }
+    }
+  }
+}
+`
+
+export const DATA_COUNTRY_TITLE =  `query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
+  countries(id: $taxonomyValue, idType: SLUG) {
+    translation(language: $language) {
+      ourTour{
+        subtitle
+        btn
+        titleBlogs
+        titleReviews
+        titleTours
+        titleTrips
+      }
+    }
+  }
+}`
 
 const DATA_ICONS_COUNTRY = `query($language: LanguageCodeEnum!){
   page(id:"cG9zdDozMDQ1" idType:ID){

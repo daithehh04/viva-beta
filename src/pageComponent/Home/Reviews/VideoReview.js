@@ -72,7 +72,7 @@ function VideoReview({ data, videoInfo, className, lang }) {
               className='w-[1vw] h-[1vw] object-cover'
             />
             <span className='text-white text-[0.875vw] leading-normal max-lg:text-[1.4vw]'>
-              {videoInfo?.tours?.tourDetail?.numberDay} {day}
+              {videoInfo?.time}
             </span>
           </div>
         </div>
@@ -90,10 +90,10 @@ function VideoReview({ data, videoInfo, className, lang }) {
           </div>
 
           <div className='flex flex-col'>
-            <span className='text-[1.125vw] font-bold capitalize text-white leading-normal max-lg:text-[1.6vw]'>
+            <span className='text-[1.125vw] font-bold capitalize text-white leading-normal max-lg:text-[1.6vw]'>{videoInfo?.authorInformation?.name} </span>
+            <span className='text-white text-[0.875vw] leading-normal max-lg:text-[1.4vw]'>
               {videoInfo?.authorInformation?.country}
             </span>
-            <span className='text-white text-[0.875vw] leading-normal max-lg:text-[1.4vw]'>{videoInfo?.authorInformation?.name} </span>
           </div>
         </div>
         <div className='flex mt-[1.25vw] ml-[-1vw]'>

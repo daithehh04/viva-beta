@@ -75,7 +75,7 @@ function FilterReview({ handleDes, handleYear, arrYear, arrDes }) {
           </FormControl>
         </div>
       </div>
-      <div className='flex flex-col justify-center select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[43.53333vw] pl-0 md:pl-[1.87vw]'>
+      <div className='flex flex-col justify-center select md:rounded-0 rounded-[1.06667vw] max-md:h-[10.67vw] flex-shrink-0 md:w-auto w-[43.53333vw] pl-0 md:pl-[1.87vw]'>
         <div className='bgFilterMobile'></div>
         <div className='flex items-center select-mobile'>
           <Image

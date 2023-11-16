@@ -54,9 +54,7 @@ function Review({ data, button, lang }) {
             data-aos-duration='1000'
             data-aos-offset='-1200'
             className='text-[1.125vw] leading-normal mb-[5.31vw] w-[30.875vw] max-md:text-[3.73vw] max-md:w-full max-md:pl-[4.27vw] max-md:mt-[2.13vw] max-lg:w-[40vw] max-lg:text-[1.6vw]'
-          >
-            {data?.text}
-          </p>
+            dangerouslySetInnerHTML={{ __html: `${data?.text}`}}></p>
           <SlideReview
             data={data?.listReview}
             lang={lang}

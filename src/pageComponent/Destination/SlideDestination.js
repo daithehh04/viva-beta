@@ -3,15 +3,15 @@ import SlideTour from '@/components/Common/SlideTour'
 import TourItem from '@/components/Common/TourItem'
 import TourItemMobile from '@/components/Common/TourItemMobile'
 import fetchData from '@/data/fetchData'
-import { DATA_SLIDE_OTHER_TOUR, GET_DATA_BEST_SELLER_OURTOUR } from '@/graphql/country/queries'
+import { DATA_COUNTRY_TITLE, DATA_SLIDE_OTHER_TOUR, GET_DATA_BEST_SELLER_OURTOUR } from '@/graphql/country/queries'
 import '@/scss/pages/_slideDestination.scss'
 import Link from 'next/link'
 
-async function SlideDestination({ dataTitle, lang, slug }) {
-
+async function SlideDestination({lang, slug }) {
   const [
     dataOtherTypeTrip,
     dataBestSeller,
+    dataCountry
   ] = await Promise.all([
     fetchData(DATA_SLIDE_OTHER_TOUR, {
       language: lang?.toUpperCase(),
@@ -23,7 +23,13 @@ async function SlideDestination({ dataTitle, lang, slug }) {
       taxonomyValue: slug,
       taxonomyName: 'COUNTRIES',
     }),
+    fetchData(DATA_COUNTRY_TITLE, {
+      language: lang?.toUpperCase(),
+      taxonomyValue: slug
+    })
   ])
+
+  const dataTitle = dataCountry?.data?.countries?.translation
 
   const dataOtherType = dataOtherTypeTrip?.data?.allTours?.nodes.filter(item => {
     return item?.translation !== null && item?.translation?.slug !== null

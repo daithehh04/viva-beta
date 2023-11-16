@@ -448,7 +448,7 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                         <div
                           role='group'
                           aria-labelledby='my-radio-group'
-                          className='grid grid-cols-2 md:gap-[1vw] gap-[4.27vw] typeOfTrip'
+                          className='grid grid-cols-1 md:gap-[1vw] gap-[4.27vw] typeOfTrip 2xl:grid-cols-2'
                         >
                           {data?.data?.allTourStyle?.nodes?.map((tour, index) => (
                             <label key={index}>
@@ -457,7 +457,7 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                                 name='typeOfTrip'
                                 value={tour?.name}
                               />
-                              <span className='md:text-[1rem] font-medium md:leading-[1.5]'>{tour?.name}</span>
+                              <span className='md:text-[1rem] font-medium md:leading-[1.5] whitespace-nowrap'>{tour?.name}</span>
                             </label>
                           ))}
                         </div>
