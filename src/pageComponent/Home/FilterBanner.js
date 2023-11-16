@@ -1,50 +1,80 @@
 'use client'
-import searchIcon from '@/assets/images/search-normal.svg'
-import locationIcon from '@/assets/images/route-square-gr.svg'
 import calendar from '@/assets/images/calendarFilter.svg'
-import wallet from '@/assets/images/wallet.svg'
+import locationIcon from '@/assets/images/route-square-gr.svg'
+import searchIcon from '@/assets/images/search-normal.svg'
 import styleIcon from '@/assets/images/style-travel.svg'
-import Image from 'next/image'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
-import { useRef, useState } from 'react'
+import wallet from '@/assets/images/wallet.svg'
 import Button from '@/components/Common/Button'
-import { useRouter } from 'next/navigation'
+import { DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
+import { useQuery } from '@apollo/client'
 import { createTheme } from '@mui/material'
-function FilterBanner({ lang, dataFilter, onClose }) {
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+function FilterBanner({ lang, onClose }) {
   const [destination, setDestination] = useState('')
   const [travelStyle, setTravelStyle] = useState('')
   const [duration, setDuration] = useState('')
   const [budget, setBudget] = useState('')
   const router = useRouter()
 
-  const handleSort = (fn) => {
-    fn?.sort(function(a, b) {
-      var numA = parseInt(a?.name.split('-')[0]);
-      var numB = parseInt(b?.name.split('-')[0]);
-      return numA - numB;
-    });
-  }
-  const arrBudget = dataFilter?.budget
-  handleSort(arrBudget)
+  const lng = lang?.toUpperCase()
 
-  const arrDuration = dataFilter?.duration
-  handleSort(arrDuration)
+  const { data: dataTaxonomiesCountry } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
+    variables: {
+      language: lng,
+    }
+  })
+  const { data: dataTaxonomiesStyleTour } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
+    variables: {
+      language: lng,
+    }
+  })
+  const { data: dataTaxonomiesBudget } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
+    variables: {
+      language: lng,
+    }
+  })
+  const { data: dataTaxonomiesDuration } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
+    variables: {
+      language: lng,
+    }
+  })
 
-  const arrCountry = dataFilter?.countries
-  arrCountry?.sort(function(a, b) {
-    var numA = parseInt(a?.country?.priority);
-    var numB = parseInt(b?.country?.priority);
-    return numA - numB;
-  });
+  const allBudget = dataTaxonomiesBudget?.allBudget?.nodes
+  const allDuration = dataTaxonomiesDuration?.allDuration?.nodes
+  const allCountries = dataTaxonomiesCountry?.allCountries?.nodes
+  const allTourStyle = dataTaxonomiesStyleTour?.allTourStyle?.nodes
 
-  const arrStyle = dataFilter?.style
-  arrStyle?.sort(function(a, b) {
-    var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-    var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-    return numA - numB;
-  });
+  // const handleSort = (fn) => {
+  //   fn?.sort(function (a, b) {
+  //     var numA = parseInt(a?.name.split('-')[0]);
+  //     var numB = parseInt(b?.name.split('-')[0]);
+  //     return numA - numB;
+  //   });
+  // }
+  // const arrBudget = arrDataTaxonomiesBudget
+  // handleSort(arrBudget)
+
+  // const arrDuration = arrDataTaxonomiesDuration
+  // handleSort(arrDuration)
+
+  // const arrCountry = arrDataTaxonomiesCountry
+  // arrCountry?.sort(function (a, b) {
+  //   var numA = parseInt(a?.country?.priority);
+  //   var numB = parseInt(b?.country?.priority);
+  //   return numA - numB;
+  // });
+
+  // const arrStyle = arrDataTaxonomiesStyleTour
+  // arrStyle?.sort(function (a, b) {
+  //   var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
+  //   var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
+  //   return numA - numB;
+  // });
 
   const handleChangeDestination = (event) => {
     setDestination(event.target.value)
@@ -112,7 +142,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
     option.duration = 'Durée'
     option.style = ' Types de voyages'
     option.day = 'Jours'
-    option.price= '€'
+    option.price = '€'
     option.search = 'Rechercher'
   }
   if (lang === 'it') {
@@ -121,7 +151,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
     option.budget = 'Budget'
     option.destination = 'Destinazione'
     option.day = 'Giorni'
-    option.price= '€'
+    option.price = '€'
     option.search = 'Cerca'
   }
   const theme = createTheme({
@@ -171,8 +201,8 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.destination
-                  if(destination !== "") {
-                    const nameCountry = arrCountry?.find((item,index) => item?.slug === destination)
+                  if (destination !== "") {
+                    const nameCountry = allCountries?.find((item, index) => item?.slug === destination)
                     name = nameCountry?.name
                   }
                   return name
@@ -191,7 +221,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                   }
                 }}
               >
-                {arrCountry?.map((item, index) => (
+                {allCountries?.map((item, index) => (
                   <MenuItem
                     className='select-item'
                     value={item?.slug} key={index}
@@ -212,7 +242,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
         </div>
 
         <div className='flex flex-col justify-center select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.style}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.style}</span>
           <div className='flex items-center select-mobile max-lg:bg-[#F6F6F6] max-md:h-[10.67vw]'>
             <Image
               src={styleIcon}
@@ -247,8 +277,8 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.style
-                  if(travelStyle !== "") {
-                    const nameCountry = arrStyle?.find((item,index) => item?.slug === travelStyle)
+                  if (travelStyle !== "") {
+                    const nameCountry = allTourStyle?.find((item, index) => item?.slug === travelStyle)
                     name = nameCountry?.name
                   }
                   return name
@@ -267,7 +297,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                   }
                 }}
               >
-                {arrStyle?.map((item, index) => (
+                {allTourStyle?.map((item, index) => (
                   <MenuItem value={item?.slug} key={index}
                     sx={{
                       '&.Mui-selected': {
@@ -286,7 +316,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
         </div>
 
         <div className='flex flex-col justify-center select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.duration}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.duration}</span>
           <div className='flex items-center select-mobile max-lg:bg-[#F6F6F6] max-md:h-[10.67vw]'>
             <Image
               src={calendar}
@@ -320,9 +350,9 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                 displayEmpty
                 renderValue={() => {
                   let name = option?.duration
-                  if(duration !== "") {
-                    const nameCountry = arrDuration?.find((item,index) => item?.name === duration)
-                    name = nameCountry?.name+" "+ option.day
+                  if (duration !== "") {
+                    const nameCountry = allDuration?.find((item, index) => item?.name === duration)
+                    name = nameCountry?.name + " " + option.day
                   }
                   return name
                 }}
@@ -341,7 +371,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                   }
                 }}
               >
-                {arrDuration?.map((item, index) => (
+                {allDuration?.map((item, index) => (
                   <MenuItem value={item?.name} key={index}
                     sx={{
                       '&.Mui-selected': {
@@ -360,7 +390,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
         </div>
 
         <div className='flex flex-col justify-center select md:rounded-0 rounded-[1.06667vw] flex-shrink-0 md:w-auto w-[48vw] max-md:bg-white max-md:w-full pl-0 md:pl-[1.87vw]'>
-        <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.budget}</span>
+          <span className='text-[#9B9B9B] uppercase text-[0.875vw] md:block hidden'>{option.budget}</span>
           <div className='flex items-center select-mobile max-lg:bg-[#F6F6F6] max-md:h-[10.67vw]'>
             <Image
               src={wallet}
@@ -395,9 +425,9 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                 inputprops={{ 'aria-label': 'Without label' }}
                 renderValue={() => {
                   let name = option?.budget
-                  if(budget !== "") {
-                    const nameCountry = arrBudget?.find((item,index) => item?.name === budget)
-                    name = nameCountry?.name+" "+ option.price
+                  if (budget !== "") {
+                    const nameCountry = allBudget?.find((item, index) => item?.name === budget)
+                    name = nameCountry?.name + " " + option.price
                   }
                   return name
                 }}
@@ -415,7 +445,7 @@ function FilterBanner({ lang, dataFilter, onClose }) {
                   }
                 }}
               >
-                {arrBudget?.map((item, index) => (
+                {allBudget?.map((item, index) => (
                   <MenuItem value={item?.name} key={index}
                     sx={{
                       '&.Mui-selected': {

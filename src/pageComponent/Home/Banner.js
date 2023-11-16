@@ -2,10 +2,10 @@
 import banner from '@/assets/images/banner.png'
 import scrollDown from '@/helpers/scrollDown'
 import Image from 'next/image'
-import FilterBanner from './FilterBanner'
+import FilterBanner from './FilterBanner.js'
 import { useRef } from 'react'
 
-function Banner({ data, dataFilter, lang }) {
+function Banner({ data, lang }) {
   const scrollRef = useRef()
   let explore = 'Explore now'
   if(lang === 'fr') {
@@ -27,7 +27,6 @@ function Banner({ data, dataFilter, lang }) {
         </h2>
         <div className='filter-tour flex  ml-auto mr-auto mt-[3.06vw] bg-white w-max py-[1.5vw] pl-[2.87vw] pr-[2vw] rounded-[1.125vw] max-lg:hidden'>
           <FilterBanner
-            dataFilter={dataFilter}
             lang={lang}
           />
         </div>

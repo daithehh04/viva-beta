@@ -197,6 +197,62 @@ const DATA_BEST_TOUR_HOME_PAGE = gql`
   }
 `
 
+export const DATA_BEST_TOUR_HOME_PAGE_WITHOUT_GQL = `
+  query GetFilterTour(
+    $language: LanguageCodeEnum!
+    $countrySlug: [String!]
+    $styleTourSlug: [String!]
+    $bestSellerSlug: [String!]
+  ) {
+    allTours(
+      first: 100,
+      where: {
+        taxQuery: {
+          taxArray: [
+            { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
+            { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
+            { taxonomy: BESTSELLER, operator: IN, terms: $bestSellerSlug, field: SLUG }
+          ]
+        }
+        orderby: { field: DATE, order: DESC }
+      }
+    ) {
+      nodes {
+        translation(language: $language) {
+          id
+          title
+          slug
+          bestSeller {
+            nodes {
+              name
+            }
+          }
+          tourStyle {
+            nodes {
+              slug
+            }
+          }
+          tourDetail {
+            priceTour
+            numberDay
+            banner {
+              title
+              gallery {
+                sourceUrl
+                altText
+                title
+              }
+              location
+              rate
+              icons
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 const DATA_SEARCH_TEXT_TOUR = gql`
   query SearchTour($title: String, $language: LanguageCodeEnum!) {
     allTours(first: 100, where: { search: $title }) {

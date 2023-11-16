@@ -1,94 +1,98 @@
 'use client'
+import calendar from '@/assets/images/calendarFilter.svg'
 import locationIcon from '@/assets/images/route-square-gr.svg'
 import styleIcon from '@/assets/images/style-travel.svg'
-import calendar from '@/assets/images/calendarFilter.svg'
 import wallet from '@/assets/images/wallet.svg'
-import Image from 'next/image'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
-import { useState } from 'react'
+import { DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_DURATION_GQL } from '@/graphql/filter/queries'
+import { useQuery } from '@apollo/client'
 import { createTheme } from '@mui/material'
-function FilterTour({
-  onSelectDes,
-  dataFilter,
-  onSelectStyle,
-  onSelectBudget,
-  onSelectDuration,
-  travelStyleSlug,
-  className,
-  lang
-}) {
-  const [destination, setDestination] = useState('')
-  const [travelStyle, setTravelStyle] = useState(travelStyleSlug || '')
-  const [duration, setDuration] = useState('')
-  const [budget, setBudget] = useState('')
+import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import { useQueryState } from 'next-usequerystate'
+import Image from 'next/image'
+import { useParams, useSearchParams } from 'next/navigation'
 
-  const handleSort = (fn) => {
-    fn?.sort(function(a, b) {
-      var numA = parseInt(a?.name.split('-')[0]);
-      var numB = parseInt(b?.name.split('-')[0]);
-      return numA - numB;
-    });
-  }
-  const arrBudget = dataFilter?.budget
-  handleSort(arrBudget)
+const handleSort = (arr) => {
+  const clone = [...arr]
+  clone?.sort(function (a, b) {
+    var numA = parseInt(a?.name.split('-')[0]);
+    var numB = parseInt(b?.name.split('-')[0]);
+    return numA - numB;
+  });
+  return clone
+}
 
-  const arrDuration = dataFilter?.duration
-  handleSort(arrDuration)
-
-  const arrCountry = dataFilter?.countries
-  arrCountry?.sort(function(a, b) {
+const sortCountry = (arr) => {
+  const clone = [...arr]
+  clone?.sort(function (a, b) {
     var numA = parseInt(a?.country?.priority);
     var numB = parseInt(b?.country?.priority);
     return numA - numB;
   });
+  return clone
+}
 
-  const arrStyle = dataFilter?.style
-  arrStyle?.sort(function(a, b) {
+const sortStyle = (arr) => {
+  const clone = [...arr]
+  clone?.sort(function (a, b) {
     var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
     var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
     return numA - numB;
   });
+  return clone
+}
 
-  const handleChangeDestination = (event) => {
-    setDestination(event.target.value)
-    onSelectDes(event.target.value)
-  }
-  const handleChangeTravelStyle = (event) => {
-    setTravelStyle(event.target.value)
-    onSelectStyle(event.target.value)
-  }
-  const handleChangeDuration = (event) => {
-    setDuration(event.target.value)
-    onSelectDuration(event.target.value)
-  }
-  const handleChangeBudget = (event) => {
-    setBudget(event.target.value)
-    onSelectBudget(event.target.value)
-  }
+function FilterTour({
+  className,
+  contries,
+  styles
+}) {
+  const { lang } = useParams()
+  const [destination, setDestination] = useQueryState('destination')
+  const [budget, setBudget] = useQueryState('budget')
+  const [duration, setDuration] = useQueryState('duration')
+  const [style, setStyle] = useQueryState('style')
+
+  const lng = lang?.toUpperCase()
+
+  const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
+    variables: {
+      language: lng,
+    }
+  })
+  const { data: durations } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
+    variables: {
+      language: lng,
+    }
+  })
+
+  const allBudget = handleSort(budgets?.allBudget?.nodes || [])
+  const allDuration = handleSort(durations?.allDuration?.nodes || [])
+  const allCountries = sortCountry(contries?.allCountries?.nodes || [])
+  const allTourStyle = sortStyle(styles?.allTourStyle?.nodes || [])
 
   const option = {
     destination: 'Destination',
-    budget : 'Budget',
+    budget: 'Budget',
     style: 'Travel Style',
     duration: 'Duration',
     day: 'day',
     price: '$'
   }
-  if(lang === 'fr') {
+  if (lang === 'fr') {
     option.duration = 'Durée'
-    option.style =' Types de voyages'
-    option.day ='Jours'
-    option.price= '€'
+    option.style = ' Types de voyages'
+    option.day = 'Jours'
+    option.price = '€'
   }
-  if(lang === 'it') {
+  if (lang === 'it') {
     option.style = 'Tipo di viaggio'
-    option.duration ='Durata'
+    option.duration = 'Durata'
     option.budget = 'Budget'
     option.destination = 'Destinazione'
-    option.day ='Giorni'
-    option.price= '€'
+    option.day = 'Giorni'
+    option.price = '€'
   }
 
   const theme = createTheme({
@@ -98,6 +102,8 @@ function FilterTour({
       }
     }
   })
+
+  const searchParams = useSearchParams()
 
   return (
     <div
@@ -123,7 +129,7 @@ function FilterTour({
               '& .MuiInputBase-root': {
                 fontSize: '1.0625vw',
                 fontWeight: 500
-              },[theme.breakpoints.down('sm')]: {
+              }, [theme.breakpoints.down('sm')]: {
                 '& .MuiSelect-select': {
                   fontSize: '3.73vw',
                   lineHeight: '1.5',
@@ -132,47 +138,50 @@ function FilterTour({
               },
             }}
           >
-          <Select
-            value={destination}
-            onChange={handleChangeDestination}
-            displayEmpty
-            inputprops={{ 'aria-label': 'Without label' }}
-            renderValue={() => {
-              let name = option?.destination
-              if(destination !== "") {
-                const nameCountry = arrCountry?.find((item,index) => item?.name === destination)
-                name = nameCountry?.name
-              }
-              return name
-            }}
-            sx={{
-              height: '2.5rem',
-              '& .MuiOutlinedInput-notchedOutline': {
-                border: 'none'
-              },
-              '& .MuiSvgIcon-root': {
-                right: 0
-              },
-              '& .MuiSelect-outlined': {
-                padding: 0,
-                paddingLeft: '0.62vw'
-              }
-            }}
-          >
-            {arrCountry?.map((item, index) => (
-              <MenuItem value={item?.name} key={index}
+            <Select
+              value={destination || ''}
+              onChange={(e) => {
+                console.log("searchParams", searchParams.get('destination'));
+                setDestination(e.target.value)
+              }}
+              displayEmpty
+              inputprops={{ 'aria-label': 'Without label' }}
+              renderValue={() => {
+                let name = option?.destination
+                if (!!destination) {
+                  const nameCountry = allCountries?.find((item, index) => item?.name === destination)
+                  name = nameCountry?.name
+                }
+                return name
+              }}
               sx={{
-                '&.Mui-selected': {
-                  backgroundColor: 'rgba(255, 210, 32, 0.7)'
+                height: '2.5rem',
+                '& .MuiOutlinedInput-notchedOutline': {
+                  border: 'none'
+                },
+                '& .MuiSvgIcon-root': {
+                  right: 0
+                },
+                '& .MuiSelect-outlined': {
+                  padding: 0,
+                  paddingLeft: '0.62vw'
                 }
               }}
-              >
-                <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                  {item?.name}
-                </span>
-              </MenuItem>
-            ))}
-          </Select>
+            >
+              {allCountries?.map((item, index) => (
+                <MenuItem value={item?.name} key={index}
+                  sx={{
+                    '&.Mui-selected': {
+                      backgroundColor: 'rgba(255, 210, 32, 0.7)'
+                    }
+                  }}
+                >
+                  <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
+                    {item?.name}
+                  </span>
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
         </div>
       </div>
@@ -208,14 +217,14 @@ function FilterTour({
             }}
           >
             <Select
-              value={travelStyle}
-              onChange={handleChangeTravelStyle}
+              value={style || ''}
+              onChange={(e) => setStyle(e.target.value)}
               displayEmpty
               inputprops={{ 'aria-label': 'Without label' }}
               renderValue={() => {
                 let name = option?.style
-                if(travelStyle !== "") {
-                  const nameCountry = arrStyle?.find((item,index) => item?.slug === travelStyle)
+                if (!!style) {
+                  const nameCountry = allTourStyle?.find((item, index) => item?.slug === style)
                   name = nameCountry?.name
                 }
                 return name
@@ -233,11 +242,11 @@ function FilterTour({
                   padding: 0,
                   paddingLeft: '0.62vw'
                 },
-                
+
               }}
             >
-              {arrStyle?.map((item, index) => (
-                <MenuItem 
+              {allTourStyle?.map((item, index) => (
+                <MenuItem
                   value={item?.slug} key={index}
                   className='item-select'
                   sx={{
@@ -287,14 +296,14 @@ function FilterTour({
             }}
           >
             <Select
-              value={duration}
-              onChange={handleChangeDuration}
+              value={duration || ''}
+              onChange={(e) => setDuration(e.target.value)}
               displayEmpty
               inputprops={{ 'aria-label': 'Without label' }}
               renderValue={() => {
                 let name = option?.duration
-                if(duration !== "") {
-                  const nameCountry = arrDuration?.find((item,index) => item?.name === duration)
+                if (!!duration) {
+                  const nameCountry = allDuration?.find((item, index) => item?.name === duration)
                   name = nameCountry?.name + " " + option?.day
                 }
                 return name
@@ -313,13 +322,13 @@ function FilterTour({
                 }
               }}
             >
-              {arrDuration?.map((item, index) => (
+              {allDuration?.map((item, index) => (
                 <MenuItem value={item?.name} key={index}
-                sx={{
-                  '&.Mui-selected': {
-                    backgroundColor: 'rgba(255, 210, 32, 0.7)'
-                  }
-                }}
+                  sx={{
+                    '&.Mui-selected': {
+                      backgroundColor: 'rgba(255, 210, 32, 0.7)'
+                    }
+                  }}
                 >
                   <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
                     {item?.name} {option.day}
@@ -362,14 +371,14 @@ function FilterTour({
             }}
           >
             <Select
-              value={budget}
-              onChange={handleChangeBudget}
+              value={budget || ''}
+              onChange={(e) => setBudget(e.target.value)}
               displayEmpty
               inputprops={{ 'aria-label': 'Without label' }}
               renderValue={() => {
                 let name = option?.budget
-                if(budget !== "") {
-                  const nameCountry = arrBudget?.find((item,index) => item?.name === budget)
+                if (!!budget) {
+                  const nameCountry = allBudget?.find((item, index) => item?.name === budget)
                   name = nameCountry?.name + " " + option?.price
                 }
                 return name
@@ -388,13 +397,13 @@ function FilterTour({
                 }
               }}
             >
-              {arrBudget?.map((item, index) => (
+              {allBudget?.map((item, index) => (
                 <MenuItem value={item?.name} key={index}
-                sx={{
-                  '&.Mui-selected': {
-                    backgroundColor: 'rgba(255, 210, 32, 0.7)'
-                  }
-                }}
+                  sx={{
+                    '&.Mui-selected': {
+                      backgroundColor: 'rgba(255, 210, 32, 0.7)'
+                    }
+                  }}
                 >
                   <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
                     {item?.name} {option.price}

@@ -23,48 +23,32 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, featuredImage)
 }
 
- 
+
 export default async function page({ params: { lang } }) {
-  const data = await fetchData(GET_HOME_PAGE, { id: LANGUAGE_IDS[lang] })
-  const dataBookTour = await fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
-
-  const dataInit = await fetchData(GET_INITIAL_FILTER, { language: lang?.toUpperCase() })
-
-  const metaDestination = dataInit?.data?.allCountries?.nodes
-  const metaCategories = dataInit?.data?.categories?.nodes
-
-  const arrayDesInit = []
-  const arrayCateInit = []
-
-  metaDestination?.map((des, index) => {
-    arrayDesInit.push(des?.slug)
-  })
-  metaCategories.map((cate, index) => {
-    arrayCateInit.push(cate?.slug)
-  })
-
-  const [nextStep,
-    dataTaxonomiesCountry,
-    dataTaxonomiesStyleTour,
-    dataTaxonomiesBudget,
-    dataTaxonomiesDuration
+  const [
+    nextStep,
+    data,
+    dataBookTour,
+    dataInit
   ] = await Promise.all([
     fetchData(GET_NEXT_STEP, { language: lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_COUNTRY, { language: lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_BUDGET, { language: lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_DURATION, { language: lang?.toUpperCase() }),
+    fetchData(GET_HOME_PAGE, { id: LANGUAGE_IDS[lang] }),
+    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    fetchData(GET_INITIAL_FILTER, { language: lang?.toUpperCase() })
   ])
+
+  const metaDestination = dataInit?.data?.allCountries?.nodes || []
+  const metaCategories = dataInit?.data?.categories?.nodes || []
+
+  const arrayDesInit = metaDestination?.map((des) => des?.slug)
+  const arrayCateInit = metaCategories?.map((cate) => cate?.slug)
+
   return (
     <main>
       <Home
         nextStep={nextStep}
         lang={lang}
         data={data}
-        dataTaxonomiesCountry={dataTaxonomiesCountry}
-        dataTaxonomiesStyleTour={dataTaxonomiesStyleTour}
-        dataTaxonomiesBudget={dataTaxonomiesBudget}
-        dataTaxonomiesDuration={dataTaxonomiesDuration}
         dataBookTour={dataBookTour}
         arrayDesInit={arrayDesInit}
         arrayCateInit={arrayCateInit}
