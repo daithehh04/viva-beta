@@ -1,5 +1,5 @@
 import React from 'react'
-import notFound from '@/assets/images/notFound/notFoundBg.jpg'
+import notFoundImage from '@/assets/images/notFound/notFoundBg.jpg'
 import notFoundImg from '@/assets/images/notFound/notFoundImg.png'
 
 import Image from 'next/image'
@@ -9,7 +9,7 @@ export default function NotFound() {
   return (
     <div className='not-found w-[100vw] h-[100vh] flex items-center text-[40px] justify-center fixed top-0 left-0 z-[10]'>
       <Image
-        src={notFound}
+        src={notFoundImage}
         alt='not found'
         width={1000}
         height={1000}

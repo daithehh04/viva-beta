@@ -69,7 +69,11 @@ async function Banner({ slug,lang }) {
             </span>
           </div>
         </div>
-        <div className='absolute bottom-[0] h-[12.4vw] left-[0] right-[0] md:flex hidden flex-shrink-0 bg-overlayBanner2'></div>
+        {/* <div className='absolute bottom-[0] h-[12.4vw] left-[0] right-[0] md:flex hidden flex-shrink-0 bg-overlayBanner2'></div> */}
+        <div
+        className='absolute inset-0 block'
+        style={{ background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.4) 45%)' }}
+      ></div>
       </div>
       {/* <div ref={scrollDownRef}></div> */}
     </Box>

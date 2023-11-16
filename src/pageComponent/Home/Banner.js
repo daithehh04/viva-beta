@@ -1,5 +1,5 @@
 'use client'
-import banner from '@/assets/images/banner.png'
+import banner from '@/assets/images/banner.jpg'
 import scrollDown from '@/helpers/scrollDown'
 import Image from 'next/image'
 import FilterBanner from './FilterBanner.js'
@@ -66,8 +66,8 @@ function Banner({ data, lang }) {
       />
       <div className='overlay-banner max-md:hidden'></div>
       <div
-        className='absolute inset-0 hidden max-md:block'
-        style={{ background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 45.44%, rgba(0, 0, 0, 0.35) 69.74%)' }}
+        className='absolute inset-0 block'
+        style={{ background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.4) 45%)' }}
       ></div>
       <div ref={scrollRef}></div>
     </div>
