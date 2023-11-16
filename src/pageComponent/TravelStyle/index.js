@@ -17,9 +17,6 @@ async function index({ lang, slug }) {
     taxonomyValue: slug,
   })
 
-  const dataWhyTravel = await fetchData(DATA_WHY_TRAVEL, { language: lang?.toUpperCase() })
-  const dataWhy = dataWhyTravel?.data?.page?.translation?.tourStyle?.whytravel
-
   if (!getPageInfo?.data?.tourStyle?.translation?.banner) {
     return <NotFound lang={lang} />
   }
@@ -30,7 +27,7 @@ async function index({ lang, slug }) {
   const dataTaxonomiesDuration = await fetchData(DATA_TAXONOMIES_DURATION, { language: lang?.toUpperCase() })
   return (
     <div>
-      <Banner data={getPageInfo?.data?.tourStyle?.translation?.banner?.banner} />
+      <Banner slug={slug} lang={lang}/>
       <TourSlide
         tourStyleName={getPageInfo?.data?.tourStyle?.translation?.banner?.tourstylename}
         lang={lang}
@@ -41,10 +38,8 @@ async function index({ lang, slug }) {
         dataTaxonomiesDuration={dataTaxonomiesDuration}
       />
       <HotTour
+        slug={slug}
         lang={lang}
-        hotTour={getPageInfo?.data?.tourStyle?.translation?.banner?.hotTour}
-        reason={dataWhy}
-        data={getPageInfo?.data?.tourStyle?.translation?.banner?.groupbutton?.buttonseemore}
       />
     </div>
   )

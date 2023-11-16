@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 
-const GET_INFO_PAGE_TRAVEL_STYLE = `query getInfoPageTravelStyle($taxonomyValue: ID!, $language: LanguageCodeEnum!) {
+export const GET_BANNER_TRAVEL_STYLE = `query getInfoPageTravelStyle($taxonomyValue: ID!, $language: LanguageCodeEnum!) {
   tourStyle(id: $taxonomyValue, idType: SLUG) {
     translation(language: $language) {
       slug
@@ -16,7 +16,20 @@ const GET_INFO_PAGE_TRAVEL_STYLE = `query getInfoPageTravelStyle($taxonomyValue:
             sourceUrl
           }
         }
-        
+        groupbutton {
+          buttonseemore
+        }
+      }
+    }
+  }
+}`
+
+export const GET_HOT_TOUR_TRAVEL_STYLE = `
+query getInfoPageTravelStyle($taxonomyValue: ID!, $language: LanguageCodeEnum!) {
+  tourStyle(id: $taxonomyValue, idType: SLUG) {
+    translation(language: $language) {
+      slug
+      banner {
         hotTour {
           title
           hotTour {
@@ -48,9 +61,17 @@ const GET_INFO_PAGE_TRAVEL_STYLE = `query getInfoPageTravelStyle($taxonomyValue:
             }
           }
         }
-        groupbutton {
-          buttonseemore
-        }
+      }
+    }
+  }
+}
+`
+const GET_INFO_PAGE_TRAVEL_STYLE = `query getInfoPageTravelStyle($taxonomyValue: ID!, $language: LanguageCodeEnum!) {
+  tourStyle(id: $taxonomyValue, idType: SLUG) {
+    translation(language: $language) {
+      slug
+      banner {
+        tourstylename
       }
     }
   }
