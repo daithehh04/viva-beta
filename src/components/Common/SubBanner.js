@@ -60,7 +60,7 @@ export default function SubBanner({ data = {}, className, lang }) {
       <Image
         src={subBannerBg2}
         alt='subBannerBg2'
-        className='md:w-[64.73%] w-full md:h-[83.28%] h-[64vw] md:absolute relative bottom-0 right-0 z-10 md:rounded-[10px]'
+        className='md:w-[56.73%] w-full md:h-[83.28%] h-[64vw] object-cover md:absolute relative bottom-0 right-0 z-10 md:rounded-[10px]'
       />
     </section>
   )

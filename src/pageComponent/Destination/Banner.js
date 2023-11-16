@@ -52,9 +52,9 @@ const Banner = async ({ slug, lang }) => {
           className='absolute inset-0 object-cover w-full h-full z-[-1]'
         />
         <div
-          className='absolute top-0 left-0 w-full h-full z-100'
-          style={{ background: 'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 45.44%, rgba(0, 0, 0, 0.35) 69.74%)' }}
-        ></div>
+        className='absolute inset-0 block'
+        style={{ background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.4) 45%)' }}
+      ></div>
 
         {/* animation button filter tour */}
         <div
