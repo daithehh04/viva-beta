@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import imgTour from '@/assets/images/tour.png'
+import imgTour from '@/assets/images/tour.jpg'
 import React from 'react'
 import Link from 'next/link'
 
