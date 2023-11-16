@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import bannerAbout from '@/assets/images/banner-about.png'
+import bannerAbout from '@/assets/images/banner-about.jpg'
 import arrowBottom from '@/assets/images/arrow-bottom.svg'
 import scrollDown from '@/helpers/scrollDown'
 import { useRef } from 'react'

@@ -1,5 +1,5 @@
 'use client'
-import imgTour from '@/assets/images/tour.png'
+import imgTour from '@/assets/images/tour.jpg'
 import imgLocation from '@/assets/images/route-square.svg'
 import imgStar from '@/assets/images/star-rate.svg'
 import Image from 'next/image'
