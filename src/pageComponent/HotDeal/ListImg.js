@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import TourDetailVideo from '../TourDetail/TourDetailVideo'
-import videoBG from '@/assets/images/about/videoBG.png'
+import videoBG from '@/assets/images/about/videoBG.jpg'
 import { useState } from 'react'
 
 export default function Listimg({ data, video }) {

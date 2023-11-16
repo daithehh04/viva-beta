@@ -7,7 +7,7 @@ import mapIcon from '@/assets/images/tourDetail/mapIcon.png'
 import Image from 'next/image'
 import Button from '@/components/Common/Button'
 import ModalCustom from '@/components/Common/ModalCustom'
-import imageTest from '@/assets/images/banner-about.png'
+import imageTest from '@/assets/images/banner-about.jpg'
 
 export default function PriceMb({ data, onClick }) {
   const [openModal, setOpenModal] = useState(false)

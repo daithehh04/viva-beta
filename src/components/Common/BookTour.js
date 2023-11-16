@@ -1,6 +1,6 @@
 'use client'
 
-import bgPc from '@/assets/images/bgBookTourPc.png'
+import bgPc from '@/assets/images/bgBookTourPc.jpg'
 import Image from 'next/image'
 import { Formik, Field, ErrorMessage, Form } from 'formik'
 import * as Yup from 'yup'
