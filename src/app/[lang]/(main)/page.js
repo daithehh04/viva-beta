@@ -1,12 +1,6 @@
 import { LANGUAGE_BOOK_IDS, LANGUAGE_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import {
-  DATA_TAXONOMIES_BUDGET,
-  DATA_TAXONOMIES_COUNTRY,
-  DATA_TAXONOMIES_DURATION,
-  DATA_TAXONOMIES_TOUR_STYLE
-} from '@/graphql/filter/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { GET_HOME_PAGE, GET_INITIAL_FILTER, GET_META_DATA, GET_NEXT_STEP } from '@/graphql/home/queries'
 import Home from '@/pageComponent/Home'
