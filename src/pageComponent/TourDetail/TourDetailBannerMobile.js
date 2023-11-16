@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import videoBG from '@/assets/images/about/videoBG.png'
+import videoBG from '@/assets/images/about/videoBG.jpg'
 import star from '@/assets/images/tourDetail/star.svg'
 import locationIcon from '@/assets/images/tourDetail/location.svg'
 import img from '@/assets/images/tourDetail/img.svg'
