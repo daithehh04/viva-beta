@@ -127,6 +127,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
                     sourceUrl
                   }
                 }
+                time
                 content
                 tours {
                   ... on Tours {
@@ -165,6 +166,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
                     sourceUrl
                   }
                 }
+                time
                 content
                 tours {
                   ... on Tours {

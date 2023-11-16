@@ -52,7 +52,7 @@ export default function Responsible({ data = {} }) {
             return (
               <div
                 key={index}
-                className={`${
+                className={`items-center ${
                   index % 2 !== 0 && 'md:flex-row-reverse'
                 } md:flex justify-between gap-[4.6875vw] items-end`}
               >

@@ -11,9 +11,9 @@ export default function StaffItem({ staff = {} }) {
         height={1000}
         className='h-[21.84vw] w-full max-md:h-[57.6vw] object-cover'
       />
-      <div className='md:min-h-[11vw] md:pl-[1.359vw] pl-[3.677vw] md:pr-[1.43vw] pr-[3.32vw] md:pt-[1.92vw] pt-[5.18vw] md:pb-[2.125vw] pb-[5.05vw]'>
+      <div className='md:min-h-[10vw] md:pl-[1.359vw] pl-[3.677vw] md:pr-[1.43vw] pr-[3.32vw] md:pt-[1.92vw] pt-[5.18vw] md:pb-[2.125vw] pb-[5.05vw]'>
         <div className='flex w-full justify-between items-center gap-[2vw] md:mb-[0.75vw] mb-[2vw]'>
-          <span className='md:text-[2vw] xl:text-[1.5vw] text-[4vw] font-medium leading-[150%] text-[#171717]'>
+          <span className='md:text-[1.25vw] text-[4vw] font-medium leading-[150%] text-[#171717]'>
             {staff?.name}
           </span>
           <a

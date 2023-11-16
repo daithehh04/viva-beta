@@ -20,7 +20,6 @@ async function page({ params: { lang, slug } }) {
       language: lang?.toUpperCase(),
       countrySlug: countrySlug
     }
-
   )
   const relatedTourNotNull = relatedTour?.data?.allTours?.nodes.filter(item => {
     return item?.translation !== null && item?.translation?.slug !== null

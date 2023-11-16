@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import imgPerson from '@/assets/images/people-survey.png'
+import imgPerson from '@/assets/images/survey-person.JPG'
 import Button from '@/components/Common/Button'
 import AOS from 'aos'
 import Link from 'next/link'

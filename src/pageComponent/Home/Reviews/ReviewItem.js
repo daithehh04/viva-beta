@@ -52,7 +52,7 @@ function ReviewItem({ data, lang }) {
               className='w-[1vw] h-[1vw] max-md:w-[3.2vw] max-md:h-[3.2vw] object-cover'
             />
             <span className='text-white text-[0.875vw] leading-normal max-md:text-[3.2vw] max-lg:text-[1.4vw]'>
-              {tourData?.numberDay} {day}
+              {data?.customerReview?.time}
             </span>
           </div>
         </div>
@@ -87,7 +87,7 @@ function ReviewItem({ data, lang }) {
           />
           <Link
             href={`/${lang}/reviews/${data?.slug}`}
-            className='text-white inline text-[1vw] font-[500] leading-normal ml-[-1.25vw] max-md:text-[3.2vw] max-lg:text-[1.2vw]'
+            className='text-white inline text-[1vw] font-[500] leading-normal ml-[-1.25vw] max-md:text-[3.2vw] max-lg:text-[1.2vw] title-review_home'
           >
             <div className='line-clamp-2' dangerouslySetInnerHTML={{ __html: `${data?.customerReview?.content}`}}></div>
           </Link>

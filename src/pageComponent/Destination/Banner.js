@@ -1,5 +1,5 @@
 import fetchData from '@/data/fetchData'
-import { DATA_COUNTRY } from '@/graphql/country/queries'
+import {DATA_COUNTRY_BANNER } from '@/graphql/country/queries'
 import ScrollNextSection from '@/sections/our-tour/banner/scroll-next-section'
 import Box from '@mui/material/Box'
 import Image from 'next/image'
@@ -9,7 +9,7 @@ const Banner = async ({ slug, lang }) => {
   const [
     dataCountry,
   ] = await Promise.all([
-    fetchData(DATA_COUNTRY, {
+    fetchData(DATA_COUNTRY_BANNER, {
       language: lang?.toUpperCase(),
       taxonomyValue: slug
     }),

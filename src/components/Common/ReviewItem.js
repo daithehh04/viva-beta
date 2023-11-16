@@ -2,24 +2,19 @@ import imgReview from '@/assets/images/imgReview.png'
 import location from '@/assets/images/locationF.svg'
 import calendar from '@/assets/images/calendar.svg'
 import commaRes from '@/assets/images/about/commaRes.svg'
-
 import Image from 'next/image'
 import Link from 'next/link'
 
 function ReviewItem({ className, data, lang }) {
   // className prop is mush have a wrapper's class to overwrite css
-
   const tourData = data?.translation?.customerReview?.tours?.tourDetail
   const authorInfo = data?.translation?.customerReview?.authorInformation
   const tourSlug = data?.translation?.customerReview?.tours?.slug
-  let day = 'Days'
   let see = 'See more'
   if(lang === 'fr') {
-    day = 'Jours'
     see = 'Voir plus'
   }
   if(lang === 'it') {
-    day = 'Jours'
     see = 'Vedi altro'
   }
   return (
@@ -104,7 +99,7 @@ function ReviewItem({ className, data, lang }) {
 
           {/* location & calendar */}
           <div className='flex items-end justify-between'>
-            <div className='md:flex hidden items-center mt-[0.62vw] md:text-[0.875vw] text-[3.2vw]'>
+            <div className='md:flex hidden items-end mt-[0.62vw] md:text-[0.875vw] text-[3.2vw]'>
               <div className='flex items-center'>
                 <Image
                   src={location}
@@ -113,7 +108,7 @@ function ReviewItem({ className, data, lang }) {
                   alt='location'
                   className='md:w-[1vw] w-[3.2vw] md:h-[1vw] h-[3.2vw] object-cover'
                 />
-                <span className=' leading-normal ml-[0.25vw] text-textColor opacity-70'>
+                <span className=' leading-normal ml-[0.25vw] text-textColor opacity-70 md:w-[5vw] line-clamp-3'>
                   {tourData?.banner?.location}
                 </span>
               </div>
@@ -125,10 +120,10 @@ function ReviewItem({ className, data, lang }) {
                   alt='calendar'
                   className='md:w-[0.75vw] w-[3.2vw] md:h-[0.83vw] h-[3.2vw] object-cover'
                 />
-                <span className='leading-normal ml-[0.3vw]'>{tourData?.numberDay} {day}</span>
+                <span className='leading-normal ml-[0.3vw]'>{data?.translation?.customerReview?.time}</span>
               </div>
             </div>
-            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more max-md:hidden'>{see}</Link>
+            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more max-md:hidden whitespace-nowrap'>{see}</Link>
           </div>
         </div>
       </div>

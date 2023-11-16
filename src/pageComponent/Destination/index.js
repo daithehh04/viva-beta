@@ -10,17 +10,11 @@ import OurBlog from './OurBlog'
 import SectionActions from './SectionActions'
 import SlideDestination from './SlideDestination'
 async function index({ lang, slug }) {
-  const [
-    dataCountry,
-  ] = await Promise.all([
-    fetchData(DATA_COUNTRY, {
-      language: lang?.toUpperCase(),
-      taxonomyValue: slug
-    }),
-  ])
-
+  const dataCountry = await fetchData(DATA_COUNTRY, {
+    language: lang?.toUpperCase(),
+    taxonomyValue: slug
+  })
   const data = dataCountry?.data?.countries?.translation
-
   if (!data) {
     return <NotFound lang={lang} />
   }
@@ -33,17 +27,15 @@ async function index({ lang, slug }) {
       <FilterPopup />
       <SectionActions lang={lang} infoCountry={data?.country?.info} />
       <SlideDestination
-        dataTitle={data}
         lang={lang}
         slug={slug}
       />
       <CustomerReview
-        dataInfo={data?.ourTour}
         lang={lang}
         slug={slug}
       />
       <OurBlog
-        data={data}
+        slug={slug}
         lang={lang}
       />
     </div>
