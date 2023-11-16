@@ -25,7 +25,8 @@ function PopupSearch({ lang, onClose }) {
     variables: {
       title: text,
       language: lang?.toUpperCase()
-    }
+    },
+    skip: !text,
   })
   const allTours = data?.allTours?.nodes
   const listTours = allTours?.filter((tour,index) => tour?.translation !== null)

@@ -1,17 +1,13 @@
 'use client'
-import Image from 'next/image'
 
-import searchIcon from '@/assets/images/search-mb.svg'
-import imgInput from '@/assets/images/img-input-h.svg'
-import arrIcon from '@/assets/images/right-arr.svg'
-import HomeSearch from '../Menu/HomeSearch'
-import { useRef } from 'react'
-import { useData } from '../Menu/DataContextMenu'
 import { DATA_SEARCH_TEXT_TOUR } from '@/graphql/filter/queries'
 import { useQuery } from '@apollo/client'
+import { useRef } from 'react'
+import { useData } from '../Menu/DataContextMenu'
+import HomeSearch from '../Menu/HomeSearch'
 
-import Link from 'next/link'
 import FilterBanner from '@/pageComponent/Home/FilterBanner'
+import Link from 'next/link'
 import Loading from './Loading'
 
 function InputSearchMb({ lang, dataFilter, onCloseNav }) {
@@ -29,7 +25,8 @@ function InputSearchMb({ lang, dataFilter, onCloseNav }) {
     variables: {
       title: dataInput,
       language: lang?.toUpperCase()
-    }
+    },
+    skip: !dataInput,
   })
   const allTours = data?.allTours?.nodes
   const listTours = allTours?.filter((tour,index) => tour?.translation !== null)
