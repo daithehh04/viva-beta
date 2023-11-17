@@ -5,7 +5,7 @@ import {
   DATA_TAXONOMIES_DURATION,
   DATA_TAXONOMIES_TOUR_STYLE
 } from '@/graphql/filter/queries'
-import { DATA_WHY_TRAVEL, GET_INFO_PAGE_TRAVEL_STYLE } from '@/graphql/travelStyle/queries'
+import { GET_INFO_PAGE_TRAVEL_STYLE } from '@/graphql/travelStyle/queries'
 import Banner from './Banner'
 import HotTour from './HotTour'
 import TourSlide from './TourSlide'

@@ -1,29 +1,55 @@
 'use client'
 import locationIcon from '@/assets/images/search/location.svg'
 import moneyIcon from '@/assets/images/search/money.svg'
-import { Button, Checkbox, capitalize, useMediaQuery } from '@mui/material'
-import RangeCustom from '@/components/tag/RangeCustom'
+import {Checkbox, useMediaQuery } from '@mui/material'
 import OptionCustomer from '@/components/tag/OptionCustomer'
 import OptionBudget from '@/components/tag/OptionBuget'
 import { useEffect, useRef, useState } from 'react'
 import theme from '@/components/ThemeRegistry/theme'
 
+const handleSort = (arr) => {
+  const clone = [...arr]
+  clone?.sort(function (a, b) {
+    var numA = parseInt(a?.name?.split('-')[0]);
+    var numB = parseInt(b?.name?.split('-')[0]);
+    return numA - numB;
+  });
+  return clone
+}
+
+const sortCountry = (arr) => {
+  const clone = [...arr]
+  clone?.sort(function (a, b) {
+    var numA = parseInt(a?.country?.priority);
+    var numB = parseInt(b?.country?.priority);
+    return numA - numB;
+  });
+  return clone
+}
+
+const sortStyle = (arr) => {
+  const clone = [...arr]
+  clone?.sort(function (a, b) {
+    var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
+    var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
+    return numA - numB;
+  });
+  return clone
+}
+
 export default function Sidebar({
+  dataFilter,
   searchInfo,
   params,
-  travelStylesList,
-  dataMenuCountry,
-  dataTaxonomiesBudget,
-  onDay,
   onDestination,
   onTravelStyle,
   onBudget,
-  isOpenModal,
+  onDay,
   lang
 }) {
   const [travelStyle, setTravelStyle] = useState([])
   const refStyle = useRef()
-  function handleCheck(e) {
+  function handleCheckStyle(e) {
     const value = e.target.value
     if (e.target.checked) {
       setTravelStyle([...travelStyle, value])
@@ -34,25 +60,61 @@ export default function Sidebar({
       onTravelStyle(rs)
     }
   }
-  
 
+  const [duration, setDuration] = useState([])
+  const refDuration = useRef()
+  function handleCheckDuration(e) {
+    const value = e.target.value
+    if (e.target.checked) {
+      setDuration([...duration, value])
+      onDay([...duration, value])
+    } else {
+      var rs = duration.filter((item) => item !== value)
+      setDuration(rs)
+      onDay(rs)
+    }
+  }
+
+  const allBudget = handleSort(dataFilter?.budget || [])
+  const allDuration = handleSort(dataFilter?.duration || [])
+  const allCountries = sortCountry(dataFilter?.countries || [])
+  const allTourStyle = sortStyle( dataFilter?.style|| [])
+  
   useEffect(() => {
     const list = refStyle?.current?.children
     Array.from(list).forEach((item) => {
       const value = item.querySelector('label').getAttribute('for')
       if (value === params.style) {
-        setTravelStyle([value])
+        setDuration([value])
       }
     })
   }, [params.style])
+  
+  useEffect(() => {
+    const list = refDuration?.current?.children
+    Array.from(list).forEach((item) => {
+      const value = item.querySelector('label').getAttribute('for')
+      if (value === params.day) {
+        setTravelStyle([value])
+      }
+    })
+  }, [params.day])
+
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  const arrStyle = travelStylesList?.data?.allTourStyle?.nodes
-  arrStyle?.sort(function(a, b) {
-    var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-    var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-    return numA - numB;
-  });
+  // const arrStyle = travelStylesList?.data?.allTourStyle?.nodes
+  // arrStyle?.sort(function(a, b) {
+  //   var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
+  //   var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
+  //   return numA - numB;
+  // });
+  let day = 'Days'
+  if(lang === 'fr') {
+    day = 'Jours'
+  }
+  if(lang === 'it') {
+    day = 'Giorni'
+  }
   return (
     <div className={`w-[20vw] flex flex-col max-md:overflow-y-scroll max-md:h-[70vh]
     max-md:w-auto max-md:rounded-t-[2vw] max-md:pt-[11.46vw]`}>
@@ -62,20 +124,36 @@ export default function Sidebar({
         max-md:px-[4.26vw] max-md:mx-[4.26vw] max-md:pt-[6.4vw] max-md:rounded-[2.66vw] max-md:w-auto max-md:pb-[5.2vw] max-md:mb-[8vw]'
         style={{ boxShadow: '0px 0px 30px 0px rgba(0, 0, 0, 0.08)' }}
       >
-        <h3 className='flex mb-[0.69vw] font-bold text-[1.25vw] leading-[1.64288vw] max-md:text-[5.33vw] max-md:leading-normal'>{
+        <h3 className='flex mb-[1.5vw] font-bold text-[1.25vw] leading-[1.64288vw] max-md:text-[5.33vw] max-md:leading-normal'>{
           searchInfo?.navbar?.duration?.title
         }</h3>
-        <div className='flex justify-between mb-[0.94vw] max-md:mb-[2.93vw] items-center'>
-          <p className='text-[0.875vw] max-md:text-[3.73vw]'>
-            <span className='font-bold'>{searchInfo?.navbar?.duration?.min}</span>
-            <span className='font-normal'>{" "}{searchInfo?.navbar?.duration?.minValue}</span>
-          </p>
-          <p className='text-[0.875vw] leading-[1.4375vw] max-md:text-[3.73vw]'>
-            <span className='font-bold'>{searchInfo?.navbar?.duration?.max}</span>
-            <span className='font-normal'>{" "}{searchInfo?.navbar?.duration?.maxValue}</span>
-          </p>
+       <div className='flex flex-col justify-center gap-[0.75vw] max-md:gap-[3.2vw]' ref={refDuration}>
+          {allDuration?.map((item,index) => (
+            <div className='flex items-center justify-between' key={index}>
+              <div className='flex gap-[0.4375vw] items-center cursor-pointer max-md:gap-[1.86vw]'>
+                <Checkbox
+                  checked={duration.includes(item?.name)}
+                  value={item?.name}
+                  color='info'
+                  id={item?.name}
+                  sx={{
+                    color: '#C7D0D9',
+                    '& .MuiSvgIcon-root': { fontSize: onlySmallScreen ? '5.5vw' : '1.25vw' },
+                    '&.Mui-checked': {
+                      color: '#228B22'
+                    }
+                  }}
+                  className='w-[1.25vw] h-[1.25vw]'
+                  onChange={handleCheckDuration}
+                />
+                <label className='text-[0.875vw] cursor-pointer max-md:text-[3.73vw]' for={item?.name}>
+                  {item?.name} {day}
+                </label>
+              </div>
+              <p className='text-[0.875vw] max-md:text-[3.73vw]'>{item?.quantity}</p>
+            </div>
+          ))}
         </div>
-        <RangeCustom isOpenModal={isOpenModal} day={params.day} onDay={(data) => onDay(data)} />
       </div>
       <div
         className='search-option px-[1.8vw] mb-[1.88vw] w-full border pb-[2vw] pt-[1.5vw] 
@@ -84,8 +162,8 @@ export default function Sidebar({
       >
         <h3 className='mb-[1.32vw] text-[1.25vw] font-bold max-md:text-[5.33vw] max-md:mb-[5.6vw]'>{searchInfo?.navbar?.travelStyles}</h3>
         <div className='flex flex-col justify-center gap-[0.75vw] max-md:gap-[3.2vw]' ref={refStyle}>
-          {travelStylesList?.data?.allTourStyle?.nodes?.map((item) => (
-            <div className='flex items-center justify-between' key={item?.id}>
+          {allTourStyle?.map((item,index) => (
+            <div className='flex items-center justify-between' key={index}>
               <div className='flex gap-[0.4375vw] items-center cursor-pointer max-md:gap-[1.86vw]'>
                 <Checkbox
                   checked={travelStyle.includes(item?.slug)}
@@ -100,7 +178,7 @@ export default function Sidebar({
                     }
                   }}
                   className='w-[1.25vw] h-[1.25vw]'
-                  onChange={handleCheck}
+                  onChange={handleCheckStyle}
                 />
                 <label className='text-[0.875vw] cursor-pointer max-md:text-[3.73vw]' for={item?.slug}>
                   {item?.name}
@@ -122,7 +200,7 @@ export default function Sidebar({
           <OptionCustomer
             onSelect={(data) => onDestination(data)}
             icon={locationIcon}
-            list={dataMenuCountry?.data?.allCountries?.nodes}
+            list={allCountries}
             defaultValue={params?.country}
             lang = {lang}
           />
@@ -132,7 +210,7 @@ export default function Sidebar({
             onSelect={(data) => onBudget(data)}
             icon={moneyIcon}
             defaultValue={params?.budget}
-            list={dataTaxonomiesBudget?.data?.allBudget?.nodes}
+            list={allBudget}
             lang ={lang}
           />
         </div>
