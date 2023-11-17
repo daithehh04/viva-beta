@@ -1,6 +1,6 @@
 'use client'
 import closeImg from '@/assets/images/close.svg'
-import { DATA_BEST_TOUR } from '@/graphql/filter/queries'
+import { DATA_BEST_TOUR, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
 import { useQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import ListTour from './ListTour'
@@ -10,22 +10,52 @@ import NewRelease from './NewRelease'
 import { Button, SwipeableDrawer, useMediaQuery } from '@mui/material'
 import theme from '@/components/ThemeRegistry/theme'
 import Image from 'next/image'
+import { useQueryState } from 'next-usequerystate'
 
 const tourBackup = new Array(6).fill(0)
-const Search = ({ lang, travelStylesList, dataMenuCountry, dataTaxonomiesBudget, listBlog, searchInfo }) => {
-  if (typeof window !== 'undefined') {
-    const currentUrl = window?.location.href
-    var urlParams = new URLSearchParams(currentUrl)
-    var durationParams = urlParams.get('duration')
-    var budgetParams = urlParams.get('budget')
-    var styleParams = urlParams.get('style')
-    var destinationParams = urlParams.get('country')
-  }
+const Search = ({ lang, listBlog, searchInfo }) => {
+  const [destination] = useQueryState('destination')
+  const [budget] = useQueryState('budget')
+  const [duration] = useQueryState('duration')
+  const [style] = useQueryState('style')
+
+  const [des, setDes] = useState(destination)
+  const [travelStyle, setTravelStyle] = useState(style)
+  const [day, setDay] = useState(duration)
+  const [bud, setBud] = useState(budget)
   const params = {
-    day: durationParams,
-    budget: budgetParams,
-    style: styleParams,
-    country: destinationParams
+    day: duration,
+    budget: budget,
+    style: style,
+    country: destination
+  }
+
+  const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+  const { data: durations } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+  const { data: countries } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+  const { data: styles } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+  // =================================================================
+  const dataFilter = {
+    countries: countries?.allCountries?.nodes,
+    style: styles?.allTourStyle?.nodes,
+    budget: budgets?.allBudget?.nodes,
+    duration: durations?.allDuration?.nodes
   }
 
   function handleTaxonomiesSlug(data) {
@@ -42,70 +72,31 @@ const Search = ({ lang, travelStylesList, dataMenuCountry, dataTaxonomiesBudget,
     })
     return newArrDataTaxonomies
   }
-  const newArrDataTaxonomiesCountry = handleTaxonomiesName(dataMenuCountry?.data?.allCountries?.nodes)
-  const newArrDataTaxonomiesStyleTravel = handleTaxonomiesSlug(travelStylesList?.data?.allTourStyle?.nodes)
-  const [destination, setDestination] = useState(null)
-  const [travelStyle, setTravelStyle] = useState(null)
-  const [day, setDay] = useState(null)
-  const [budget, setBudget] = useState(null)
-
-  useEffect(() => {
-    let nameV = []
-    nameV = dataMenuCountry?.data?.allCountries?.nodes.filter((item) => item.slug === destinationParams)
-
-    if (nameV) {
-      var nameDef = nameV[0]?.name
-      setDestination(nameDef)
-    }
-    if (durationParams) {
-      var rangeArray = durationParams?.split('-').map(Number)
-      setDay(rangeArray)
-    }
-    if (budgetParams) {
-      setBudget(budgetParams)
-    }
-  }, [budgetParams, durationParams, dataMenuCountry, destinationParams])
-
-  useEffect(() => {
-    if (styleParams) {
-      setTravelStyle(styleParams)
-    }
-  }, [styleParams])
-  const dataAllTours = useQuery(DATA_BEST_TOUR, {
+  const newArrDataTaxonomiesCountry = handleTaxonomiesName(dataFilter?.countries)
+  const newArrDataTaxonomiesStyleTravel = handleTaxonomiesSlug(dataFilter?.style)
+  const newArrDataTaxonomiesBudget = handleTaxonomiesName(dataFilter?.budget)
+  const newArrDataTaxonomiesDuration = handleTaxonomiesName(dataFilter?.duration)
+ 
+  const {data:dataBestTours, refetch, loading} = useQuery(DATA_BEST_TOUR, {
     variables: {
       language: lang?.toUpperCase(),
-      countrySlug: (destination && destination[0] == null) || !destination  ? newArrDataTaxonomiesCountry : destination,
-      styleTourSlug: !travelStyle || travelStyle.length === 0 ? newArrDataTaxonomiesStyleTravel : travelStyle
+      countrySlug: !des || !des?.length ? newArrDataTaxonomiesCountry : des,
+      styleTourSlug:!travelStyle || !travelStyle?.length ?  newArrDataTaxonomiesStyleTravel : travelStyle,
+      budget: !bud || !bud.length ? newArrDataTaxonomiesBudget : bud,
+      duration: !day || !day.length ? newArrDataTaxonomiesDuration : day ,
+      offset: 0,
+      size: 9
     }
   })
-  var allTours = dataAllTours?.data?.allTours?.nodes
-  const loading = dataAllTours?.loading
-  // console.log(budget)
-  if(budget === "Budget") { 
-    allTours = dataAllTours?.data?.allTours?.nodes
-   } else if (budget) {
-    allTours = allTours?.filter((tour) => {
-      let priceTour = tour?.translation?.tourDetail?.priceTour
-      if (!priceTour) return
-      const arrBudget = budget?.split('-')
-      const minBudget = arrBudget[0]
-      const maxBudget = arrBudget[1]
-      return priceTour >= +minBudget && priceTour <= +maxBudget
-    })
-  }
-
-  if (day) {
-    allTours = allTours?.filter((tour) => {
-      let numTour = tour?.translation?.tourDetail?.numberDay
-      if (!numTour) return
-      const minDay = day[0]
-      const maxDay = day[1]
-      return numTour >= +minDay && numTour <= +maxDay
-    })
-  }
+  let allTours = dataBestTours?.allTours?.nodes
   if (!allTours) {
     allTours = tourBackup
   }
+  const pageInfo = dataBestTours?.allTours?.pageInfo?.offsetPagination?.total
+  const totalPage = Math.ceil(pageInfo / 9)
+  useEffect(() => {
+    window.scrollTo(0,0)
+  },[])
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [isOpenModal, setIsOpenModal] = useState(false)
 
@@ -141,7 +132,6 @@ const Search = ({ lang, travelStylesList, dataMenuCountry, dataTaxonomiesBudget,
               fill='#171717'
             />
           </svg>
-
           <p
             className='text-[3.73333vw] leading-[160%] text-textColor'
             onClick={() => {
@@ -172,18 +162,16 @@ const Search = ({ lang, travelStylesList, dataMenuCountry, dataTaxonomiesBudget,
               />
             </div>
             <Sidebar
+              dataFilter={dataFilter}
               searchInfo={searchInfo}
               isOpenModal={isOpenModal}
               setOpenModal={setIsOpenModal}
               params={params}
               lang={lang}
-              travelStylesList={travelStylesList}
-              dataMenuCountry={dataMenuCountry}
-              dataTaxonomiesBudget={dataTaxonomiesBudget}
               onDay={(data) => setDay(data)}
-              onDestination={(data) => setDestination([data])}
+              onDestination={(data) => setDes([data])}
               onTravelStyle={(data) => setTravelStyle(data)}
-              onBudget={(data) => setBudget(data)}
+              onBudget={(data) => setBud(data)}
             />
             <div className='mx-[4.26vw] w-auto my-[8vw] bg-white md:hidden'>
               <Button
@@ -207,16 +195,14 @@ const Search = ({ lang, travelStylesList, dataMenuCountry, dataTaxonomiesBudget,
           </SwipeableDrawer>
         ) : (
           <Sidebar
+            dataFilter={dataFilter}
             searchInfo={searchInfo}
             params={params}
             lang={lang}
-            travelStylesList={travelStylesList}
-            dataMenuCountry={dataMenuCountry}
-            dataTaxonomiesBudget={dataTaxonomiesBudget}
             onDay={(data) => setDay(data)}
-            onDestination={(data) => setDestination([data])}
+            onDestination={(data) => setDes([data])}
             onTravelStyle={(data) => setTravelStyle(data)}
-            onBudget={(data) => setBudget(data)}
+            onBudget={(data) => setBud(data)}
             isOpenModal={isOpenModal}
           />
         )}
@@ -224,10 +210,13 @@ const Search = ({ lang, travelStylesList, dataMenuCountry, dataTaxonomiesBudget,
           <div className='flex-1'>
             {allTours?.length !== 0 ? (
               <ListTour
-                results={searchInfo?.foundResults}
-                data={allTours}
-                lang={lang}
+                totalPage={totalPage}
+                refetch={refetch}
+                allTours={allTours}
                 loading={loading}
+                results={searchInfo?.foundResults}
+                dataFilter = {dataFilter}
+                lang={lang}
               />
             ) : (
               <OtherTours lang={lang} searchInfo={searchInfo}/>
@@ -235,7 +224,7 @@ const Search = ({ lang, travelStylesList, dataMenuCountry, dataTaxonomiesBudget,
           </div>
         }
       </div>
-      {allTours?.length !== 0 && (
+      { (
         <NewRelease
           title={searchInfo?.newRelated}
           button={searchInfo?.button}

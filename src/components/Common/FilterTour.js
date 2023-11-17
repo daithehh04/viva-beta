@@ -3,8 +3,6 @@ import calendar from '@/assets/images/calendarFilter.svg'
 import locationIcon from '@/assets/images/route-square-gr.svg'
 import styleIcon from '@/assets/images/style-travel.svg'
 import wallet from '@/assets/images/wallet.svg'
-import { DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_DURATION_GQL } from '@/graphql/filter/queries'
-import { useQuery } from '@apollo/client'
 import { createTheme } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
@@ -16,8 +14,8 @@ import { useParams, useSearchParams } from 'next/navigation'
 const handleSort = (arr) => {
   const clone = [...arr]
   clone?.sort(function (a, b) {
-    var numA = parseInt(a?.name.split('-')[0]);
-    var numB = parseInt(b?.name.split('-')[0]);
+    var numA = parseInt(a?.name?.split('-')[0]);
+    var numB = parseInt(b?.name?.split('-')[0]);
     return numA - numB;
   });
   return clone
@@ -44,9 +42,9 @@ const sortStyle = (arr) => {
 }
 
 function FilterTour({
-  className,
-  contries,
-  styles
+  dataFilter,
+  travelStyleSlug,
+  className
 }) {
   const { lang } = useParams()
   const [destination, setDestination] = useQueryState('destination')
@@ -54,24 +52,10 @@ function FilterTour({
   const [duration, setDuration] = useQueryState('duration')
   const [style, setStyle] = useQueryState('style')
 
-  const lng = lang?.toUpperCase()
-
-  const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
-    variables: {
-      language: lng,
-    }
-  })
-  const { data: durations } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
-    variables: {
-      language: lng,
-    }
-  })
-
-  const allBudget = handleSort(budgets?.allBudget?.nodes || [])
-  const allDuration = handleSort(durations?.allDuration?.nodes || [])
-  const allCountries = sortCountry(contries?.allCountries?.nodes || [])
-  const allTourStyle = sortStyle(styles?.allTourStyle?.nodes || [])
-
+  const allBudget = handleSort(dataFilter?.budget || [])
+  const allDuration = handleSort(dataFilter?.duration || [])
+  const allCountries = sortCountry(dataFilter?.countries || [])
+  const allTourStyle = sortStyle( dataFilter?.style|| [])
   const option = {
     destination: 'Destination',
     budget: 'Budget',
@@ -217,7 +201,7 @@ function FilterTour({
             }}
           >
             <Select
-              value={style || ''}
+              value={style || travelStyleSlug || option?.style}
               onChange={(e) => setStyle(e.target.value)}
               displayEmpty
               inputprops={{ 'aria-label': 'Without label' }}
@@ -225,6 +209,10 @@ function FilterTour({
                 let name = option?.style
                 if (!!style) {
                   const nameCountry = allTourStyle?.find((item, index) => item?.slug === style)
+                  name = nameCountry?.name
+                }
+                if(travelStyleSlug) {
+                  const nameCountry = allTourStyle?.find((item, index) => item?.slug === travelStyleSlug)
                   name = nameCountry?.name
                 }
                 return name

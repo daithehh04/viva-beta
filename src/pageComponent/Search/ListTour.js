@@ -1,12 +1,16 @@
 import SearchResult from './SearchResult'
 
-function ListTour({ data,lang,loading, results }) {
+function ListTour({lang,loading,dataFilter,allTours, results,refetch,totalPage }) {
   return (
     <div>
-      <SearchResult results={results}
+      <SearchResult 
+        totalPage={totalPage}
+        refetch={refetch}
+        allTours={allTours}
+        results={results}
+        dataFilter={dataFilter}
         lang={lang}
         loading={loading}
-        data={data}
         quantity={9}
         text={'You may also like:'}
       />
