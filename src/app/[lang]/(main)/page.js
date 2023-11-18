@@ -17,7 +17,6 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, featuredImage)
 }
 
-
 export default async function page({ params: { lang } }) {
   const [
     nextStep,
