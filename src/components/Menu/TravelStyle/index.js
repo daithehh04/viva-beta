@@ -3,8 +3,8 @@ import StyleItem from './StyleItem'
 
 export default function TravelStyle({ travelStylesList, lang,onCloseMenu }) {
   let travelStyleList = null
-  if (travelStylesList?.data?.allTourStyle?.nodes) {
-    travelStyleList = travelStylesList?.data?.allTourStyle?.nodes
+  if (travelStylesList?.allTourStyle?.nodes) {
+    travelStyleList = travelStylesList?.allTourStyle?.nodes
   }
   const handleSort = (fn) => {
     fn?.sort(function(a, b) {

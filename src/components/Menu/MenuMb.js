@@ -139,7 +139,7 @@ function MenuMb({
                 : { height: '0px', overflow: 'hidden' }
             }
           >
-            {travelStylesList?.data?.allTourStyle?.nodes?.map((item, index) => (
+            {travelStylesList?.allTourStyle?.nodes?.map((item, index) => (
               <div key={index}>
                 <Link
                   href={`/${lang}/travel-style/${item?.slug}`}
@@ -231,7 +231,7 @@ function MenuMb({
                 : { height: '0px', overflow: 'hidden' }
             }
           >
-            {rcmServicesList?.data?.categories?.nodes?.map((item, index) => (
+            {rcmServicesList?.categories?.nodes?.map((item, index) => (
               <ServiceItem key={index} data={item} lang={lang} onCloseMenu={onCloseMenu} />
             ))}
           </div>

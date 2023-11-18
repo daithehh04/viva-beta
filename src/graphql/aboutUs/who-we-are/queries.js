@@ -1,3 +1,5 @@
+import { gql } from "@apollo/client"
+
 export const GET_WHO_WE_ARE_DATA = `query($language: LanguageCodeEnum!) {
   page(id: "cG9zdDoxMTg2") {
     translation(language: $language) {
@@ -72,7 +74,7 @@ export const GET_WHO_WE_ARE_DATA = `query($language: LanguageCodeEnum!) {
   }
 }`
 
-export const GET_DATA_MENU_WWR = `query($language: LanguageCodeEnum!) {
+export const GET_DATA_MENU_WWR = gql`query($language: LanguageCodeEnum!) {
   page(id: "cG9zdDoxMTg2") {
     translation(language: $language) {
       who_we_are {

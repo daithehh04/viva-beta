@@ -1,3 +1,5 @@
+import { gql } from "@apollo/client"
+
 export const GET_RESPONSIBLE_TRAVEL_DATA = `query ($language: LanguageCodeEnum!) {
     page(id: "cG9zdDoxMjg1") {
       translation(language: $language) {
@@ -29,7 +31,7 @@ export const GET_RESPONSIBLE_TRAVEL_DATA = `query ($language: LanguageCodeEnum!)
     }
   }`
 
-export const GET_DATA_MENU_RT = `query($language: LanguageCodeEnum!) {
+export const GET_DATA_MENU_RT = gql`query($language: LanguageCodeEnum!) {
     page(id: "cG9zdDoxMjg1") {
       translation(language: $language) {
         responsibleTravel {

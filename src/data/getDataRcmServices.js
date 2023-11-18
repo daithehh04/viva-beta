@@ -1,4 +1,6 @@
-const GET_SERVICE_BY_CATEGORY = `
+import { gql } from "@apollo/client"
+
+const GET_SERVICE_BY_CATEGORY = gql`
     query ($language: LanguageCodeFilterEnum) {
     categories(where: {language: $language}) {
     nodes {

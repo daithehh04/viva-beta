@@ -1,4 +1,6 @@
-const DATA_MENU_COUNTRY = `
+import { gql } from "@apollo/client"
+
+const DATA_MENU_COUNTRY = gql`
 query country($language: LanguageCodeFilterEnum){
   allCountries(first: 50, where: {
     language: $language

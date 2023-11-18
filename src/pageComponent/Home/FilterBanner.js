@@ -49,33 +49,6 @@ function FilterBanner({ lang, onClose }) {
   const allCountries = dataTaxonomiesCountry?.allCountries?.nodes
   const allTourStyle = dataTaxonomiesStyleTour?.allTourStyle?.nodes
 
-  // const handleSort = (fn) => {
-  //   fn?.sort(function (a, b) {
-  //     var numA = parseInt(a?.name.split('-')[0]);
-  //     var numB = parseInt(b?.name.split('-')[0]);
-  //     return numA - numB;
-  //   });
-  // }
-  // const arrBudget = arrDataTaxonomiesBudget
-  // handleSort(arrBudget)
-
-  // const arrDuration = arrDataTaxonomiesDuration
-  // handleSort(arrDuration)
-
-  // const arrCountry = arrDataTaxonomiesCountry
-  // arrCountry?.sort(function (a, b) {
-  //   var numA = parseInt(a?.country?.priority);
-  //   var numB = parseInt(b?.country?.priority);
-  //   return numA - numB;
-  // });
-
-  // const arrStyle = arrDataTaxonomiesStyleTour
-  // arrStyle?.sort(function (a, b) {
-  //   var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-  //   var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-  //   return numA - numB;
-  // });
-
   const handleChangeDestination = (event) => {
     setDestination(event.target.value)
   }
