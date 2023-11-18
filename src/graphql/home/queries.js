@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-const DATA_HEADER = `
+const DATA_HEADER = gql`
 query homePage($id:ID!){
     page (id: $id) {
         home {

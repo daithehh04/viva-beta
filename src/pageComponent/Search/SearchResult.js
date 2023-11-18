@@ -4,7 +4,7 @@ import TourItem from '@/components/Common/TourItem'
 import TourItemMobile from '@/components/Common/TourItemMobile'
 import { Skeleton } from '@mui/material'
 
-const SearchResult = ({ lang, className,refetch,allTours, results,loading,totalPage }) => {
+const SearchResult = ({ lang,pageInfo, className,refetch,allTours, results,loading,totalPage }) => {
   let foundResultsText = results?.split(' ')
   const eleRef = useRef()
   const [activePage, setActivePage] = useState(0)
@@ -16,16 +16,24 @@ const SearchResult = ({ lang, className,refetch,allTours, results,loading,totalP
     })
   }
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
   },[])
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
   }, [activePage])
   return (
     <div ref={eleRef}>
       {!loading ? (
         <h2 className={`text-[2vw] font-medium leading-[2.2vw] mb-[1.5vw] max-md:hidden ${className}`}>
-          {foundResultsText && foundResultsText[0]} {allTours?.length} {foundResultsText && foundResultsText[1]}
+          {foundResultsText && foundResultsText[0]} {pageInfo} {foundResultsText && foundResultsText[1]}
         </h2>
       ) : (
         <Skeleton

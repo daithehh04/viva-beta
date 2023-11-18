@@ -21,6 +21,15 @@ import Button from './Button'
 import { usePathname } from 'next/navigation'
 import { createTheme, useMediaQuery } from '@mui/material'
 import { DataProvider } from '../Menu/DataContextMenu'
+import { useQuery } from '@apollo/client'
+import { GET_DATA_MENU_WWR } from '@/graphql/aboutUs/who-we-are/queries'
+import { GET_DATA_MENU_RV } from '@/graphql/aboutUs/reviews/queries'
+import { GET_DATA_MENU_RT } from '@/graphql/aboutUs/responsible-travel/queries'
+import { DATA_MENU_COUNTRY } from '@/graphql/country/queries'
+import { DATA_HEADER } from '@/graphql/home/queries'
+import { LANGUAGE_IDS } from '@/configs/global-config'
+import GET_SERVICE_BY_CATEGORY from '@/data/getDataRcmServices'
+import { GET_LIST_TRAVEL_STYLE_NAME } from '@/graphql/travelStyle/queries'
 
 const theme = createTheme({
   breakpoints: {
@@ -32,24 +41,55 @@ const theme = createTheme({
 export default function Navbar({
   socialMobile,
   lang,
-  dataHome,
-  dataMenuCountry,
-  travelStylesList,
-  rcmServicesList,
   hotDeals,
   listVoucher,
-  dataAboutUs,
   dataBookTour,
-  dataTaxonomiesCountry,
-  dataTaxonomiesStyleTour,
-  dataTaxonomiesBudget,
-  dataTaxonomiesDuration,
   contactInfo
 }) {
-  const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.data?.allBudget?.nodes
-  const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.data?.allDuration?.nodes
-  const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.data?.allCountries?.nodes
-  const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.data?.allTourStyle?.nodes
+  const {data:rcmServicesList} = useQuery(GET_SERVICE_BY_CATEGORY, {
+    variables: {
+      language: lang?.toUpperCase()
+    }
+  })
+
+  const {data:travelStylesList} = useQuery(GET_LIST_TRAVEL_STYLE_NAME, {
+    variables: {
+      language: lang?.toUpperCase()
+    }
+  })
+  const {data:home} = useQuery(DATA_HEADER, {
+    variables: {
+      id: LANGUAGE_IDS[lang]
+    }
+  })
+  const dataHome = home?.page?.home?.header
+  const {data:wwrRes} = useQuery(GET_DATA_MENU_WWR, {
+    variables: {
+      language: lang?.toUpperCase()
+    }
+  })
+  const {data:rtRes} = useQuery(GET_DATA_MENU_RT, {
+    variables: {
+      language: lang?.toUpperCase()
+    }
+  })
+  const {data:rvRes} = useQuery(GET_DATA_MENU_RV, {
+    variables: {
+      language: lang?.toUpperCase()
+    }
+  })
+  const {data:listMenuCountry} = useQuery(DATA_MENU_COUNTRY, {
+    variables: {
+      language: lang?.toUpperCase()
+    }
+  })
+  const dataMenuCountry = listMenuCountry?.allCountries?.nodes
+  const dataAboutUs={
+    wwrRes: wwrRes?.page?.translation,
+    rtRes: rtRes?.page?.translation,
+    rvRes: rvRes?.page?.translation
+  }
+
   const refMb = useRef()
   const refMenu = useRef()
   const refNav = useRef()
@@ -182,25 +222,6 @@ export default function Navbar({
   }
   const handleClickClose = () => {
     refMb.current.classList.remove('active')
-  }
-
-  function handleTaxonomies(data) {
-    const newArrDataTaxonomies = []
-    data?.map((item) => {
-      newArrDataTaxonomies.push(item)
-    })
-    return newArrDataTaxonomies
-  }
-  const newArrDataTaxonomiesCountry = handleTaxonomies(arrDataTaxonomiesCountry)
-  const newArrDataTaxonomiesStyleTravel = handleTaxonomies(arrDataTaxonomiesStyleTour)
-  const newArrDataTaxonomiesBudget = handleTaxonomies(arrDataTaxonomiesBudget)
-  const newArrDataTaxonomiesDuration = handleTaxonomies(arrDataTaxonomiesDuration)
-  // ==============================================================
-  const dataFilter = {
-    countries: newArrDataTaxonomiesCountry,
-    style: newArrDataTaxonomiesStyleTravel,
-    budget: newArrDataTaxonomiesBudget,
-    duration: newArrDataTaxonomiesDuration
   }
 
   const handleCloseNav = () => {
@@ -360,7 +381,6 @@ export default function Navbar({
             <div className='flex-1 hidden max-lg:block'>
               <InputSearchMb
                 lang={lang}
-                dataFilter={dataFilter}
                 onCloseNav={handleCloseNav}
               />
             </div>

@@ -11,24 +11,28 @@ import { Button, SwipeableDrawer, useMediaQuery } from '@mui/material'
 import theme from '@/components/ThemeRegistry/theme'
 import Image from 'next/image'
 import { useQueryState } from 'next-usequerystate'
-
-const tourBackup = new Array(6).fill(0)
+const tourBackup = new Array(6).fill()
 const Search = ({ lang, listBlog, searchInfo }) => {
-  const [destination] = useQueryState('destination')
-  const [budget] = useQueryState('budget')
-  const [duration] = useQueryState('duration')
-  const [style] = useQueryState('style')
+  const [destination, setDestination] = useQueryState('country')
+  const [budget, setBudget] = useQueryState('budget')
+  const [duration, setDuration] = useQueryState('duration')
+  const [style, setStyle] = useQueryState('style')
 
-  const [des, setDes] = useState(destination)
-  const [travelStyle, setTravelStyle] = useState(style)
-  const [day, setDay] = useState(duration)
-  const [bud, setBud] = useState(budget)
+  
+  const [des, setDes] = useState(destination ?? [])
+  const [travelStyle, setTravelStyle] = useState(style ?? [])
+  const [day, setDay] = useState(duration ?? [])
+  const [bud, setBud] = useState(budget ?? [])
+  
   const params = {
     day: duration,
     budget: budget,
     style: style,
     country: destination
   }
+
+  console.log('des',des);
+  console.log('budget',bud);
 
   const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
     variables: {
@@ -77,6 +81,12 @@ const Search = ({ lang, listBlog, searchInfo }) => {
   const newArrDataTaxonomiesBudget = handleTaxonomiesName(dataFilter?.budget)
   const newArrDataTaxonomiesDuration = handleTaxonomiesName(dataFilter?.duration)
  
+  const dataQuery = {
+    country: newArrDataTaxonomiesCountry,
+    style: newArrDataTaxonomiesStyleTravel,
+    budget: newArrDataTaxonomiesBudget,
+    duration: newArrDataTaxonomiesDuration
+  }
   const {data:dataBestTours, refetch, loading} = useQuery(DATA_BEST_TOUR, {
     variables: {
       language: lang?.toUpperCase(),
@@ -99,7 +109,6 @@ const Search = ({ lang, listBlog, searchInfo }) => {
   },[])
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [isOpenModal, setIsOpenModal] = useState(false)
-
   const handleCloseFilter = () => {
     setIsOpenModal(false)
   }
@@ -169,7 +178,7 @@ const Search = ({ lang, listBlog, searchInfo }) => {
               params={params}
               lang={lang}
               onDay={(data) => setDay(data)}
-              onDestination={(data) => setDes([data])}
+              onDestination={(data) => setDes(data)}
               onTravelStyle={(data) => setTravelStyle(data)}
               onBudget={(data) => setBud(data)}
             />
@@ -200,7 +209,7 @@ const Search = ({ lang, listBlog, searchInfo }) => {
             params={params}
             lang={lang}
             onDay={(data) => setDay(data)}
-            onDestination={(data) => setDes([data])}
+            onDestination={(data) => setDes(data)}
             onTravelStyle={(data) => setTravelStyle(data)}
             onBudget={(data) => setBud(data)}
             isOpenModal={isOpenModal}
@@ -217,9 +226,15 @@ const Search = ({ lang, listBlog, searchInfo }) => {
                 results={searchInfo?.foundResults}
                 dataFilter = {dataFilter}
                 lang={lang}
+                pageInfo={pageInfo}
               />
             ) : (
-              <OtherTours lang={lang} searchInfo={searchInfo}/>
+              <OtherTours 
+                dataQuery={dataQuery}
+                dataFilter = {dataFilter}
+                lang={lang} 
+                results={searchInfo?.foundResults}
+                searchInfo={searchInfo}/>
             )}
           </div>
         }

@@ -28,8 +28,16 @@ const Placeholder = ({ item, icon }) => (
   </div>
 )
 
-export default function OptionBudget({ icon, list, defaultValue, onSelect, lang }) {
+export default function OptionBudget({icon, list, defaultValue, onSelect, lang }) {
   const [personName, setPersonName] = useState('Budget')
+  let price = '$'
+  let budget = 'Budget'
+  if(lang === 'fr' || lang === 'it') {
+    price = '€'
+  }
+  if (lang === 'it') {
+    budget = 'Budget'
+  }
   useEffect(() => {
     if (defaultValue) {
       setPersonName(defaultValue)
@@ -39,29 +47,26 @@ export default function OptionBudget({ icon, list, defaultValue, onSelect, lang 
     const {
       target: { value }
     } = event
-    setPersonName(value)
-    onSelect(value)
+    if(value === budget) {
+      setPersonName(budget)
+      onSelect([])
+    }else {
+      setPersonName(value)
+      onSelect(value)
+    }
   }
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const handleSort = (fn) => {
     fn?.sort(function(a, b) {
-      var numA = parseInt(a?.name.split('-')[0]);
-      var numB = parseInt(b?.name.split('-')[0]);
+      var numA = parseInt(a?.name?.split('-')[0]);
+      var numB = parseInt(b?.name?.split('-')[0]);
       return numA - numB;
     });
   }
   
   handleSort(list)
 
-  let price = '$'
-  let budget = 'Budget'
-  if(lang === 'fr' || lang === 'it') {
-    price = '€'
-  }
-  if (lang === 'it') {
-    budget = 'Budget'
-  }
   return (
     <div>
       <FormControl className='mb-[0.94vw] max-md:rounded-[1.06vw] bg-[#F0F0F0] 
@@ -92,7 +97,7 @@ export default function OptionBudget({ icon, list, defaultValue, onSelect, lang 
             )
           }}
         >
-          <MenuItem value='Budget'>
+          <MenuItem value={budget}>
             <div className='flex gap-[1vw] items-center'>
               <Image
                 src={icon}

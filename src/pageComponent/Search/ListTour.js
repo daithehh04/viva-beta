@@ -1,9 +1,10 @@
 import SearchResult from './SearchResult'
 
-function ListTour({lang,loading,dataFilter,allTours, results,refetch,totalPage }) {
+function ListTour({lang,pageInfo,loading,dataFilter,allTours, results,refetch,totalPage }) {
   return (
     <div>
       <SearchResult 
+        pageInfo={pageInfo}
         totalPage={totalPage}
         refetch={refetch}
         allTours={allTours}

@@ -60,7 +60,6 @@ export default function Sidebar({
       onTravelStyle(rs)
     }
   }
-
   const [duration, setDuration] = useState([])
   const refDuration = useRef()
   function handleCheckDuration(e) {
@@ -69,7 +68,7 @@ export default function Sidebar({
       setDuration([...duration, value])
       onDay([...duration, value])
     } else {
-      var rs = duration.filter((item) => item !== value)
+      var rs = duration?.filter((item) => item !== value)
       setDuration(rs)
       onDay(rs)
     }
@@ -85,9 +84,10 @@ export default function Sidebar({
     Array.from(list).forEach((item) => {
       const value = item.querySelector('label').getAttribute('for')
       if (value === params.style) {
-        setDuration([value])
+        setTravelStyle([value])
       }
     })
+    setTravelStyle([params.style])
   }, [params.style])
   
   useEffect(() => {
@@ -95,19 +95,14 @@ export default function Sidebar({
     Array.from(list).forEach((item) => {
       const value = item.querySelector('label').getAttribute('for')
       if (value === params.day) {
-        setTravelStyle([value])
+        setDuration([value])
       }
     })
+    setDuration([params.day])
   }, [params.day])
 
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  // const arrStyle = travelStylesList?.data?.allTourStyle?.nodes
-  // arrStyle?.sort(function(a, b) {
-  //   var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-  //   var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-  //   return numA - numB;
-  // });
   let day = 'Days'
   if(lang === 'fr') {
     day = 'Jours'
