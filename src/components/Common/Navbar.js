@@ -40,16 +40,8 @@ export default function Navbar({
   listVoucher,
   dataAboutUs,
   dataBookTour,
-  dataTaxonomiesCountry,
-  dataTaxonomiesStyleTour,
-  dataTaxonomiesBudget,
-  dataTaxonomiesDuration,
   contactInfo
 }) {
-  const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.data?.allBudget?.nodes
-  const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.data?.allDuration?.nodes
-  const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.data?.allCountries?.nodes
-  const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.data?.allTourStyle?.nodes
   const refMb = useRef()
   const refMenu = useRef()
   const refNav = useRef()
@@ -182,25 +174,6 @@ export default function Navbar({
   }
   const handleClickClose = () => {
     refMb.current.classList.remove('active')
-  }
-
-  function handleTaxonomies(data) {
-    const newArrDataTaxonomies = []
-    data?.map((item) => {
-      newArrDataTaxonomies.push(item)
-    })
-    return newArrDataTaxonomies
-  }
-  const newArrDataTaxonomiesCountry = handleTaxonomies(arrDataTaxonomiesCountry)
-  const newArrDataTaxonomiesStyleTravel = handleTaxonomies(arrDataTaxonomiesStyleTour)
-  const newArrDataTaxonomiesBudget = handleTaxonomies(arrDataTaxonomiesBudget)
-  const newArrDataTaxonomiesDuration = handleTaxonomies(arrDataTaxonomiesDuration)
-  // ==============================================================
-  const dataFilter = {
-    countries: newArrDataTaxonomiesCountry,
-    style: newArrDataTaxonomiesStyleTravel,
-    budget: newArrDataTaxonomiesBudget,
-    duration: newArrDataTaxonomiesDuration
   }
 
   const handleCloseNav = () => {
@@ -360,7 +333,6 @@ export default function Navbar({
             <div className='flex-1 hidden max-lg:block'>
               <InputSearchMb
                 lang={lang}
-                dataFilter={dataFilter}
                 onCloseNav={handleCloseNav}
               />
             </div>

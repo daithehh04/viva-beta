@@ -1,4 +1,3 @@
-'use client'
 import DestinationItem from './DestinationItem'
 
 function index({ data, lang,onCloseMenu }) {

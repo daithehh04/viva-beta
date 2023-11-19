@@ -64,11 +64,14 @@ function FilterBanner() {
 
   const handleSort = (fn = []) => {
     const clone = [...fn]
-    clone?.sort(function (a, b) {
-      var numA = parseInt(a?.name.split('-')[0]);
-      var numB = parseInt(b?.name.split('-')[0]);
-      return numA - numB;
-    });
+    if (clone?.length > 0) {
+      clone?.sort(function (a, b) {
+        var numA = parseInt(a?.name.split('-')[0]);
+        var numB = parseInt(b?.name.split('-')[0]);
+        return numA - numB;
+      });
+    }
+    return clone
   }
   const arrBudget = dataFilter?.budget
   // handleSort(arrBudget)

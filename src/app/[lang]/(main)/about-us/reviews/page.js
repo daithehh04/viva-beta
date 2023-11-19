@@ -28,7 +28,7 @@ export default async function page({ params: { lang } }) {
   const res = await fetchData(GET_REVIEWS_DATA, {language: lang?.toUpperCase()})
   const dataCountry = await fetchData(DATA_TAXONOMIES_COUNTRY, { language: lang?.toUpperCase() })
   const dataYear = await fetchData(getYearReview)
-  const arrCountry = dataCountry?.data?.allCountries?.nodes
+  const arrCountry = dataCountry?.data?.allCountries?.nodes || []
   arrCountry?.sort(function(a, b) {
     var numA = parseInt(a?.country?.priority);
     var numB = parseInt(b?.country?.priority);

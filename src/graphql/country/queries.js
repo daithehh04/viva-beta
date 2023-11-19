@@ -155,7 +155,7 @@ query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxono
 const DATA_SLIDE_OTHER_TOUR = `
 query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxonomyName: TaxonomyEnum) {
   allTours(
-    first: 100,
+    first: 8,
     where: {
       taxQuery: {
         taxArray: { terms: [$taxonomyValue], taxonomy: $taxonomyName, field: SLUG, operator: IN }
@@ -198,7 +198,7 @@ query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxono
 const GET_DATA_BEST_SELLER_OURTOUR = `
 query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxonomyName: TaxonomyEnum) {
   allTours(
-    first: 100,
+    first: 7,
     where: {
       taxQuery: {
         taxArray: [
@@ -208,6 +208,11 @@ query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxono
       }
     }
   ) {
+    pageInfo {
+      offsetPagination {
+        total
+      }
+    }
     nodes {
       translation(language: $language) {
           slug

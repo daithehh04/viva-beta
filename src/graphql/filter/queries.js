@@ -93,108 +93,132 @@ query durationTaxonomies {
 }`
 
 const DATA_BEST_TOUR = gql`
-  query GetFilterTour($language: LanguageCodeEnum!, $countrySlug: [String!], $styleTourSlug: [String!]) {
-    allTours(
-      first: 100,
-      where: {
-        taxQuery: {
-          taxArray: [
-            { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
-            { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
-          ]
-        }
-        orderby: { field: DATE, order: DESC }
+query GetFilterTour(
+  $language: LanguageCodeEnum!
+  $countrySlug: [String!]
+  $styleTourSlug: [String!]
+  $budget: [String!]
+  $duration: [String!]
+  $offset: Int!
+  $size: Int!
+) {
+  allTours(
+    where: {
+      offsetPagination: { offset: $offset, size: $size }
+      taxQuery: {
+        taxArray: [
+          { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
+          { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
+          { taxonomy: BUDGET, operator: IN, terms: $budget, field: NAME }
+          { taxonomy: DURATION, operator: IN, terms: $duration, field: NAME }
+        ]
       }
-    ) {
-      nodes {
-        translation(language: $language) {
-          id
-          title
-          slug
-          bestSeller {
-            nodes {
-              name
-            }
+      orderby: { field: DATE, order: DESC }
+    }
+  ) {
+    pageInfo {
+      offsetPagination {
+        total
+      }
+    }
+    nodes {
+      translation(language: $language) {
+        id
+        title
+        slug
+        bestSeller {
+          nodes {
+            name
           }
-          tourStyle {
-            nodes {
-              slug
-            }
+        }
+        tourStyle {
+          nodes {
+            slug
           }
-          tourDetail {
-            priceTour
-            numberDay
-            banner {
+        }
+        tourDetail {
+          priceTour
+          numberDay
+          banner {
+            title
+            gallery {
+              sourceUrl
+              altText
               title
-              gallery {
-                sourceUrl
-                altText
-                title
-              }
-              location
-              rate
-              icons
             }
+            location
+            rate
+            icons
           }
         }
       }
     }
   }
+}
 `
 const DATA_BEST_TOUR_HOME_PAGE = gql`
-  query GetFilterTour(
-    $language: LanguageCodeEnum!
-    $countrySlug: [String!]
-    $styleTourSlug: [String!]
-    $bestSellerSlug: [String!]
-  ) {
-    allTours(
-      first: 100,
-      where: {
-        taxQuery: {
-          taxArray: [
-            { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
-            { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
-            { taxonomy: BESTSELLER, operator: IN, terms: $bestSellerSlug, field: SLUG }
-          ]
-        }
-        orderby: { field: DATE, order: DESC }
+query GetFilterTour(
+  $language: LanguageCodeEnum!
+  $countrySlug: [String!]
+  $styleTourSlug: [String!]
+  $bestSellerSlug: [String!]
+  $budget: [String!]
+  $duration: [String!]
+) {
+  allTours(
+    first: 7,
+    where: {
+      taxQuery: {
+        taxArray: [
+          { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
+          { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
+          { taxonomy: BESTSELLER, operator: IN, terms: $bestSellerSlug, field: SLUG }
+          { taxonomy: BUDGET, operator: IN, terms: $budget, field: NAME }
+          { taxonomy: DURATION, operator: IN, terms: $duration, field: NAME }
+        ]
       }
-    ) {
-      nodes {
-        translation(language: $language) {
-          id
-          title
-          slug
-          bestSeller {
-            nodes {
-              name
-            }
+      orderby: { field: DATE, order: DESC }
+    }
+  ) {
+    pageInfo {
+      offsetPagination {
+        total
+      }
+    }
+    nodes {
+      translation(language: $language) {
+        id
+        title
+        slug
+        bestSeller {
+          nodes {
+            name
           }
-          tourStyle {
-            nodes {
-              slug
-            }
+        }
+        tourStyle {
+          nodes {
+            slug
           }
-          tourDetail {
-            priceTour
-            numberDay
-            banner {
+        }
+        tourDetail {
+          priceTour
+          numberDay
+          banner {
+            title
+            gallery {
+              sourceUrl
+              altText
               title
-              gallery {
-                sourceUrl
-                altText
-                title
-              }
-              location
-              rate
-              icons
             }
+            location
+            rate
+            icons
           }
         }
       }
     }
   }
+}
 `
 
 export const DATA_BEST_TOUR_HOME_PAGE_WITHOUT_GQL = `

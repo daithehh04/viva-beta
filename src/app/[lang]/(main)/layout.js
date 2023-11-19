@@ -59,10 +59,6 @@ export default async function MainLayout({ children, params }) {
     wwrRes,
     rtRes,
     rvRes,
-    dataTaxonomiesCountry,
-    dataTaxonomiesStyleTour,
-    dataTaxonomiesBudget,
-    dataTaxonomiesDuration
   ] = await Promise.all([
     fetchData(DATA_HEADER, { id: LANGUAGE_IDS['en'] }),
     fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS?.[params?.lang], language: params?.lang?.toUpperCase() }),
@@ -76,10 +72,6 @@ export default async function MainLayout({ children, params }) {
     fetchData(GET_DATA_MENU_WWR, { language: params?.lang?.toUpperCase() }),
     fetchData(GET_DATA_MENU_RT, { language: params?.lang?.toUpperCase() }),
     fetchData(GET_DATA_MENU_RV, { language: params?.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_COUNTRY, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_BUDGET, { language: params.lang?.toUpperCase() }),
-    fetchData(DATA_TAXONOMIES_DURATION, { language: params.lang?.toUpperCase() }),
   ])
 
   const dataHome = data?.data?.page?.home
@@ -97,10 +89,6 @@ export default async function MainLayout({ children, params }) {
         <ApolloClientProvider>
         <Navbar
           socialMobile={socialMobile}
-          dataTaxonomiesCountry={dataTaxonomiesCountry}
-          dataTaxonomiesStyleTour={dataTaxonomiesStyleTour}
-          dataTaxonomiesBudget={dataTaxonomiesBudget}
-          dataTaxonomiesDuration={dataTaxonomiesDuration}
           travelStylesList={travelStylesList}
           lang={params.lang}
           dataHome={dataHome?.header}

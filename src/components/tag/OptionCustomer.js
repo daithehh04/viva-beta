@@ -25,7 +25,6 @@ const Placeholder = ({ item, icon }) => (
   </div>
 )
 export default function OptionCustomer({ icon, list, defaultValue, onSelect,lang }) {
- 
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   let placeholderDefault = "Destination"
   if(lang === 'it') {
@@ -46,8 +45,8 @@ export default function OptionCustomer({ icon, list, defaultValue, onSelect,lang
     } = event
     if (value === placeholderDefault) {
       // console.log(value, placeholderDefault)
-      setPersonName(value)
-      onSelect(null)
+      setPersonName(placeholderDefault)
+      onSelect([])
     } else {
       setPersonName(value)
       onSelect(value)

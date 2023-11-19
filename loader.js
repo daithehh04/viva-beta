@@ -2,7 +2,7 @@ const isProd = process.env.NODE_ENV === 'production'
 
 export default function myImageLoader({ src, width, quality }) {
   // Run development
-  if (!isProd) return `${src}?w=${width}&q=${quality || 75}`
+  return `${src}?w=${width}&q=${quality || 75}`
 
   // Run Production
   // Public file

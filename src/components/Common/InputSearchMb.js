@@ -1,6 +1,6 @@
 'use client'
 
-import { DATA_SEARCH_TEXT_TOUR } from '@/graphql/filter/queries'
+import { DATA_SEARCH_TEXT_TOUR, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
 import { useQuery } from '@apollo/client'
 import { useRef } from 'react'
 import { useData } from '../Menu/DataContextMenu'
@@ -10,7 +10,55 @@ import FilterBanner from '@/pageComponent/Home/FilterBanner'
 import Link from 'next/link'
 import Loading from './Loading'
 
-function InputSearchMb({ lang, dataFilter, onCloseNav }) {
+function InputSearchMb({ lang, onCloseNav }) {
+  const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+  const { data: durations } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+
+  const { data: countries } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+  const { data: styles } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
+    variables: {
+      language: lang?.toUpperCase(),
+    }
+  })
+  function handleTaxonomiesSlug(data) {
+    const newArrDataTaxonomies = []
+    data?.map((item) => {
+      newArrDataTaxonomies.push(item?.slug)
+    })
+    return newArrDataTaxonomies
+  }
+
+  function handleTaxonomiesName(data) {
+    const newArrDataTaxonomies = []
+    data?.map((item) => {
+      newArrDataTaxonomies.push(item?.name)
+    })
+    return newArrDataTaxonomies
+  }
+  const newArrDataTaxonomiesCountry = handleTaxonomiesName(countries?.allCountries?.nodes)
+  const newArrDataTaxonomiesStyleTravel = handleTaxonomiesSlug(styles?.allTourStyle?.nodes)
+  const newArrDataTaxonomiesBudget = handleTaxonomiesName(budgets?.allBudget?.nodes)
+  const newArrDataTaxonomiesDuration = handleTaxonomiesName(durations?.allDuration?.nodes)
+  // =================================================================
+
+  const dataFilter = {
+    countries: newArrDataTaxonomiesCountry,
+    style: newArrDataTaxonomiesStyleTravel,
+    budget: newArrDataTaxonomiesBudget,
+    duration: newArrDataTaxonomiesDuration
+  }
   const { dataInput } = useData();
   const refMenu = useRef()
   const handleOpen = (e) => {

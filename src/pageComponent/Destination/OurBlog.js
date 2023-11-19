@@ -10,7 +10,9 @@ async function OurBlog({ lang,slug }) {
   })
   const data = dataCountry?.data?.countries?.translation
   const dataInfo = data?.country?.blogs
-  
+  if(!dataInfo?.length) {
+    return null
+  }
   return (
     <div className={`flex flex-col mt-[14.93vw] md:mt-[8.28vw] content`}>
       <span className='heading-1 md:mb-[3vw] mb-[6.4vw] md:pl-0 pl-[4.27vw]'>{data?.ourTour?.titleBlogs}</span>

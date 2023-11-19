@@ -66,32 +66,40 @@ function FilterPopup() {
     setBudget(event.target.value)
   }
 
-  const handleSort = (fn) => {
-    fn?.sort(function (a, b) {
-      var numA = parseInt(a?.name.split('-')[0]);
-      var numB = parseInt(b?.name.split('-')[0]);
+  const handleSort = (fn = []) => {
+    const clone = [...fn]
+    if (clone?.length > 0) {
+      clone?.sort(function (a, b) {
+        var numA = parseInt(a?.name.split('-')[0]);
+        var numB = parseInt(b?.name.split('-')[0]);
+        return numA - numB;
+      });
+    }
+    return clone
+  }
+  let arrBudget = dataFilter?.budget
+  arrBudget = handleSort(arrBudget)
+
+  let arrDuration = dataFilter?.duration
+  arrDuration = handleSort(arrDuration)
+
+  const arrCountry = dataFilter?.country
+  if (arrCountry?.length > 0) {
+    arrCountry?.sort(function (a, b) {
+      const numA = parseInt(a?.country?.priority);
+      const numB = parseInt(b?.country?.priority);
       return numA - numB;
     });
   }
-  const arrBudget = dataFilter?.budget
-  handleSort(arrBudget)
-
-  const arrDuration = dataFilter?.duration
-  handleSort(arrDuration)
-
-  const arrCountry = dataFilter?.country
-  arrCountry?.sort(function (a, b) {
-    var numA = parseInt(a?.country?.priority);
-    var numB = parseInt(b?.country?.priority);
-    return numA - numB;
-  });
 
   const arrStyle = dataFilter?.style
-  arrStyle?.sort(function (a, b) {
-    var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-    var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-    return numA - numB;
-  });
+  if (arrStyle?.length > 0) {
+    arrStyle?.sort(function (a, b) {
+      var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
+      var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
+      return numA - numB;
+    });
+  }
 
   function handleSearch(e) {
     const arrParams = []
