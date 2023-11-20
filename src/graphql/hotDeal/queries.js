@@ -1,3 +1,40 @@
+export const PROMOTION_TOUR_SLUG_QUERY = `
+query ($language: LanguageCodeEnum!) {
+  page(id: "cG9zdDoxMTAy", idType: ID) {
+    translation(language: $language) {
+      hotDeals {
+        promotionList {
+          ... on Tours {
+            translation(language: $language) {
+              id
+              slug
+            }
+          }
+        }
+      }
+    }
+  }
+}`
+
+export const VOUCHER_SLUG_QUERY = `
+query ($language: LanguageCodeEnum!) {
+  page(id: "cG9zdDoxMTAy", idType: ID) {
+    translation(language: $language) {
+      hotDeals {
+        voucherHeader {
+          listVoucher {
+            ... on Vouchers {
+              translation(language: $language) {
+                slug
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`
+
 export const GET_HOT_DEAL_DATA = `query ($language: LanguageCodeEnum!) {
   page(id: "cG9zdDoxMTAy", idType: ID) {
     translation(language: $language) {

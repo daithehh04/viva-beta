@@ -3,7 +3,7 @@ import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
-import { GET_LIST_PROMOTION_TOUR } from '@/graphql/hotDeal/queries'
+import { GET_LIST_PROMOTION_TOUR, PROMOTION_TOUR_SLUG_QUERY } from '@/graphql/hotDeal/queries'
 import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
 import { GET_TOUR_DETAIL, GET_TOUR_DETAIL_HEADER } from '@/graphql/tourDetail/queries'
 import Promotion from '@/pageComponent/HotDeal'
@@ -19,6 +19,17 @@ export async function generateMetadata({ params: { slug, lang } }) {
   const title = tourDetail?.meta?.title
   const excerpt = tourDetail?.meta?.description
   return getMeta(title, excerpt, featuredImage)
+}
+
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(PROMOTION_TOUR_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+
+  const hotDeals = data?.page?.translation?.hotDeals?.promotionList || []
+
+  return hotDeals.map((hotDeal) => ({
+    slug: hotDeal?.translation?.slug
+  }))
 }
 
 export default async function page({ params: { lang, slug } }) {
