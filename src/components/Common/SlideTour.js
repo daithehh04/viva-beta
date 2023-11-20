@@ -4,6 +4,7 @@ import { Pagination, FreeMode } from 'swiper/modules'
 import { useRef, useState } from 'react'
 import TourItem from './TourItem'
 import vw from '@/helpers/convertToVw'
+import { Skeleton } from '@mui/material'
 
 function SlideTour({ data, slug, isLoading, lang }) {
   const [indexSlider, setIndexSlider] = useState(0)

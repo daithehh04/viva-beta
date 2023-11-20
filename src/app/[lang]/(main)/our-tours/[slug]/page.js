@@ -22,19 +22,17 @@ export async function generateMetadata({ params: { lang, slug } }) {
 function page({ params: { lang, slug } }) {
   return (
     <div>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <Suspense fallback={<Banner.Skeleton />}>
         <Banner
           slug={slug}
           lang={lang}
         />
       </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
-        <FilterPopup />
-      </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <FilterPopup />
+      <Suspense fallback={<SectionActions.Skeleton />}>
         <SectionActions lang={lang} slug={slug} />
       </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <Suspense fallback={<SlideDestination.Skeleton />} >
         <SlideDestination
           lang={lang}
           slug={slug}
