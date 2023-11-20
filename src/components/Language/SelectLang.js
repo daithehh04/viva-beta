@@ -20,7 +20,7 @@ function SelectLang({ lang }) {
       return segments.join('/')
     }
     segments[1] = locale
-    return segments.join('/')
+    return `/${locale}`
   }
 
   const handleChange = (event) => {
