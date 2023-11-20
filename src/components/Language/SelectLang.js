@@ -11,21 +11,17 @@ import { i18n } from '../../../i18n-config'
 
 function SelectLang({ lang }) {
   const pathName = usePathname()
-  const [lng, setLng] = useState(lang)
+  // const [lng, setLng] = useState(lang)
   const redirectedPathName = (locale) => {
-    if (!pathName) return `/${currentLang}`
+    if (!pathName) return '/'
     const segments = pathName.split('/')
-    if (segments[1] !== 'it' && segments[1] !== 'en' && segments[1] !== 'fr') {
-      segments.splice(1, 0, locale)
-      return segments.join('/')
-    }
     segments[1] = locale
-    return `/${locale}`
+    return segments.join('/')
   }
 
-  const handleChange = (event) => {
-    setLng(event.target.value)
-  }
+  // const handleChange = (event) => {
+  //   setLng(event.target.value)
+  // }
 
   let chooseLang = 'Choose language'
   if(lang === 'fr') {
@@ -47,8 +43,8 @@ function SelectLang({ lang }) {
           }}
         >
           <Select
-            value={lng}
-            onChange={handleChange}
+            value={lang}
+            // onChange={handleChange}
             displayEmpty
             inputprops={{ 'aria-label': 'Without label' }}
             sx={{
