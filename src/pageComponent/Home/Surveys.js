@@ -1,27 +1,17 @@
 'use client'
-import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
-import imgPerson from '@/assets/images/survey-person.JPG'
-import Button from '@/components/Common/Button'
-import AOS from 'aos'
-import Link from 'next/link'
-import ModalCustom from '@/components/Common/ModalCustom'
-import BookTour from '@/components/Common/BookTour'
 import bgTourItemMB from '@/assets/images/bg-fb-mb.jpg'
+import imgPerson from '@/assets/images/survey-person.JPG'
+import BookTour from '@/components/Common/BookTour'
+import Button from '@/components/Common/Button'
+import ModalCustom from '@/components/Common/ModalCustom'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRef, useState } from 'react'
 
 function Surveys({ data, button, lang, dataBookTour }) {
   const [openModal, setOpenModal] = useState(false)
   const refBtnBookTour = useRef()
 
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 769
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
   return (
     <div className='surveys h-[auto] relative max-md:pt-[18vw]'>
       <Image

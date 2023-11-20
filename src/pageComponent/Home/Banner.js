@@ -1,19 +1,12 @@
-'use client'
 import banner from '@/assets/images/banner.jpg'
-import scrollDown from '@/helpers/scrollDown'
 import Image from 'next/image'
 import FilterBanner from './FilterBanner.js'
-import { useRef } from 'react'
+import { getDictionary } from '@/get-dictionary.js'
+import ScrollDown from '@/components/Common/ScrollDown.js'
 
-function Banner({ data, lang }) {
-  const scrollRef = useRef()
-  let explore = 'Explore now'
-  if(lang === 'fr') {
-    explore = 'Explorez maintenant'
-  }
-  if(lang === 'it') {
-    explore = 'Esplora ora'
-  }
+async function Banner({ data, lang }) {
+  const dictionary = await getDictionary(lang)
+
   return (
     <div className='h-[100vh] relative banner max-lg:h-[84.8vw]'>
       <div className='relative z-40 wrapper-banner'>
@@ -31,9 +24,9 @@ function Banner({ data, lang }) {
           />
         </div>
         <div
-          onClick={() => scrollDown(scrollRef, 'start')}
-          className='flex flex-col gap-[0.94vw] text-center items-center cursor-pointer justify-center md:mt-[2.19vw] mt-[4.8vw]'
+          className='relative flex flex-col gap-[0.94vw] text-center items-center cursor-pointer justify-center md:mt-[2.19vw] mt-[4.8vw]'
         >
+          <ScrollDown block="home-wrapper" />
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='arrow-down md:w-[1.375vw] md:h-[1.35vw] w-[3.2vw] h-[3.2vw]'
@@ -52,7 +45,7 @@ function Banner({ data, lang }) {
             />
           </svg>
           <span className='md:block hidden text-center font-manrope text-[0.875vw] not-italic font-semibold tracking-[0.04375vw] uppercase text-[#fff] relative z-[99]' style={{textShadow: '1px 1px 2px #000, 0 0 1em #000, 0 0 0.2em #000'}}>
-            {explore}
+            {dictionary.home.banner_explore}
           </span>
         </div>
       </div>
@@ -69,7 +62,6 @@ function Banner({ data, lang }) {
         className='absolute inset-0 block'
         style={{ background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.4) 45%)' }}
       ></div>
-      <div ref={scrollRef}></div>
     </div>
   )
 }

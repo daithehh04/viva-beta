@@ -393,7 +393,7 @@ const GET_INFO_CONTACT = `query getInfoContact($language: LanguageCodeEnum!) {
   }
 }`
 
-const GET_DATA_iNSEPECT = gql`query getDataInsepect(
+const GET_DATA_iNSEPECT = `query getDataInsepect(
     $language: LanguageCodeEnum!
     $categorySlug: [String!] 
     $destinationSlug: [String!]

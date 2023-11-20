@@ -1,11 +1,8 @@
-'use client'
 import BookingProcessSteps from '@/components/Common/BookingProcessSteps'
 import OurBlogHomePage from '@/components/Common/OurBlogHomePage'
 import AboutVideo from '@/components/Common/Video'
 import { GET_DATA_iNSEPECT } from '@/graphql/home/queries'
 import { useQuery } from '@apollo/client'
-import AOS from 'aos'
-import { useEffect } from 'react'
 import Banner from './Banner'
 import BestTour from './BestTour'
 import InspectionTrip from './InspectionTrip'
@@ -14,7 +11,7 @@ import Review from './Reviews/Review'
 import Surveys from './Surveys'
 import TravelStyle from './TravelStyle/TravelStyle'
 import TravelStyleMb from './TravelStyle/TravelStyleMb'
-export default function Home({
+export default async function Home({
   data,
   lang,
   nextStep,
@@ -23,41 +20,11 @@ export default function Home({
   arrayCateInit
 }) {
 
-  const newArrCate = arrayCateInit.filter((item,index) => item !== "blog")
-
   const language = lang?.toUpperCase() || 'EN'
-  const res = useQuery(GET_DATA_iNSEPECT, {
-    variables: {
-      language: language,
-      categorySlug: newArrCate,
-      destinationSlug: arrayDesInit
-    }
-  })
 
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 769
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
-  if (!data) {
-    return <p>Loading....</p>
-  }
-  const finalData = data?.data?.page?.home
 
-  const banner = finalData?.banner
-  const survey = finalData?.survey
-  const inspection = finalData?.inspectionTrip
-  const representative = finalData?.representative
-  const customerReview = finalData?.customerReview
-  const aboutVideo = finalData?.video
-  const travelStyleList = finalData?.travelStyle
-  const blog = finalData?.blogs
-  const nextStepBookTour = nextStep?.data?.page?.translation?.aboutUsReviews?.steps
-  const button = finalData?.groupbutton
+
+
 
   // =================================================================
 

@@ -1,30 +1,21 @@
 'use client'
 
-import Image from 'next/image'
-import comma from '@/assets/images/comma.svg'
 import commaRes from '@/assets/images/about/commaRes.svg'
+import subIcon from '@/assets/images/about/subIcon.svg'
+import comma from '@/assets/images/comma.svg'
 import sloganBg from '@/assets/images/sloganBg.png'
 import wave from '@/assets/images/wave.svg'
-import waveWhite from '@/assets/images/waveWhite.svg'
-import AOS from 'aos'
-import waveNormalWhite from '@/assets/images/waveNormalWhite.svg'
 import waveNormal from '@/assets/images/waveNormal.svg'
+import waveNormalWhite from '@/assets/images/waveNormalWhite.svg'
 import waveShort from '@/assets/images/waveShort.svg'
-import subIcon from '@/assets/images/about/subIcon.svg'
-import { useEffect, useRef, useState } from 'react'
+import waveWhite from '@/assets/images/waveWhite.svg'
 import CountDown from '@/components/Common/CountDown'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
 
 var timeoutId = null
 export default function Statistics({ data }) {
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 769
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
+
   const imgRef = useRef([])
   const [scrollPositions, setScrollPositions] = useState([-1300, 1300, -1300, 1300, -1300, 1300, -1300])
 

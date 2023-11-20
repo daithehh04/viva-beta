@@ -1,23 +1,13 @@
 'use client'
 
-import Image from 'next/image'
 import subBannerBg from '@/assets/images/about/subBannerBg.png'
 import subBannerBg2 from '@/assets/images/about/subBannerBg2.png'
-import Button from './Button'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
-import AOS from 'aos'
+import Button from './Button'
 
 export default function SubBanner({ data = {}, className, lang }) {
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 768
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
+
   const router = useRouter()
   return (
     <section className='md:w-[83.81vw] w-full md:m-auto rounded-[10px] relative md:px-[4.375vw] px-0 md:pt-[7.9375vw] pt-0 md:pb-[13.25vw] pb-0 md:shadow-[0_0_2.5vw_0_rgba(0,0,0,0.08)]'>

@@ -1,19 +1,9 @@
 'use client'
-import Image from 'next/image'
 import responsibleBg from '@/assets/images/about/responsibleBg.png'
-import { useEffect } from 'react'
-import AOS from 'aos'
+import Image from 'next/image'
 
 export default function Responsible({ data = {} }) {
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 768
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
+
   return (
     <section className='relative pb-[7.5vw] rounded-2xl md:rounded-none mt-[-7.2vw] bg-white z-10 md:mt-0'>
       <Image

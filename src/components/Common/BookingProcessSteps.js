@@ -1,19 +1,18 @@
 'use client'
-import Image from 'next/image'
-import { styled } from '@mui/material/styles'
-import Stack from '@mui/material/Stack'
-import Stepper from '@mui/material/Stepper'
-import Step from '@mui/material/Step'
-import StepLabel from '@mui/material/StepLabel'
-import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
 import stepIcon from '@/assets/images/about/step.png'
 import stepIcon1 from '@/assets/images/about/stepIcon1.svg'
 import stepIcon2 from '@/assets/images/about/stepIcon2.svg'
 import stepIcon3 from '@/assets/images/about/stepIcon3.svg'
 import stepIcon4 from '@/assets/images/about/stepIcon4.svg'
 import stepIcon5 from '@/assets/images/about/stepIcon5.svg'
-import AOS from 'aos'
-import { useEffect, useState } from 'react'
+import Stack from '@mui/material/Stack'
+import Step from '@mui/material/Step'
+import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector'
+import StepLabel from '@mui/material/StepLabel'
+import Stepper from '@mui/material/Stepper'
+import { styled } from '@mui/material/styles'
+import Image from 'next/image'
+import { useState } from 'react'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`& .${stepConnectorClasses.line}`]: {
@@ -90,15 +89,6 @@ export default function BookingProcessSteps({ data = {} }) {
   const handleHover = (index) => {
     setActiveIndex(index)
   }
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 768
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
   return (
     <section className='relative z-10 about-step-container'>
       <h3 className='content md:text-[4vw] text-[4.8vw] font-semibold capitalize font-optima md:leading-[110%] leading-[120%] md:text-center w-fit md:mb-[3.375vw]'>

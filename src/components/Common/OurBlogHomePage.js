@@ -1,21 +1,10 @@
 'use client'
 import { createTheme, useMediaQuery } from '@mui/material'
 import Link from 'next/link'
-import AOS from 'aos'
-import BlogItem2 from './BlogItem2'
 import BlogItem from './BlogItem'
-import { useEffect } from 'react'
+import BlogItem2 from './BlogItem2'
 
 function OurBlogHomePage({ data, button, lang }) {
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 768
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
   const theme = createTheme({
     breakpoints: {
       values: {

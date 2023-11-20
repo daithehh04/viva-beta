@@ -36,6 +36,7 @@ import SearchButton from '@/pageComponent/Home/SearchButton'
 import '@/assets/fonts/stylesheet.css'
 import '@/scss/main.scss'
 import ApolloClientProvider from '@/components/apolloProvider'
+import AosInit from '@/components/aos-init'
 
 const IDS = {
   en: 'cG9zdDoxNDIy',
@@ -107,6 +108,7 @@ export default async function MainLayout({ children, params }) {
         {!isPopup && <PopupPromotion lang={params.lang} data={dataPopupVoucher?.data?.page?.translation} />}
         {params.lang === 'fr' && <ChatTawkto url={linkChatFr} />}
         {params.lang === 'it' && <ChatTawkto url={linkChatIt} />}
+        <AosInit />
         {children}
         <Footer lang={params.lang} />
       </ApolloClientProvider>

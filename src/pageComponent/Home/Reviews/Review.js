@@ -1,24 +1,11 @@
-'use client'
-
-import VideoReview from './VideoReview'
-import SlideReview from './SlideReview'
-import Button from '@/components/Common/Button'
-import Link from 'next/link'
-import Image from 'next/image'
 import coconut from '@/assets/images/coconut.png'
-import AOS from 'aos'
-import { useEffect } from 'react'
+import Button from '@/components/Common/Button'
+import Image from 'next/image'
+import Link from 'next/link'
+import SlideReview from './SlideReview'
+import VideoReview from './VideoReview'
 
 function Review({ data, button, lang }) {
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 768
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
   return (
     <div>
       <div className='flex gap-x-[2vw] items-end overflow-hidden relative custom-review pt-[9.37vw]'>

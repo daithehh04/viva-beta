@@ -10,6 +10,7 @@ import { useQueryState } from 'next-usequerystate'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 function BestTour({
   button,
@@ -20,7 +21,7 @@ function BestTour({
   const [budget] = useQueryState('budget')
   const [duration] = useQueryState('duration')
   const [style] = useQueryState('style')
-  
+
   const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
     variables: {
       language: lang?.toUpperCase(),
@@ -111,10 +112,12 @@ function BestTour({
           data-aos-disabled='true'
           data-aos='fade-up'
           data-aos-duration='1000' className='bg-white mt-[2vw] w-max rounded-[1.125vw] px-[2.38vw] py-[2vw] max-md:mt-[4.27vw] max-md:p-0 max-md:bg-transparent max-md:w-full'>
-          <FilterTour
-            dataFilter={dataFilter}
-            className={'filterMobile'}
-          />
+          <Suspense fallback={<div>Loading ...</div>}>
+            <FilterTour
+              dataFilter={dataFilter}
+              className={'filterMobile'}
+            />
+          </Suspense>
         </div>
       </div>
 

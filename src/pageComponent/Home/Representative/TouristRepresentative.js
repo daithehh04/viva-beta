@@ -1,19 +1,8 @@
-'use client'
-import { useEffect } from 'react'
-import SlideRepresent from './SlideRepresentative'
-import AOS from 'aos'
 import SlideRepresentMb from './SlideRepresentMb'
+import SlideRepresent from './SlideRepresentative'
 
 function TouristRepresentative({ data }) {
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 769
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
+
   return (
     <div className='tourist-representative pt-[4.69vw] pb-[8.42vw] max-md:pt-[13.81vw]'>
       <div className='flex md:flex-row flex-col items-center content pb-[6.4vw] md:pb-[3.2vw]'>

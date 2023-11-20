@@ -1,12 +1,10 @@
 'use client'
+import Loading from '@/components/Common/Loading'
 import ReviewItem from '@/components/Common/ReviewItem'
 import { GET_All_CUSTOMERS_REVIEW } from '@/graphql/customersReview/queries'
 import { useQuery } from '@apollo/client'
-import { Skeleton, createTheme, useMediaQuery } from '@mui/material'
-import { useEffect, useRef, useState } from 'react'
-import AOS from 'aos'
-import Loading from '@/components/Common/Loading'
-import Link from 'next/link'
+import { createTheme, useMediaQuery } from '@mui/material'
+import { useRef, useState } from 'react'
 import FilterReview from './FilterReview'
 
 const theme = createTheme({
@@ -20,15 +18,7 @@ const Reviews = ({ lang, data, arrYear, arrCountry }) => {
   const listCountry = arrCountry?.map((item) => item?.slug)
   const [year,setYear] = useState(arrYear)
   const [country,setCountry] = useState(listCountry)
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 768
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refetch
-  }, [])
+
 
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   let totalPage = useRef(0)

@@ -1,20 +1,10 @@
 'use client'
 
-import AOS from 'aos'
-import { useEffect } from 'react'
 import StaffSlide from './StaffSlide'
 import StaffSlideMobile from './StaffSlideMobile'
 
 export default function Staffs({ data }) {
-  useEffect(() => {
-    AOS.init({
-      disable: function () {
-        var maxWidth = 768
-        return window.innerWidth < maxWidth
-      }
-    })
-    AOS.refresh()
-  }, [])
+
   return (
     <section className='pb-[7.5vw] mt-[14.93vw] md:mt-[5vw]'>
       {/* title of slide */}
