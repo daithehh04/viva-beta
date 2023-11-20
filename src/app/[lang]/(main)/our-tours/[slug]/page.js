@@ -1,6 +1,6 @@
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import { GET_META_DATA } from '@/graphql/country/queries'
+import { DATA_MENU_COUNTRY, GET_META_DATA } from '@/graphql/country/queries'
 import Banner from '@/pageComponent/Destination/Banner'
 import CustomerReview from '@/pageComponent/Destination/CustomerReview'
 import FilterPopup from '@/pageComponent/Destination/FilterPopup'
@@ -19,34 +19,44 @@ export async function generateMetadata({ params: { lang, slug } }) {
   const excerpt = meta?.description
   return getMeta(title, excerpt)
 }
+
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(DATA_MENU_COUNTRY, { language: params.lang?.toUpperCase() })
+
+  const countries = data?.allCountries?.nodes
+
+  return countries.map((country) => ({
+    slug: country.slug,
+  }))
+}
+
 function page({ params: { lang, slug } }) {
   return (
     <div>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <Suspense fallback={<Banner.Skeleton />}>
         <Banner
           slug={slug}
           lang={lang}
         />
       </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
-        <FilterPopup />
-      </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <FilterPopup />
+      <Suspense fallback={<SectionActions.Skeleton />}>
         <SectionActions lang={lang} slug={slug} />
       </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <Suspense fallback={<SlideDestination.Skeleton />} >
         <SlideDestination
           lang={lang}
           slug={slug}
         />
       </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <Suspense fallback={<SectionActions.Skeleton />}>
         <CustomerReview
           lang={lang}
           slug={slug}
         />
       </Suspense>
-      <Suspense fallback={<p>Loading feed...</p>}>
+      <Suspense fallback={<SectionActions.Skeleton />}>
         <OurBlog
           slug={slug}
           lang={lang}

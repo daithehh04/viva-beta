@@ -1,5 +1,5 @@
 import fetchData from '@/data/fetchData'
-import {DATA_COUNTRY_BANNER } from '@/graphql/country/queries'
+import { DATA_COUNTRY_BANNER } from '@/graphql/country/queries'
 import ScrollNextSection from '@/sections/our-tour/banner/scroll-next-section'
 import Box from '@mui/material/Box'
 import Image from 'next/image'
@@ -18,14 +18,8 @@ const Banner = async ({ slug, lang }) => {
   const data = dataCountry?.data?.countries?.translation?.country?.banner
 
   return (
-    <Box
-      sx={{
-        height: {
-          xs: '74.4vw', // For extra-small (mobile) screens
-          sm: '74.4vw', // For small screens
-          md: '100vh' // For medium screens
-        }
-      }}
+    <div
+      className='h-[74.4vw] md:h-screen'
     >
       <div className='relative h-[100%] flex justify-center items-center bannerOurtour'>
         <div className='flex flex-col justify-center text-center items-center absolute z-[10] '>
@@ -52,9 +46,9 @@ const Banner = async ({ slug, lang }) => {
           className='absolute inset-0 object-cover w-full h-full z-[-1]'
         />
         <div
-        className='absolute inset-0 block'
-        style={{ background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.4) 45%)' }}
-      ></div>
+          className='absolute inset-0 block'
+          style={{ background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.4) 45%)' }}
+        ></div>
 
         {/* animation button filter tour */}
         <div
@@ -63,7 +57,23 @@ const Banner = async ({ slug, lang }) => {
         ></div>
       </div>
 
-    </Box>
+    </div>
+  )
+}
+
+Banner.Skeleton = function BannerSkeleton() {
+  return (
+    <div
+      className='h-[74.4vw] md:h-screen'
+    >
+      <div className='relative h-[100%] flex justify-center items-center bannerOurtour'>
+        <div
+          className='absolute inset-0 block'
+          style={{ background: 'linear-gradient(0deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.4) 45%)' }}
+        ></div>
+      </div>
+
+    </div>
   )
 }
 

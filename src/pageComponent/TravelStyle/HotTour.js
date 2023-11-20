@@ -45,9 +45,9 @@ async function HotTour({slug, lang }) {
             return (
               <Reason
                 key={index}
-                icon={choose.image.sourceUrl}
-                title={choose.title}
-                desc={choose.content}
+                icon={choose?.image?.sourceUrl}
+                title={choose?.title}
+                desc={choose?.content}
               />
             )
           })}

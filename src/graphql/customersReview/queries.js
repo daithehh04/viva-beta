@@ -48,6 +48,17 @@ query GetDataPageReview($language: LanguageCodeEnum!, $offset: Int!, $size: Int!
   }
 }
 `
+
+export const REVIEWS_SLUG_QUERY = `query ($language: LanguageCodeEnum!) {
+  allCustomerReview(first: 100) {
+    nodes {
+      translation(language: $language) {
+        slug
+      }
+    }
+  }
+}`
+
 export const GET_REVIEWS = `query ($language: LanguageCodeEnum!) {
   allCustomerReview(first: 4) {
     nodes {

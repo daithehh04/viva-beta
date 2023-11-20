@@ -1,3 +1,4 @@
+import { TOURS_SLUG_QUERY } from '@/app/[lang]/sitemap'
 import NotFound from '@/components/Common/NotFound'
 import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
@@ -18,6 +19,17 @@ export async function generateMetadata({ params: { slug, lang } }) {
   const title = tourDetail?.meta?.title
   const excerpt = tourDetail?.meta?.description
   return getMeta(title, excerpt, featuredImage)
+}
+
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(TOURS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+
+  const tours = data?.allTours?.nodes || []
+
+  return tours.map((tour) => ({
+    slug: tour?.translation?.slug || undefined
+  }))
 }
 
 export default async function page({ params: { lang, slug } }) {

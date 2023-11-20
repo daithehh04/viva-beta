@@ -1,12 +1,23 @@
 import fetchData from "@/data/fetchData"
 import { getMeta } from "@/data/metaData/getMeta"
-import { DATA_RELATED_TOUR_REVIEW, REVIEW_DETAIl } from "@/graphql/customersReview/queries"
+import { DATA_RELATED_TOUR_REVIEW, REVIEWS_SLUG_QUERY, REVIEW_DETAIl } from "@/graphql/customersReview/queries"
 import ReviewDetail from "@/pageComponent/ReviewDetail/ReviewDetail"
 
 export async function generateMetadata({ params: { slug, lang } }) {
   const res = await fetchData(REVIEW_DETAIl, { slug: slug, language: lang?.toUpperCase() })
   const title = res?.data?.customerReview?.translation?.title + " - " + res?.data?.customerReview?.translation?.customerReview?.tours?.title
   return getMeta(title, null, null)
+}
+
+// Return a list of `params` to populate the [slug] dynamic segment
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(REVIEWS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+
+  const reviews = data?.allCustomerReview?.nodes || []
+  
+  return reviews.map((review) => ({
+    slug: review?.translation?.slug || undefined
+  }))
 }
 
 async function page({ params: { lang, slug } }) {
