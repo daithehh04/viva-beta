@@ -1,7 +1,13 @@
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
 import { GET_META_DATA } from '@/graphql/country/queries'
-import Destination from '@/pageComponent/Destination'
+import Banner from '@/pageComponent/Destination/Banner'
+import CustomerReview from '@/pageComponent/Destination/CustomerReview'
+import FilterPopup from '@/pageComponent/Destination/FilterPopup'
+import OurBlog from '@/pageComponent/Destination/OurBlog'
+import SectionActions from '@/pageComponent/Destination/SectionActions'
+import SlideDestination from '@/pageComponent/Destination/SlideDestination'
+import { Suspense } from 'react'
 
 export async function generateMetadata({ params: { lang, slug } }) {
   const res = await fetchData(GET_META_DATA, {
@@ -16,10 +22,37 @@ export async function generateMetadata({ params: { lang, slug } }) {
 function page({ params: { lang, slug } }) {
   return (
     <div>
-      <Destination
-        lang={lang}
-        slug={slug}
-      />
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <Banner
+          slug={slug}
+          lang={lang}
+        />
+      </Suspense>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <FilterPopup />
+      </Suspense>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <SectionActions lang={lang} slug={slug} />
+      </Suspense>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <SlideDestination
+          lang={lang}
+          slug={slug}
+        />
+      </Suspense>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <CustomerReview
+          lang={lang}
+          slug={slug}
+        />
+      </Suspense>
+      <Suspense fallback={<p>Loading feed...</p>}>
+        <OurBlog
+          slug={slug}
+          lang={lang}
+        />
+      </Suspense>
+
     </div>
   )
 }
