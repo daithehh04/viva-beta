@@ -14,9 +14,9 @@ function SelectLang({ lang }) {
   // const [lng, setLng] = useState(lang)
   const redirectedPathName = (locale) => {
     if (!pathName) return '/'
-    const segments = pathName.split('/')
-    segments[1] = locale
-    return segments.join('/')
+    // const segments = pathName.split('/')
+    // segments[1] = locale
+    return `/${locale}`
   }
 
   // const handleChange = (event) => {
