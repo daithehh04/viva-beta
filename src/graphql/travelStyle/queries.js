@@ -77,6 +77,18 @@ const GET_INFO_PAGE_TRAVEL_STYLE = `query getInfoPageTravelStyle($taxonomyValue:
   }
 }`
 
+export const TRAVEL_STYLE_SLUG_QUERY = `
+query ($language: LanguageCodeEnum!) {
+  allTourStyle {
+    nodes {
+      translation(language: $language) {
+        slug
+      }
+    }
+  }
+}
+`
+
 const GET_LIST_TRAVEL_STYLE_NAME = `query getTourStyleName($language: LanguageCodeFilterEnum) {
   allTourStyle(first: 50,where: {language: $language}) {
     nodes {

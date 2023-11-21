@@ -25,4 +25,15 @@ const GET_SERVICE_BY_CATEGORY = `
 }
   `
 
+
+export const SERVICES_SLUG_QUERY = `
+  query ($language: LanguageCodeFilterEnum) {
+    categories(where: {language: $language}) {
+      nodes {
+        slug
+      }
+    }
+  }
+`
+
 export default GET_SERVICE_BY_CATEGORY

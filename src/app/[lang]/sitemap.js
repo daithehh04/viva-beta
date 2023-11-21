@@ -19,6 +19,18 @@ const GET_TOURS = `
   }
 }
 `
+
+export const TOURS_SLUG_QUERY = `
+query ($language: LanguageCodeEnum!) {
+  allTours(first: 1000){
+    nodes{
+      translation(language: $language) {
+        slug
+      }
+    }
+  }
+}
+`
 const GET_COUNTRIES = `
 {
   allCountries(first:100,where:{language:EN}){
