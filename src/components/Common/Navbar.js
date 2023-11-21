@@ -110,7 +110,7 @@ export default function Navbar({
         if (menuItems) {
           menuItems.forEach((item) => {
             item.style.display = 'block'
-            if(refOverlay.current) {
+            if (refOverlay.current) {
               refOverlay.current.style.display = 'block'
             }
           })
@@ -120,7 +120,7 @@ export default function Navbar({
         if (menuItems) {
           menuItems.forEach((item) => {
             item.style.display = 'none'
-            if(refOverlay.current) {
+            if (refOverlay.current) {
               refOverlay.current.style.display = 'none'
             }
           })
@@ -197,159 +197,162 @@ export default function Navbar({
   }
 
   return (
-    <DataProvider>
-      <div className='nav-container'>
-        <nav
-          className={`bg-white w-[100vw] navbar h-[5.375vw] max-lg:h-[14.93vw]`}
-          ref={refNav}
-        >
-          <div className={`bg-trans flex items-center h-full w-full bg-white ${lang === 'fr' ? 'px-[6.125%]' : 'px-[8.125%]'}`}>
-            <div className='flex items-center gap-x-[2vw]'>
-              <Link href={`/${lang}`}>
-                <Image
-                  src={logo}
-                  width={100}
-                  height={100}
-                  alt='viva-travel'
-                  className='nav-logo w-[4.5vw] object-cover max-lg:w-[10.4vw]'
-                />
+    <div className='nav-container'>
+      <nav
+        className={`bg-white w-[100vw] navbar h-[5.375vw] max-lg:h-[14.93vw]`}
+        ref={refNav}
+      >
+        <div className={`bg-trans flex items-center h-full w-full bg-white ${lang === 'fr' ? 'px-[6.125%]' : 'px-[8.125%]'}`}>
+          <div className='flex items-center gap-x-[2vw]'>
+            <Link href={`/${lang}`}>
+              <Image
+                src={logo}
+                width={100}
+                height={100}
+                alt='viva-travel'
+                className='nav-logo w-[4.5vw] object-cover max-lg:w-[10.4vw]'
+              />
+            </Link>
+            <div
+              className='nav-list max-lg:hidden flex items-center gap-x-[2vw] mr-[6vw]'
+              ref={refMenu}
+            >
+              <div className='relative flex flex-shrink-0'>
+                <div
+                  className='capitalize text-[1vw] nav-link cursor-pointer'
+                  menu={dataHome?.nav1}
+                >
+                  <span>{dataHome?.nav1}</span>
+                  <div className='menu-item'>
+                    <MenuDestinations
+                      data={dataMenuCountry}
+                      lang={lang}
+                      onCloseMenu={handleCloseMenu}
+                    />
+                  </div>
+                </div>
+
+              </div>
+              <div
+                className='capitalize text-[1vw] nav-link cursor-pointer'
+                menu={dataHome?.nav2}
+              >
+                <span>{dataHome?.nav2}</span>
+                <div className='menu-item '>
+                  <MenuStyle
+                    travelStylesList={travelStylesList}
+                    lang={lang}
+                    onCloseMenu={handleCloseMenu}
+                  />
+                </div>
+              </div>
+              <Link
+                href={`/${lang}/hot-deals`}
+                className='capitalize text-[1vw] nav-link cursor-pointer relative'
+                menu={dataHome?.nav3}
+                onClick={handleCloseMenu}
+              >
+                <span>{dataHome?.nav3}</span>
+
+                <div className='hidden menu-item menu-item3'>
+                  <HotDeal
+                    hotDeals={hotDeals}
+                    listVoucher={listVoucher}
+                    menu
+                    lang={lang}
+                    onCloseMenu={handleCloseMenu}
+                  />
+                </div>
+                <span className='icon-hot absolute top-[-0.75vw] right-[-0.375vw] px-[0.625vw] rounded-[99px] bg-primaryColor text-[0.75vw]'>
+                  {hot}
+                </span>
+              </Link>
+              <Link
+                href={`/${lang}/check-visa`}
+                className='capitalize text-[1vw] nav-link '
+                menu={dataHome?.nav4}
+              >
+                <span>{dataHome?.nav4}</span>
               </Link>
               <div
-                className='nav-list max-lg:hidden flex items-center gap-x-[2vw] mr-[6vw]'
-                ref={refMenu}
+                className='capitalize text-[1vw] nav-link cursor-pointer'
+                menu={dataHome?.nav5}
               >
-                <div className='relative flex flex-shrink-0'>
-                  <div
-                    className='capitalize text-[1vw] nav-link cursor-pointer'
-                    menu={dataHome?.nav1}
-                  >
-                    <span>{dataHome?.nav1}</span>
-                    <div className='menu-item'>
-                      <MenuDestinations
-                        data={dataMenuCountry}
-                        lang={lang}
-                        onCloseMenu={handleCloseMenu}
-                      />
-                    </div>
-                  </div>
-
+                <span>{dataHome?.nav5}</span>
+                <div className='menu-item'>
+                  <MenuAbout
+                    dataAboutUs={dataAboutUs}
+                    onCloseMenu={handleCloseMenu}
+                    lang={lang}
+                  />
                 </div>
-                <div
-                  className='capitalize text-[1vw] nav-link cursor-pointer'
-                  menu={dataHome?.nav2}
-                >
-                  <span>{dataHome?.nav2}</span>
-                  <div className='menu-item '>
-                    <MenuStyle
-                      travelStylesList={travelStylesList}
-                      lang={lang}
-                      onCloseMenu={handleCloseMenu}
-                    />
-                  </div>
-                </div>
-                <Link
-                  href={`/${lang}/hot-deals`}
-                  className='capitalize text-[1vw] nav-link cursor-pointer relative'
-                  menu={dataHome?.nav3}
-                  onClick={handleCloseMenu}
-                >
-                  <span>{dataHome?.nav3}</span>
-
-                  <div className='hidden menu-item menu-item3'>
-                    <HotDeal
-                      hotDeals={hotDeals}
-                      listVoucher={listVoucher}
-                      menu
-                      lang={lang}
-                      onCloseMenu={handleCloseMenu}
-                    />
-                  </div>
-                  <span className='icon-hot absolute top-[-0.75vw] right-[-0.375vw] px-[0.625vw] rounded-[99px] bg-primaryColor text-[0.75vw]'>
-                    {hot}
-                  </span>
-                </Link>
-                <Link
-                  href={`/${lang}/check-visa`}
-                  className='capitalize text-[1vw] nav-link '
-                  menu={dataHome?.nav4}
-                >
-                  <span>{dataHome?.nav4}</span>
-                </Link>
-                <div
-                  className='capitalize text-[1vw] nav-link cursor-pointer'
-                  menu={dataHome?.nav5}
-                >
-                  <span>{dataHome?.nav5}</span>
-                  <div className='menu-item'>
-                    <MenuAbout
-                      dataAboutUs={dataAboutUs}
-                      onCloseMenu={handleCloseMenu}
-                      lang={lang}
-                    />
-                  </div>
-                </div>
-                <div
-                  className='capitalize text-[1vw] nav-link cursor-pointer'
-                  menu={dataHome?.nav6}
-                >
-                  <span>{dataHome?.nav6}</span>
-                  <div className='menu-item'>
-                    <MenuRcmService
-                      rcmServicesList={rcmServicesList}
-                      lang={lang}
-                      onCloseMenu={handleCloseMenu}
-                    />
-                  </div>
-                </div>
-                <Link
-                  href={`/${lang}/blog`}
-                  className='capitalize text-[1vw] nav-link cursor-pointer'
-                  menu={dataHome?.nav7}
-                >
-                  <span>{dataHome?.nav7}</span>
-                </Link>
               </div>
+              <div
+                className='capitalize text-[1vw] nav-link cursor-pointer'
+                menu={dataHome?.nav6}
+              >
+                <span>{dataHome?.nav6}</span>
+                <div className='menu-item'>
+                  <MenuRcmService
+                    rcmServicesList={rcmServicesList}
+                    lang={lang}
+                    onCloseMenu={handleCloseMenu}
+                  />
+                </div>
+              </div>
+              <Link
+                href={`/${lang}/blog`}
+                className='capitalize text-[1vw] nav-link cursor-pointer'
+                menu={dataHome?.nav7}
+              >
+                <span>{dataHome?.nav7}</span>
+              </Link>
             </div>
-            <div
-              className='flex ml-auto max-lg:hidden'
-              ref={refBtnBookTour}
-              // onClick={handleOpenPopup}
-              onClick={() => setOpenModal(true)}
-            >
-              <Button className='flex-shrink-0 btn-primary mr-[3.25vw]'>
-                <Image
-                  src={bookTourIcon}
-                  width={50}
-                  height={50}
-                  alt='img'
-                  className='w-[1.25vw] object-cover mr-[0.75vw]'
-                />
-                {book}
-              </Button>
-            </div>
-            <div className='flex-shrink-0 max-lg:hidden'>
-              <SelectLang lang={lang} />
-            </div>
-            <div className='flex-1 hidden max-lg:block'>
+          </div>
+          <div
+            className='flex ml-auto max-lg:hidden'
+            ref={refBtnBookTour}
+            // onClick={handleOpenPopup}
+            onClick={() => setOpenModal(true)}
+          >
+            <Button className='flex-shrink-0 btn-primary mr-[3.25vw]'>
+              <Image
+                src={bookTourIcon}
+                width={50}
+                height={50}
+                alt='img'
+                className='w-[1.25vw] object-cover mr-[0.75vw]'
+              />
+              {book}
+            </Button>
+          </div>
+          <div className='flex-shrink-0 max-lg:hidden'>
+            <SelectLang lang={lang} />
+          </div>
+          <div className='flex-1 hidden max-lg:block'>
+            <DataProvider>
               <InputSearchMb
                 lang={lang}
                 onCloseNav={handleCloseNav}
               />
-            </div>
-            <Image
-              src={bars}
-              width={50}
-              height={50}
-              alt='bars'
-              className={`w-[4.8vw] h-[2.93vw] ml-auto object-cover cursor-pointer hidden max-lg:block`}
-              onClick={handleClickBars}
-            />
+            </DataProvider>
+
           </div>
-        </nav>
-        <div
-          className='menu-popup fixed inset-0 hidden overflow-x-hidden overflow-y-auto w-full h-full bg-white nav-mobile max-lg:block !z-[199] nav-mobile'
-          ref={refMb}
-        >
+          <Image
+            src={bars}
+            width={50}
+            height={50}
+            alt='bars'
+            className={`w-[4.8vw] h-[2.93vw] ml-auto object-cover cursor-pointer hidden max-lg:block`}
+            onClick={handleClickBars}
+          />
+        </div>
+      </nav>
+      <div
+        className='menu-popup fixed inset-0 hidden overflow-x-hidden overflow-y-auto w-full h-full bg-white nav-mobile max-lg:block !z-[199] nav-mobile'
+        ref={refMb}
+      >
+        <DataProvider>
           <MenuMb
             dataHome={dataHome}
             socialMobile={socialMobile}
@@ -363,61 +366,62 @@ export default function Navbar({
             menu
             contactInfo={contactInfo}
           />
-        </div>
-        <div
-          className={`${(pathName.includes('tours') && !pathName.includes('our-tours')) || pathName.includes('hot-deals/')
-            ? 'max-md:hidden'
-            : ''
-            } books-footer h-[15.2vw] fixed bottom-0 left-0 right-0 z-[99] hidden max-md:flex`}
-        >
-          <Link
-            href={`/${lang}/search`}
-            className='flex items-center gap-[1.6vw] w-[50%] bg-[#fff] justify-center'
-          >
-            <Image
-              src={planeF}
-              width={50}
-              height={50}
-              alt='img'
-              className='w-[4.26vw] h-[4.26vw]'
-            />
-            <span className='text-[3.46vw] font-[500]'>{listTour}</span>
-          </Link>
-          <div
-            onClick={() => setOpenModal(true)}
-            className='flex items-center gap-[1.6vw] w-[50%] bg-[#FFD220] justify-center'
-          >
-            <Image
-              src={bookTourIcon}
-              width={50}
-              height={50}
-              alt='img'
-              className='w-[4.26vw] h-[4.26vw]'
-            />
-            <span className='text-[3.46vw] font-[500]'>{book}</span>
-          </div>
-        </div>
+        </DataProvider>
 
-        {openModal && (
-          <ModalCustom
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            className='w-[91.46vw] md:w-[82.93vw] md:h-[90vh] h-[80vh]'
-          >
-            <div className='w-full h-full overflow-y-auto md:rounded-[16px] overflow-x-hidden'>
-              <BookTour
-                data={dataBookTour}
-                setOpenModal={setOpenModal}
-                lang={lang}
-              />
-            </div>
-          </ModalCustom>
-        )}
-        <div
-          className='overlay'
-          ref={refOverlay}
-        ></div>
       </div>
-    </DataProvider>
+      <div
+        className={`${(pathName.includes('tours') && !pathName.includes('our-tours')) || pathName.includes('hot-deals/')
+          ? 'max-md:hidden'
+          : ''
+          } books-footer h-[15.2vw] fixed bottom-0 left-0 right-0 z-[99] hidden max-md:flex`}
+      >
+        <Link
+          href={`/${lang}/search`}
+          className='flex items-center gap-[1.6vw] w-[50%] bg-[#fff] justify-center'
+        >
+          <Image
+            src={planeF}
+            width={50}
+            height={50}
+            alt='img'
+            className='w-[4.26vw] h-[4.26vw]'
+          />
+          <span className='text-[3.46vw] font-[500]'>{listTour}</span>
+        </Link>
+        <div
+          onClick={() => setOpenModal(true)}
+          className='flex items-center gap-[1.6vw] w-[50%] bg-[#FFD220] justify-center'
+        >
+          <Image
+            src={bookTourIcon}
+            width={50}
+            height={50}
+            alt='img'
+            className='w-[4.26vw] h-[4.26vw]'
+          />
+          <span className='text-[3.46vw] font-[500]'>{book}</span>
+        </div>
+      </div>
+
+      {openModal && (
+        <ModalCustom
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          className='w-[91.46vw] md:w-[82.93vw] md:h-[90vh] h-[80vh]'
+        >
+          <div className='w-full h-full overflow-y-auto md:rounded-[16px] overflow-x-hidden'>
+            <BookTour
+              data={dataBookTour}
+              setOpenModal={setOpenModal}
+              lang={lang}
+            />
+          </div>
+        </ModalCustom>
+      )}
+      <div
+        className='overlay'
+        ref={refOverlay}
+      ></div>
+    </div>
   )
 }
