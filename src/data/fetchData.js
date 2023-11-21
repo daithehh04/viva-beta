@@ -1,11 +1,12 @@
-import fetchPonyfill from 'fetch-ponyfill'
+// import fetchPonyfill from 'fetch-ponyfill'
 
 export default async function fetchData(
   query, variables = {},
-  usePonyfill = true
+  // usePonyfill = true
 ) {
   try {
-    const res = await (usePonyfill ? fetchPonyfill() : { fetch }).fetch(process.env.NEXT_PUBLIC_API, {
+    // const res = await (usePonyfill ? fetchPonyfill() : { fetch }).fetch(process.env.NEXT_PUBLIC_API, {
+      const res = await fetch(process.env.NEXT_PUBLIC_API, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
