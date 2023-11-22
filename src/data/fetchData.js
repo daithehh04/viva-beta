@@ -15,7 +15,7 @@ export default async function fetchData(
         query,
         variables,
       }),
-      next: { revalidate: 60 },
+      cache: 'no-store',
     })
     // The return value is *not* serialized
     // You can return Date, Map, Set, etc.
