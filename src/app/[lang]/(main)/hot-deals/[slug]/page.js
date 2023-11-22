@@ -22,15 +22,15 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams({ params }) {
-  const { data } = await fetchData(PROMOTION_TOUR_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+// export async function generateStaticParams({ params }) {
+//   const { data } = await fetchData(PROMOTION_TOUR_SLUG_QUERY, { language: params.lang?.toUpperCase() })
 
-  const hotDeals = data?.page?.translation?.hotDeals?.promotionList || []
+//   const hotDeals = data?.page?.translation?.hotDeals?.promotionList || []
 
-  return hotDeals.map((hotDeal) => ({
-    slug: hotDeal?.translation?.slug
-  }))
-}
+//   return hotDeals.map((hotDeal) => ({
+//     slug: hotDeal?.translation?.slug
+//   }))
+// }
 
 export default async function page({ params: { lang, slug } }) {
   const [

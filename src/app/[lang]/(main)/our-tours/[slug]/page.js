@@ -21,15 +21,15 @@ export async function generateMetadata({ params: { lang, slug } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams({ params }) {
-  const { data } = await fetchData(DATA_MENU_COUNTRY, { language: params.lang?.toUpperCase() })
+// export async function generateStaticParams({ params }) {
+//   const { data } = await fetchData(DATA_MENU_COUNTRY, { language: params.lang?.toUpperCase() })
 
-  const countries = data?.allCountries?.nodes
+//   const countries = data?.allCountries?.nodes
 
-  return countries.map((country) => ({
-    slug: country.slug,
-  }))
-}
+//   return countries.map((country) => ({
+//     slug: country.slug,
+//   }))
+// }
 
 function page({ params: { lang, slug } }) {
   return (

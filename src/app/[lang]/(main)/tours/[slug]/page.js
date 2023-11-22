@@ -22,15 +22,15 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams({ params }) {
-  const { data } = await fetchData(TOURS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+// export async function generateStaticParams({ params }) {
+//   const { data } = await fetchData(TOURS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
 
-  const tours = data?.allTours?.nodes || []
+//   const tours = data?.allTours?.nodes || []
 
-  return tours.map((tour) => ({
-    slug: tour?.translation?.slug || undefined
-  }))
-}
+//   return tours.map((tour) => ({
+//     slug: tour?.translation?.slug || undefined
+//   }))
+// }
 
 export default async function page({ params: { lang, slug } }) {
   const [headerData, result, res, result4, dataBookTour] = await Promise.all([

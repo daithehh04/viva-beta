@@ -10,15 +10,15 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams({ params }) {
-  const { data } = await fetchData(REVIEWS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+// export async function generateStaticParams({ params }) {
+//   const { data } = await fetchData(REVIEWS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
 
-  const reviews = data?.allCustomerReview?.nodes || []
+//   const reviews = data?.allCustomerReview?.nodes || []
   
-  return reviews.map((review) => ({
-    slug: review?.translation?.slug || undefined
-  }))
-}
+//   return reviews.map((review) => ({
+//     slug: review?.translation?.slug || undefined
+//   }))
+// }
 
 async function page({ params: { lang, slug } }) {
   const data = await fetchData(REVIEW_DETAIl, { slug: slug, language: lang?.toUpperCase() })

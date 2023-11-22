@@ -76,15 +76,15 @@ export async function generateMetadata({ params: { lang } }) {
 
 
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams({ params }) {
-  const { data } = await fetchData(SERVICES_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+// export async function generateStaticParams({ params }) {
+//   const { data } = await fetchData(SERVICES_SLUG_QUERY, { language: params.lang?.toUpperCase() })
 
-  const services = data?.categories?.nodes || []
+//   const services = data?.categories?.nodes || []
 
-  return services.map((service) => ({
-    slug: service?.slug
-  }))
-}
+//   return services.map((service) => ({
+//     slug: service?.slug
+//   }))
+// }
 
 
 async function Page({ params: { lang, slug } }) {
