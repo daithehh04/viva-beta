@@ -1,5 +1,10 @@
 {
   "home": {
     "banner_explore": "Explore now"
+  },
+  "nav": {
+    "booking_button": "Request A Quote",
+    "hot": "Hot",
+    "all_our_tours": "All Our Tours"
   }
 }

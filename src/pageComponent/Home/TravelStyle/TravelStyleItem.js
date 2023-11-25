@@ -18,7 +18,7 @@ function TravelStyleItem({ data, lang }) {
       data-aos-disabled='true'
       data-aos='fade-up'
       data-aos-duration='1000'
-      className='relative w-[26.25vw] travel-style z-10'
+      className='relative w-[26.25vw] types-of-trips z-10'
     >
       <Image
         src={data?.banner?.travelStyleInfo?.imageHomePage?.sourceUrl}
@@ -45,7 +45,7 @@ function TravelStyleItem({ data, lang }) {
           className='absolute w-[2.825vw] left-[-2.25vw] top-[-0.5vw]'
         />
         <Link
-          href={`/${lang}/travel-style/${data?.slug}`}
+          href={`/${lang}/types-of-trips/${data?.slug}`}
           className='w-[5.9375vw] h-[5.9375vw] text-center rounded-full bg-primaryColor text-textColor text-[0.875vw] font-[500] flex items-center justify-center max-lg:max-lg:text-[1.1vw] cursor-pointer'
         >
           {view}

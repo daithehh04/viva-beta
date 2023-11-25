@@ -30,6 +30,7 @@ const theme = createTheme({
   }
 })
 export default function Navbar({
+  dictionary,
   socialMobile,
   lang,
   dataHome,
@@ -51,18 +52,20 @@ export default function Navbar({
   const titleAboutUs = {
     whoWeAre: dataAboutUs?.wwrRes?.who_we_are?.banner?.title,
     ResTravel: dataAboutUs?.rtRes?.responsibleTravel?.banner?.title,
-    AboutUs: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.title
+    AboutUs: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.title,
+    whoWeAreSlug: dataAboutUs?.wwrRes?.who_we_are?.banner?.slug,
+    ResTravelSlug: dataAboutUs?.rtRes?.responsibleTravel?.banner?.slug,
+    AboutUsSlug: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.slug,
   }
+  console.log("dataAboutUs?.rvRes?.aboutUsReviews", dataAboutUs?.rvRes?.aboutUsReviews);
   //check pathName
   const pathName = usePathname()
   const [openModal, setOpenModal] = useState(false)
   const pathNameMb = [
-    'our-tours',
-    'travel-style',
+    'destinations',
+    'types-of-trips',
     'tours',
-    'who-we-are',
-    'responsible-travel',
-    'reviews',
+    'about-us',
     'hot-deals/',
     'check-visa'
   ]
@@ -75,7 +78,7 @@ export default function Navbar({
     // check header transpent or not
     const isTrans = onlySmallScreen
       ? pathNameMb.some((item) => pathName.includes(item))
-      : pathName.includes(pathNamePc) && !pathName.includes('our-tours')
+      : pathName.includes(pathNamePc) && !pathName.includes('destinations')
 
     if (isTrans) {
       nav.classList.add('nav-mb-special')
@@ -149,7 +152,7 @@ export default function Navbar({
       item.addEventListener('mouseout', function () {
         item.classList.remove('show')
         refOverlay.current.classList.remove('active')
-        if (pathName.includes('tours') && !pathName.includes('our-tours') && window.pageYOffset === 0) {
+        if (pathName.includes('tours') && !pathName.includes('destinations') && window.pageYOffset === 0) {
           nav.classList.add('nav-mb-special')
         } else {
           nav.classList.remove('nav-mb-special')
@@ -182,19 +185,9 @@ export default function Navbar({
     }
   }
 
-  let book = 'Request A Quote'
-  let hot = 'Hot'
-  let listTour = 'All Our Tours'
-  if (lang === 'fr') {
-    book = 'Demander Un Devis'
-    hot = 'Hot'
-    listTour = 'Tous Nos Voyages '
-  }
-  if (lang === 'it') {
-    book = ' Richiedi Un Preventivo'
-    hot = 'speciali'
-    listTour = 'Tutti I Nostri Viaggi '
-  }
+  const book = dictionary.nav.booking_button
+  const hot = dictionary.nav.hot
+  const listTour = dictionary.nav.all_our_tours
 
   return (
     <div className='nav-container'>
@@ -370,7 +363,7 @@ export default function Navbar({
 
       </div>
       <div
-        className={`${(pathName.includes('tours') && !pathName.includes('our-tours')) || pathName.includes('hot-deals/')
+        className={`${(pathName.includes('tours') && !pathName.includes('destinations')) || pathName.includes('hot-deals/')
           ? 'max-md:hidden'
           : ''
           } books-footer h-[15.2vw] fixed bottom-0 left-0 right-0 z-[99] hidden max-md:flex`}

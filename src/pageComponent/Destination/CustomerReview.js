@@ -44,7 +44,7 @@ async function CustomerReview({lang, slug }) {
                 lang={lang}
               />
               <ReviewItem
-                className={`md:hidden block our-tours-item-mobile w-[74.66vw] ${index === data.length - 1 ? 'mr-[4.27vw]' : ''
+                className={`md:hidden block destinations-item-mobile w-[74.66vw] ${index === data.length - 1 ? 'mr-[4.27vw]' : ''
                   }`}
                 data={item}
                 lang={lang}

@@ -42,6 +42,7 @@ export const GET_DATA_MENU_RV = `query($language: LanguageCodeEnum!) {
               sourceUrl
               altText
             }
+            slug
           }
           
         }

@@ -6,7 +6,7 @@ import Link from 'next/link'
 function StyleItem({ id, title, image, lang, onCloseMenu }) {
   return (
     <Link
-      href={`/${lang}/travel-style/${id}`}
+      href={`/${lang}/types-of-trips/${id}`}
       className='flex box_item_menu items-center gap-x-[1.32vw]'
       onClick={onCloseMenu}
     >

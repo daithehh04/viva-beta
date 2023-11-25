@@ -5,7 +5,7 @@ function DestinationItem({ tour, lang, onCloseMenu }) {
 
   return (
     <Link
-      href={`/${lang}/our-tours/${encodeURIComponent(tour?.slug)}`}
+      href={`/${lang}/destinations/${encodeURIComponent(tour?.slug)}`}
       className='h-[16vw] relative ourTour_menu rounded-[0.625vw]'
       onClick={onCloseMenu}
     >

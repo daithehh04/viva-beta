@@ -12,7 +12,7 @@ export default function SearchButton({ lang }) {
   const [popup, setPopup] = useState(false)
   const searchRef = useRef()
   useEffect(() => {
-    if (pathName.includes('/search') || pathName.includes('/our-tours')) {
+    if (pathName.includes('/search') || pathName.includes('/destinations')) {
       searchRef.current.classList.add('hidden')
     } else {
       searchRef.current.classList.remove('hidden')

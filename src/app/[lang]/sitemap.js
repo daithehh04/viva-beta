@@ -99,14 +99,14 @@ export default async function sitemap() {
   })
   const arrCountries = countries?.data?.allCountries?.nodes?.map((e) => {
     return {
-      url: `${process.env.DOMAIN}/our-tours/${e?.slug}`,
+      url: `${process.env.DOMAIN}/destinations/${e?.slug}`,
       lastModified: new Date(),
       priority: 0.8
     }
   })
   const arrTourStyles = tourStyles?.data?.allTourStyle?.nodes?.map((e) => {
     return {
-      url: `${process.env.DOMAIN}/travel-style/${e?.slug}`,
+      url: `${process.env.DOMAIN}/types-of-trips/${e?.slug}`,
       lastModified: new Date(),
       priority: 0.8
     }

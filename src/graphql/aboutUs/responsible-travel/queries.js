@@ -1,3 +1,17 @@
+export const ABOUT_US_QUERY = `{
+  page(id: "cG9zdDo4MDcz") {
+    listslugaboutus {
+      listslugpage {
+        itempage {
+          id
+          lang
+          slugs
+        }
+      }
+    }
+  }
+}`
+
 export const GET_RESPONSIBLE_TRAVEL_DATA = `query ($language: LanguageCodeEnum!) {
     page(id: "cG9zdDoxMjg1") {
       translation(language: $language) {
@@ -39,6 +53,7 @@ export const GET_DATA_MENU_RT = `query($language: LanguageCodeEnum!) {
               sourceUrl
               altText
             }
+            slug
           }
           
         }

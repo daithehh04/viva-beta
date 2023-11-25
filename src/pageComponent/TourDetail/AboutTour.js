@@ -602,13 +602,13 @@ export default function AboutTour(props) {
                       }`}
                   >
                     <ReviewItem
-                      className='hidden our-tours-item md:flex'
+                      className='hidden destinations-item md:flex'
                       data={item}
                       lang={lang}
                     />
                     <ReviewItem
                       data={item}
-                      className='md:hidden block our-tours-item-mobile w-[74.66vw]'
+                      className='md:hidden block destinations-item-mobile w-[74.66vw]'
                       lang={lang}
                     />
                   </div>

@@ -21,9 +21,9 @@ async function Banner({ slug,lang }) {
         }
       }}
     >
-      <div className='travel-style-banner relative h-[100%] flex justify-center items-center'>
+      <div className='types-of-trips-banner relative h-[100%] flex justify-center items-center'>
         <Image
-          alt={imageSrc?.altText || 'img-travel-style'}
+          alt={imageSrc?.altText || 'img-types-of-trips'}
           src={imageSrc?.sourceUrl}
           quality={100}
           fill
@@ -39,7 +39,7 @@ async function Banner({ slug,lang }) {
           <span className='md:w-[43vw] w-[66.27vw] max-md:w-[90%] text-center font-sans md:text-[1.5vw] text-[2.67vw] font-medium leading-[151%] text-[#fff] pb-[2.5vw]'>
             <span
               dangerouslySetInnerHTML={{ __html: data?.desc }}
-              className='whitespace-pre-wrap travel-style-desc max-lg:text-[2vw] max-md:text-[3.773vw]'
+              className='whitespace-pre-wrap types-of-trips-desc max-lg:text-[2vw] max-md:text-[3.773vw]'
             ></span>
           </span>
 

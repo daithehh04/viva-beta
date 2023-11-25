@@ -5,19 +5,19 @@ function MenuAbout({ dataAboutUs,onCloseMenu,lang }) {
     <div className='content flex gap-[2.5vw] py-[2.81vw]'>
       <AboutItem
         data={dataAboutUs?.wwrRes?.who_we_are?.banner}
-        slug='about-us/who-we-are'
+        slug={`about-us/${dataAboutUs?.wwrRes?.who_we_are?.banner?.slug}`}
         onCloseMenu={onCloseMenu}
         lang={lang}
       />
       <AboutItem
         data={dataAboutUs?.rtRes?.responsibleTravel?.banner}
-        slug='about-us/responsible-travel'
+        slug={`about-us/${dataAboutUs?.rtRes?.responsibleTravel?.banner?.slug}`}
         onCloseMenu={onCloseMenu}
         lang={lang}
       />
       <AboutItem
         data={dataAboutUs?.rvRes?.aboutUsReviews?.banner}
-        slug='about-us/reviews'
+        slug={`about-us/${dataAboutUs?.rvRes?.aboutUsReviews?.banner?.slug}`}
         onCloseMenu={onCloseMenu}
         lang={lang}
       />

@@ -82,6 +82,7 @@ export const GET_DATA_MENU_WWR = `query($language: LanguageCodeEnum!) {
             sourceUrl
             altText
           }
+          slug
         }
         
       }

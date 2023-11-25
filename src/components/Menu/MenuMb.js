@@ -100,7 +100,7 @@ function MenuMb({
             <div className='flex items-center gap-[7.47vw]'>
               {dataMenuCountry?.map((tour, index) => (
                 <Link
-                  href={`/${lang}/our-tours/${tour?.slug}`}
+                  href={`/${lang}/destinations/${tour?.slug}`}
                   key={index}
                   className='flex flex-col items-center justify-center flex-shrink-0'
                   onClick={onCloseMenu}
@@ -142,7 +142,7 @@ function MenuMb({
             {travelStylesList?.data?.allTourStyle?.nodes?.map((item, index) => (
               <div key={index}>
                 <Link
-                  href={`/${lang}/travel-style/${item?.slug}`}
+                  href={`/${lang}/types-of-trips/${item?.slug}`}
                   className='flex flex-col items-center'
                   onClick={onCloseMenu}
                 >
@@ -269,21 +269,21 @@ function MenuMb({
             }
           >
             <Link
-              href='/about-us/who-we-are'
+              href={`/about-us/${titleAboutUs?.whoWeAreSlug}`}
               className='text-[3.667vw] text-textColor opacity-70 uppercase'
               onClick={onCloseMenu}
             >
               {titleAboutUs?.whoWeAre}
             </Link>
             <Link
-              href='/about-us/responsible-travel'
+              href={`/about-us/${titleAboutUs?.ResTravelSlug}`}
               className='text-[3.667vw] text-textColor opacity-70 uppercase'
               onClick={onCloseMenu}
             >
               {titleAboutUs?.ResTravel}
             </Link>
             <Link
-              href='/about-us/reviews'
+              href={`/about-us/${titleAboutUs?.AboutUsSlug}`}
               className='text-[3.667vw] text-textColor opacity-70 uppercase'
               onClick={onCloseMenu}
             >

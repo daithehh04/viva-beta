@@ -1,5 +1,10 @@
 {
   "home": {
     "banner_explore": "Explorez maintenant"
+  },
+  "nav": {
+    "booking_button": "Demander Un Devis",
+    "hot": "Hot",
+    "all_our_tours": "Tous Nos Voyages"
   }
 }
