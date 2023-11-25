@@ -14,6 +14,7 @@ import { useClickOutside } from '@/helpers/customHooks'
 import { createTheme } from '@mui/material'
 import { DATA_TAXONOMIES_BUDGET, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
 import { useQuery } from '@apollo/client'
+import { sortBy } from 'lodash'
 function FilterPopup() {
   // const refLink = useRef(null)
   const searchRef = useRef()
@@ -67,39 +68,25 @@ function FilterPopup() {
   }
 
   const handleSort = (fn = []) => {
-    const clone = [...fn]
+    let clone = [...fn]
     if (clone?.length > 0) {
-      clone?.sort(function (a, b) {
-        var numA = parseInt(a?.name.split('-')[0]);
-        var numB = parseInt(b?.name.split('-')[0]);
-        return numA - numB;
-      });
+      clone = sortBy(clone, item => {
+        return +item?.name.split('-')[0]
+      })
     }
     return clone
   }
-  let arrBudget = dataFilter?.budget
-  arrBudget = handleSort(arrBudget)
+  const arrBudget = handleSort(dataFilter?.budget)
 
-  let arrDuration = dataFilter?.duration
-  arrDuration = handleSort(arrDuration)
+  const arrDuration = handleSort(dataFilter?.duration)
 
-  const arrCountry = dataFilter?.country
-  if (arrCountry?.length > 0) {
-    arrCountry?.sort(function (a, b) {
-      const numA = parseInt(a?.country?.priority);
-      const numB = parseInt(b?.country?.priority);
-      return numA - numB;
-    });
-  }
+  const arrCountry = sortBy(dataFilter?.country, item => {
+    return +item?.country?.priority
+  })
 
-  const arrStyle = dataFilter?.style
-  if (arrStyle?.length > 0) {
-    arrStyle?.sort(function (a, b) {
-      var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-      var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-      return numA - numB;
-    });
-  }
+  const arrStyle = sortBy(dataFilter?.style, item => {
+    return +item?.banner?.travelStyleInfo?.priority
+  })
 
   function handleSearch(e) {
     const arrParams = []

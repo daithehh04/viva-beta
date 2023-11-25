@@ -6,24 +6,26 @@ import OptionCustomer from '@/components/tag/OptionCustomer'
 import OptionBudget from '@/components/tag/OptionBuget'
 import { useEffect, useRef, useState } from 'react'
 import theme from '@/components/ThemeRegistry/theme'
+import { sortBy } from 'lodash'
 
-const handleSort = (arr) => {
-  const clone = [...arr]
-  clone?.sort(function (a, b) {
-    var numA = parseInt(a?.name?.split('-')[0]);
-    var numB = parseInt(b?.name?.split('-')[0]);
-    return numA - numB;
-  });
+const handleSort = (fn = []) => {
+  let clone = [...fn]
+  if (clone?.length > 0) {
+    clone = sortBy(clone, item => {
+      return +item?.name.split('-')[0]
+    })
+  }
   return clone
 }
 
 const sortCountry = (arr) => {
-  const clone = [...arr]
-  clone?.sort(function (a, b) {
-    var numA = parseInt(a?.country?.priority);
-    var numB = parseInt(b?.country?.priority);
-    return numA - numB;
-  });
+  let clone = [...arr]
+  if (clone?.length > 0) {
+    clone = sortBy(clone, item => {
+      return item?.country?.priority
+    })
+  }
+
   return clone
 }
 

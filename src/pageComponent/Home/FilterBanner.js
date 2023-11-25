@@ -11,6 +11,7 @@ import { createTheme } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import { sortBy } from 'lodash'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -48,33 +49,28 @@ function FilterBanner({ lang, onClose }) {
   const allDuration = dataTaxonomiesDuration?.allDuration?.nodes
   const allCountries = dataTaxonomiesCountry?.allCountries?.nodes
   const allTourStyle = dataTaxonomiesStyleTour?.allTourStyle?.nodes
+  
+  const handleSort = (fn = []) => {
+    let clone = [...fn]
+    if (clone?.length > 0) {
+      clone = sortBy(clone, item => {
+        return +item?.name.split('-')[0]
+      })
+    }
+    return clone
+  }
 
-  // const handleSort = (fn) => {
-  //   fn?.sort(function (a, b) {
-  //     var numA = parseInt(a?.name.split('-')[0]);
-  //     var numB = parseInt(b?.name.split('-')[0]);
-  //     return numA - numB;
-  //   });
-  // }
-  // const arrBudget = arrDataTaxonomiesBudget
-  // handleSort(arrBudget)
+  const arrBudget = handleSort(allBudget)
 
-  // const arrDuration = arrDataTaxonomiesDuration
-  // handleSort(arrDuration)
+  const arrDuration = handleSort(allDuration)
 
-  // const arrCountry = arrDataTaxonomiesCountry
-  // arrCountry?.sort(function (a, b) {
-  //   var numA = parseInt(a?.country?.priority);
-  //   var numB = parseInt(b?.country?.priority);
-  //   return numA - numB;
-  // });
+  const arrCountry = sortBy(allCountries, item => {
+    return +item?.country?.priority
+  })
 
-  // const arrStyle = arrDataTaxonomiesStyleTour
-  // arrStyle?.sort(function (a, b) {
-  //   var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-  //   var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-  //   return numA - numB;
-  // });
+  const arrStyle = sortBy(allTourStyle, item => {
+    return +item?.banner?.travelStyleInfo?.priority
+  })
 
   const handleChangeDestination = (event) => {
     setDestination(event.target.value)
@@ -202,7 +198,7 @@ function FilterBanner({ lang, onClose }) {
                 renderValue={() => {
                   let name = option?.destination
                   if (destination !== "") {
-                    const nameCountry = allCountries?.find((item, index) => item?.slug === destination)
+                    const nameCountry = arrCountry?.find((item, index) => item?.slug === destination)
                     name = nameCountry?.name
                   }
                   return name
@@ -221,7 +217,7 @@ function FilterBanner({ lang, onClose }) {
                   }
                 }}
               >
-                {allCountries?.map((item, index) => (
+                {arrCountry?.map((item, index) => (
                   <MenuItem
                     className='select-item'
                     value={item?.slug} key={index}
@@ -278,7 +274,7 @@ function FilterBanner({ lang, onClose }) {
                 renderValue={() => {
                   let name = option?.style
                   if (travelStyle !== "") {
-                    const nameCountry = allTourStyle?.find((item, index) => item?.slug === travelStyle)
+                    const nameCountry = arrStyle?.find((item, index) => item?.slug === travelStyle)
                     name = nameCountry?.name
                   }
                   return name
@@ -297,7 +293,7 @@ function FilterBanner({ lang, onClose }) {
                   }
                 }}
               >
-                {allTourStyle?.map((item, index) => (
+                {arrStyle?.map((item, index) => (
                   <MenuItem value={item?.slug} key={index}
                     sx={{
                       '&.Mui-selected': {
@@ -351,7 +347,7 @@ function FilterBanner({ lang, onClose }) {
                 renderValue={() => {
                   let name = option?.duration
                   if (duration !== "") {
-                    const nameCountry = allDuration?.find((item, index) => item?.name === duration)
+                    const nameCountry = arrDuration?.find((item, index) => item?.name === duration)
                     name = nameCountry?.name + " " + option.day
                   }
                   return name
@@ -371,7 +367,7 @@ function FilterBanner({ lang, onClose }) {
                   }
                 }}
               >
-                {allDuration?.map((item, index) => (
+                {arrDuration?.map((item, index) => (
                   <MenuItem value={item?.name} key={index}
                     sx={{
                       '&.Mui-selected': {
@@ -426,7 +422,7 @@ function FilterBanner({ lang, onClose }) {
                 renderValue={() => {
                   let name = option?.budget
                   if (budget !== "") {
-                    const nameCountry = allBudget?.find((item, index) => item?.name === budget)
+                    const nameCountry = arrBudget?.find((item, index) => item?.name === budget)
                     name = nameCountry?.name + " " + option.price
                   }
                   return name
@@ -445,7 +441,7 @@ function FilterBanner({ lang, onClose }) {
                   }
                 }}
               >
-                {allBudget?.map((item, index) => (
+                {arrBudget?.map((item, index) => (
                   <MenuItem value={item?.name} key={index}
                     sx={{
                       '&.Mui-selected': {

@@ -10,6 +10,7 @@ import { createTheme } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import { sortBy } from 'lodash'
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -42,6 +43,7 @@ function FilterBanner() {
   const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.allBudget?.nodes
   const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.allDuration?.nodes
   const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.allTourStyle?.nodes
+  console.log({arrDataTaxonomiesStyleTour});
   const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.allCountries?.nodes
 
 
@@ -63,28 +65,20 @@ function FilterBanner() {
   }
 
   const handleSort = (fn = []) => {
-    const clone = [...fn]
+    let clone = [...fn]
     if (clone?.length > 0) {
-      clone?.sort(function (a, b) {
-        var numA = parseInt(a?.name.split('-')[0]);
-        var numB = parseInt(b?.name.split('-')[0]);
-        return numA - numB;
-      });
+      clone = sortBy(clone, item => {
+        return +item?.name.split('-')[0]
+      })
     }
     return clone
   }
-  const arrBudget = dataFilter?.budget
-  // handleSort(arrBudget)
+  const arrBudget = handleSort(dataFilter?.budget)
 
-  const arrDuration = dataFilter?.duration
-  // handleSort(arrDuration)
+  const arrDuration = handleSort(dataFilter?.duration)
+  
 
-  const arrStyle = dataFilter?.style
-  // arrStyle?.sort(function (a, b) {
-  //   var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-  //   var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-  //   return numA - numB;
-  // });
+  const arrStyle = sortBy(dataFilter?.style, item => item?.banner?.travelStyleInfo?.priority)
 
   function handleSearch(e) {
     const arrParams = []

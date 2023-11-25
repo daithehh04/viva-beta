@@ -57,7 +57,6 @@ export default function Navbar({
     ResTravelSlug: dataAboutUs?.rtRes?.responsibleTravel?.banner?.slug,
     AboutUsSlug: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.slug,
   }
-  console.log("dataAboutUs?.rvRes?.aboutUsReviews", dataAboutUs?.rvRes?.aboutUsReviews);
   //check pathName
   const pathName = usePathname()
   const [openModal, setOpenModal] = useState(false)

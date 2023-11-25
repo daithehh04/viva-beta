@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { useState } from 'react'
+import { sortBy } from 'lodash'
 
 function FilterService({ handleDes, metaDestination, slug }) {
   const [destination, SetDestination] = useState('')
@@ -13,6 +14,10 @@ function FilterService({ handleDes, metaDestination, slug }) {
     SetDestination(event.target.value)
     handleDes(event.target.value)
   }
+
+  const allCountries = sortBy(metaDestination, item => {
+    return item?.country?.priority
+  })
 
   return (
     <div className='flex gap-[3.2vw] md:pt-[1.2vw] md:justify-normal justify-between md:mt-[3.5vw] ourBlog relative'>
@@ -59,7 +64,7 @@ function FilterService({ handleDes, metaDestination, slug }) {
                   Country
                 </span>
               </MenuItem>
-              {metaDestination?.map((destination, index) => (
+              {allCountries?.map((destination, index) => (
                 <MenuItem key={index} value={destination?.slug}>
                   <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
                     {destination?.name}

@@ -7,44 +7,38 @@ import { createTheme } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import { sortBy } from 'lodash'
 import { useQueryState } from 'next-usequerystate'
 import Image from 'next/image'
 import { useParams, useSearchParams } from 'next/navigation'
 
-const handleSort = (arr) => {
-  const clone = [...arr]
+const handleSort = (fn = []) => {
+  let clone = [...fn]
   if (clone?.length > 0) {
-    clone?.sort(function (a, b) {
-      var numA = parseInt(a?.name?.split('-')[0]);
-      var numB = parseInt(b?.name?.split('-')[0]);
-      return numA - numB;
-    });
+    clone = sortBy(clone, item => {
+      return +item?.name.split('-')[0]
+    })
   }
-
   return clone
 }
 
 const sortCountry = (arr) => {
-  const clone = [...arr]
+  let clone = [...arr]
   if (clone?.length > 0) {
-    clone?.sort(function (a, b) {
-      var numA = parseInt(a?.country?.priority);
-      var numB = parseInt(b?.country?.priority);
-      return numA - numB;
-    });
+    clone = sortBy(clone, item => {
+      return item?.country?.priority
+    })
   }
 
   return clone
 }
 
 const sortStyle = (arr) => {
-  const clone = [...arr]
+  let clone = [...arr]
   if (clone?.length > 0) {
-    clone?.sort(function (a, b) {
-      var numA = parseInt(a?.banner?.travelStyleInfo?.priority);
-      var numB = parseInt(b?.banner?.travelStyleInfo?.priority);
-      return numA - numB;
-    });
+    clone = sortBy(clone, item => {
+      return item?.banner?.travelStyleInfo?.priority
+    })
   }
 
   return clone

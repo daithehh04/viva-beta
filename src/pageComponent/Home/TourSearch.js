@@ -10,7 +10,7 @@ function TourSearch({data,onClose, lang}) {
       <Image  
         src={tourData?.gallery ? tourData?.gallery[0]?.sourceUrl : imgTour} 
         width={50} height={50} 
-        alt={tourData?.gallery[0]?.altText || 'thumb tour'} 
+        alt={tourData?.gallery?.[0]?.altText || 'thumb tour'} 
         className='w-[4vw] h-[4vw] object-cover'
       />
       <h3 className='text-[1.1vw] pt-2'>{tourData?.title}</h3>
