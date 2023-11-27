@@ -1,29 +1,22 @@
 'use client'
+import background from '@/assets/images/ourBlog_background.png'
 import BlogItem from '@/components/Common/BlogItem'
 import Button from '@/components/Common/Button'
-import SlideTour from '@/components/Common/SlideTour'
-import Image from 'next/image'
 import Loading from '@/components/Common/Loading'
-import { useEffect, useRef, useState } from 'react'
-import background from '@/assets/images/ourBlog_background.png'
-import Link from 'next/link'
-import { GET_ALL_POST_FILTER, GET_BEST_TOUR_BLOG_BY_COUNTRY } from '@/graphql/post/queries'
+import SlideTour from '@/components/Common/SlideTour'
+import { FILTER_RECOMMENDED_SERVICE_QUERY, GET_BEST_TOUR_BLOG_BY_COUNTRY } from '@/graphql/post/queries'
 import { useQuery } from '@apollo/client'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
 import FilterService from './FilterService'
-import NotFound from '@/components/Common/NotFound'
 
-function Index({ data1, lang, initTopic, initCategories, allCountries, slug }) {
-    const metaTopic = initTopic?.nodes
+function Index({ data1, lang, initCategories, allCountries, slug }) {
     const metaDestination = allCountries?.nodes
     const metaCategories = initCategories?.nodes
 
-    const arrayTopicInit = []
     const arrayDesInit = []
     const arrayCateInit = []
-
-    metaTopic?.map((topic, index) => {
-        arrayTopicInit.push(topic?.slug)
-    })
 
     metaDestination?.map((des, index) => {
         arrayDesInit.push(des?.slug)
@@ -39,12 +32,11 @@ function Index({ data1, lang, initTopic, initCategories, allCountries, slug }) {
     const [destination, setDestination] = useState(arrayDesInit || '')
     const language = lang?.toUpperCase() || 'EN'
 
-    const { data, refetch, loading } = useQuery(GET_ALL_POST_FILTER, {
+    const { data, refetch, loading } = useQuery(FILTER_RECOMMENDED_SERVICE_QUERY, {
         variables: {
             language,
             offset: 0,
             size: 12,
-            topicSlug: arrayTopicInit,
             categorySlug: slug,
             destinationSlug: destination === '' ? arrayDesInit : destination
         }
@@ -84,10 +76,8 @@ function Index({ data1, lang, initTopic, initCategories, allCountries, slug }) {
                 </h2>
                 <FilterService
                     handleDes={(data) => setDestination(data)}
-                    metaTopic={metaTopic}
                     metaDestination={metaDestination}
                     metaCategories={metaCategories}
-                    slug={slug}
                 />
             </div>
 
@@ -104,8 +94,8 @@ function Index({ data1, lang, initTopic, initCategories, allCountries, slug }) {
                                     className={'max-md:w-[43.73333vw] max-md:h-[43.73333vw] !ml-0'}
                                 />
                             ))}
-                        </div> : <div className='text-center text-[3.5vw] pt-[4vw] w-full font-optima max-md:text-[5.67vw]'>
-                            Not Found !
+                        </div> : <div className='md:px-[8.06vw] px-[4.27vw] md:mt-[4vw] mt-[7.73vw] text-center text-[3.5vw] pt-[4vw] w-full font-optima max-md:text-[5.67vw]'>
+                            No data found!
                           </div>}
 
                         <div className='flex md:gap-[0.75vw] gap-[3.2vw] justify-center items-center relative md:mt-[4.5vw] mt-[8.53vw]'>
