@@ -34,7 +34,7 @@ function ReviewDetail({data,lang,dataTour}) {
       <div className="relative z-10 content">
         <div className="flex items-end justify-between max-md:flex-col">
           <h3 className="mt-[8.5vw] max-md:mt-[23vw] uppercase text-[2.625vw] max-md:text-[5.86vw] max-md:w-full font-bold w-[70%]"><span className="text-[#138140]">{review}:</span> <span>{dataReview?.tours?.title}</span></h3>
-          <Link href={`/${lang}/tours/${dataReview?.tours?.slug}`} className="max-md:hidden">
+          <Link href={`/${lang}/${dataReview?.tours?.slug}`} className="max-md:hidden">
             <Button className='btn-primary' content={view}><span>{view}</span> </Button>
           </Link>
         </div>
@@ -59,7 +59,7 @@ function ReviewDetail({data,lang,dataTour}) {
             />
             <span>{dataReview?.time}</span>
           </div>
-          <Link href={`/${lang}/tours/${dataReview?.tours?.slug}`} className="hidden ml-auto max-md:block">
+          <Link href={`/${lang}/${dataReview?.tours?.slug}`} className="hidden ml-auto max-md:block">
             <Button className='btn-primary' content={view}><span>{view}</span> </Button>
           </Link>
         </div>

@@ -119,7 +119,7 @@ function InputSearchMb({ lang, onCloseNav }) {
                 uniqueObjects?.map((tour, index) => (
                   <Link
                     onClick={handleClose}
-                    href={`/${lang}/tours/${encodeURIComponent(tour?.translation?.slug)}`}
+                    href={`/${lang}/${encodeURIComponent(tour?.translation?.slug)}`}
                     key={index}
                   >
                     <h3 className='text-[3.2vw] pb-[3.2vw]'>{tour?.translation?.tourDetail?.banner?.title}</h3>

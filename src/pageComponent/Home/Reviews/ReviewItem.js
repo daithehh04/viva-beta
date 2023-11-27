@@ -25,7 +25,7 @@ function ReviewItem({ data, lang }) {
         className='rounded-[1vw] w-full h-full object-cover max-md:rounded-[3.2vw] customer-review__img'
       />
       <div className='top absolute top-0 pt-[1.5vw] pl-[1.5vw] pr-[2.38vw] z-10 max-md:pt-[4.8vw] max-md:pl-[4.92vw] max-md:pr-[7.88vw]'>
-        <Link href={`/${lang}/tours/${tourSlug}`}>
+        <Link href={`/${lang}/${tourSlug}`}>
           <h3 className='text-white text-[1.25vw] font-bold leading-[1.3] tracking-tight max-md:text-[4vw] desc max-lg:text-[1.2vw]'>
             {tourData?.banner?.title}
           </h3>

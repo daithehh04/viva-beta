@@ -202,7 +202,7 @@ export default function Navbar({
                 width={100}
                 height={100}
                 alt='viva-travel'
-                className='nav-logo w-[4.5vw] object-cover max-lg:w-[10.4vw]'
+                className='nav-logo w-[6.5vw] object-cover max-lg:w-[10.4vw]'
               />
             </Link>
             <div

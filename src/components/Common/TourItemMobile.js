@@ -34,7 +34,7 @@ function TourItemMobile({ data, lang, loading }) {
   
   return (
     <Link
-      href={`/${lang}/${isPromotion ? 'hot-deals' : 'tours'}/${encodeURIComponent(data?.translation?.slug)}`}
+      href={`/${lang}${isPromotion ? '/hot-deals' : ''}/${encodeURIComponent(data?.translation?.slug)}`}
       className={` p-[4.27vw] min-h-[46.4vw] h-auto flex gap-[4.27vw] bg-white`}
     >
       <div className='max-h-[54vw] w-[45%] rounded-[1.067vw]'>

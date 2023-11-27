@@ -13,26 +13,17 @@ import Image from 'next/image'
 import { useQueryState } from 'next-usequerystate'
 const tourBackup = new Array(6).fill()
 const Search = ({ lang, listBlog, searchInfo }) => {
-  const [destination, setDestination] = useQueryState('country')
-  const [budget, setBudget] = useQueryState('budget')
-  const [duration, setDuration] = useQueryState('duration')
-  const [style, setStyle] = useQueryState('style')
-
-  
-  const [des, setDes] = useState(destination ?? [])
-  const [travelStyle, setTravelStyle] = useState(style ?? [])
-  const [day, setDay] = useState(duration ?? [])
-  const [bud, setBud] = useState(budget ?? [])
+  const [des, setDes] = useQueryState('country')
+  const [bud, setBud] = useQueryState('budget')
+  const [day, setDay] = useQueryState('duration')
+  const [travelStyle, setTravelStyle] = useQueryState('style')
   
   const params = {
-    day: duration,
-    budget: budget,
-    style: style,
-    country: destination
+    day: day,
+    budget: bud,
+    style: travelStyle,
+    country: des
   }
-
-  console.log('des',des);
-  console.log('budget',bud);
 
   const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
     variables: {

@@ -92,7 +92,7 @@ export default async function sitemap() {
   })
   const arrTours = tours?.data?.allTours?.nodes?.map((e) => {
     return {
-      url: `${process.env.DOMAIN}/tours/${e?.slug}`,
+      url: `${process.env.DOMAIN}/${e?.slug}`,
       lastModified: e?.date,
       priority: 0.8
     }
