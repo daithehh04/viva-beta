@@ -6,5 +6,16 @@
     "booking_button": "Request A Quote",
     "hot": "Hot",
     "all_our_tours": "All Our Tours"
+  },
+  "about_us": {
+    "destination": "Destination",
+    "years" : "Years" 
+  },
+  "service": {
+    "country":"Country"
+  },
+  "blog":{
+    "destination": "Destination",
+    "topicFilter": "Topic"
   }
 }

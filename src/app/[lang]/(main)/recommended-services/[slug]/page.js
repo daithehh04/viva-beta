@@ -2,6 +2,7 @@ import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { SERVICES_SLUG_QUERY } from '@/data/getDataRcmServices'
 import { getMeta } from '@/data/metaData/getMeta'
+import { getDictionary } from '@/get-dictionary'
 import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
 import Service from '@/pageComponent/Service'
 
@@ -93,6 +94,7 @@ async function Page({ params: { lang, slug } }) {
       taxonomyValue: slug
     }),
   ])
+  const dictionary = await getDictionary(lang)
 
   return (
     <Service lang={lang}
@@ -101,6 +103,7 @@ async function Page({ params: { lang, slug } }) {
       initDestination={dataInit?.data?.allCountries}
       initCategories={dataInit?.data?.categories}
       allCountries={dataInit?.data?.allCountries}
+      dictionary={dictionary}
     />
   )
 }

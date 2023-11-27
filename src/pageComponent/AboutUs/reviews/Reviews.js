@@ -14,7 +14,7 @@ const theme = createTheme({
     }
   }
 })
-const Reviews = ({ lang, data, arrYear, arrCountry }) => {
+const Reviews = ({ lang, data, arrYear, arrCountry, dictionary }) => {
   const listCountry = arrCountry?.map((item) => item?.slug)
   const [year,setYear] = useState(arrYear)
   const [country,setCountry] = useState(listCountry)
@@ -76,7 +76,7 @@ const Reviews = ({ lang, data, arrYear, arrCountry }) => {
           {data?.desc}
         </p>
       </div>
-      <FilterReview arrDes={arrCountry} arrYear={arrYear} handleDes={setCountry} handleYear={setYear}/>
+      <FilterReview arrDes={arrCountry} arrYear={arrYear} handleDes={setCountry} handleYear={setYear} dictionary={dictionary}/>
       {/* reviews */}
       {!loading ? (
         <div className='md:grid md:grid-cols-2 mt-[4vw] max-md:mt-[8vw] w-full md:row-auto md:gap-[2.5vw] gap-[4.8vw] flex flex-col '>

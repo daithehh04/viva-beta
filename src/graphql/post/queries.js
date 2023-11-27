@@ -247,6 +247,7 @@ query GetFilterTour(
         taxQuery: {
           taxArray: [
             { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: SLUG }
+            { taxonomy: BESTSELLER, operator: IN, terms:"best-seller-tours", field: SLUG }
           ]
         }
         orderby: { field: DATE, order: DESC }
@@ -257,6 +258,11 @@ query GetFilterTour(
           id
           title
           slug
+          bestSeller {
+            nodes {
+              name
+            }
+          }
           tourDetail {
             priceTour
             numberDay

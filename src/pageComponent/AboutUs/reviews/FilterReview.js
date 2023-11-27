@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { useState } from 'react'
 
-function FilterReview({ handleDes, handleYear, arrYear, arrDes }) {
+function FilterReview({ handleDes, handleYear, arrYear, arrDes, dictionary }) {
   const [destination, setDestination] = useState('')
   const [year, setYear] = useState('')
 
@@ -61,7 +61,7 @@ function FilterReview({ handleDes, handleYear, arrYear, arrDes }) {
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                  Destination
+                {dictionary.about_us.destination}
                 </span>
               </MenuItem>
               {arrDes?.map((destination, index) => (
@@ -115,7 +115,7 @@ function FilterReview({ handleDes, handleYear, arrYear, arrDes }) {
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                  Years
+                {dictionary.about_us.years}
                 </span>
               </MenuItem>
               {arrYear?.map((topic, index) => (

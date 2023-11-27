@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { useState } from 'react'
 
-function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, slug }) {
+function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, slug, dictionary }) {
   const [destination, SetDestination] = useState('')
   const [topic, SetTopic] = useState('')
   const [category, SetCategory] = useState(slug ? slug : '')
@@ -21,15 +21,6 @@ function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, 
     handleTopic(event.target.value)
   }
 
-  let country = 'Destination'
-  let topicFilter = 'Topic'
-  if(lang === 'it') {
-    country = 'Destination'
-    topicFilter = 'Tema'
-  }
-  if(lang === 'fr') {
-    topicFilter = ' Thème'
-  }
   return (
     <div className='flex gap-[3.2vw] md:pt-[1.2vw] md:justify-normal justify-between md:mt-[3.5vw] ourBlog relative'>
       <div className='background max-md:hidden md:block'></div>
@@ -72,7 +63,7 @@ function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, 
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                  {country}
+                  {dictionary.blog.destination}
                 </span>
               </MenuItem>
               {metaDestination?.map((destination, index) => (
@@ -126,7 +117,7 @@ function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, 
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                  {topicFilter}
+                {dictionary.blog.topicFilter}
                 </span>
               </MenuItem>
               {metaTopic?.map((topic, index) => (

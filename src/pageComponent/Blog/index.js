@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { GET_ALL_POST_FILTER, GET_BEST_TOUR_BLOG_BY_COUNTRY } from '@/graphql/post/queries'
 import { useQuery } from '@apollo/client'
 
-function Index({ data1, lang, initTopic, initCategories, allCountries, slug }) {
+function Index({ data1, lang, initTopic, initCategories, allCountries, slug, dictionary }) {
   const metaTopic = initTopic?.nodes
   const metaDestination = allCountries?.nodes
   const metaCategories = initCategories?.nodes
@@ -89,6 +89,7 @@ function Index({ data1, lang, initTopic, initCategories, allCountries, slug }) {
           metaCategories={metaCategories}
           slug={slug}
           lang={lang}
+          dictionary={dictionary}
         />
       </div>
 
