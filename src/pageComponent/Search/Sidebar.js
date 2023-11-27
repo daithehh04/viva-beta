@@ -1,7 +1,7 @@
 'use client'
 import locationIcon from '@/assets/images/search/location.svg'
 import moneyIcon from '@/assets/images/search/money.svg'
-import {Checkbox, useMediaQuery } from '@mui/material'
+import { Checkbox, useMediaQuery } from '@mui/material'
 import OptionCustomer from '@/components/tag/OptionCustomer'
 import OptionBudget from '@/components/tag/OptionBuget'
 import { useEffect, useRef, useState } from 'react'
@@ -49,29 +49,39 @@ export default function Sidebar({
   onDay,
   lang
 }) {
-  const [travelStyle, setTravelStyle] = useState([])
+  // const [travelStyle, setTravelStyle] = useState([])
   const refStyle = useRef()
   function handleCheckStyle(e) {
     const value = e.target.value
     if (e.target.checked) {
-      setTravelStyle([...travelStyle, value])
-      onTravelStyle([...travelStyle, value])
+      // setTravelStyle([...travelStyle, value])
+      if (params?.style) {
+        onTravelStyle([...params?.style, value])
+      } else {
+        onTravelStyle([value])
+      }
     } else {
-      var rs = travelStyle.filter((item) => item !== value)
-      setTravelStyle(rs)
+      var rs = params?.style?.filter((item) => item !== value)
+      // setTravelStyle(rs)
       onTravelStyle(rs)
     }
   }
-  const [duration, setDuration] = useState([])
+  // const [duration, setDuration] = useState([])
   const refDuration = useRef()
   function handleCheckDuration(e) {
     const value = e.target.value
     if (e.target.checked) {
-      setDuration([...duration, value])
-      onDay([...duration, value])
+      // setDuration([...duration, value])
+      console.log({ value });
+      if (params?.day) {
+        onDay([...params?.day, value])
+      } else {
+        onDay([value])
+      }
     } else {
-      var rs = duration?.filter((item) => item !== value)
-      setDuration(rs)
+      console.log("params?.day", params?.day);
+      var rs = params?.day?.filter((item) => item !== value)
+      // setDuration(rs)
       onDay(rs)
     }
   }
@@ -79,37 +89,37 @@ export default function Sidebar({
   const allBudget = handleSort(dataFilter?.budget || [])
   const allDuration = handleSort(dataFilter?.duration || [])
   const allCountries = sortCountry(dataFilter?.countries || [])
-  const allTourStyle = sortStyle( dataFilter?.style|| [])
-  
-  useEffect(() => {
-    const list = refStyle?.current?.children
-    Array.from(list).forEach((item) => {
-      const value = item.querySelector('label').getAttribute('for')
-      if (value === params.style) {
-        setTravelStyle([value])
-      }
-    })
-    setTravelStyle([params.style])
-  }, [params.style])
-  
-  useEffect(() => {
-    const list = refDuration?.current?.children
-    Array.from(list).forEach((item) => {
-      const value = item.querySelector('label').getAttribute('for')
-      if (value === params.day) {
-        setDuration([value])
-      }
-    })
-    setDuration([params.day])
-  }, [params.day])
+  const allTourStyle = sortStyle(dataFilter?.style || [])
+
+  // useEffect(() => {
+  //   const list = refStyle?.current?.children
+  //   Array.from(list).forEach((item) => {
+  //     const value = item.querySelector('label').getAttribute('for')
+  //     if (value === params.style) {
+  //       setTravelStyle([value])
+  //     }
+  //   })
+  //   setTravelStyle([params.style])
+  // }, [params.style])
+
+  // useEffect(() => {
+  //   const list = refDuration?.current?.children
+  //   Array.from(list).forEach((item) => {
+  //     const value = item.querySelector('label').getAttribute('for')
+  //     if (value === params.day) {
+  //       setDuration([value])
+  //     }
+  //   })
+  //   setDuration([params.day])
+  // }, [params.day])
 
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   let day = 'Days'
-  if(lang === 'fr') {
+  if (lang === 'fr') {
     day = 'Jours'
   }
-  if(lang === 'it') {
+  if (lang === 'it') {
     day = 'Giorni'
   }
   return (
@@ -124,12 +134,12 @@ export default function Sidebar({
         <h3 className='flex mb-[1.5vw] font-bold text-[1.25vw] leading-[1.64288vw] max-md:text-[5.33vw] max-md:leading-normal'>{
           searchInfo?.navbar?.duration?.title
         }</h3>
-       <div className='flex flex-col justify-center gap-[0.75vw] max-md:gap-[3.2vw]' ref={refDuration}>
-          {allDuration?.map((item,index) => (
+        <div className='flex flex-col justify-center gap-[0.75vw] max-md:gap-[3.2vw]' ref={refDuration}>
+          {allDuration?.map((item, index) => (
             <div className='flex items-center justify-between' key={index}>
               <div className='flex gap-[0.4375vw] items-center cursor-pointer max-md:gap-[1.86vw]'>
                 <Checkbox
-                  checked={duration.includes(item?.name)}
+                  checked={params?.day?.includes(item?.name)}
                   value={item?.name}
                   color='info'
                   id={item?.name}
@@ -159,11 +169,11 @@ export default function Sidebar({
       >
         <h3 className='mb-[1.32vw] text-[1.25vw] font-bold max-md:text-[5.33vw] max-md:mb-[5.6vw]'>{searchInfo?.navbar?.travelStyles}</h3>
         <div className='flex flex-col justify-center gap-[0.75vw] max-md:gap-[3.2vw]' ref={refStyle}>
-          {allTourStyle?.map((item,index) => (
+          {allTourStyle?.map((item, index) => (
             <div className='flex items-center justify-between' key={index}>
               <div className='flex gap-[0.4375vw] items-center cursor-pointer max-md:gap-[1.86vw]'>
                 <Checkbox
-                  checked={travelStyle.includes(item?.slug)}
+                  checked={params?.style?.includes(item?.slug)}
                   value={item?.slug}
                   color='info'
                   id={item?.slug}
@@ -199,16 +209,16 @@ export default function Sidebar({
             icon={locationIcon}
             list={allCountries}
             defaultValue={params?.country}
-            lang = {lang}
+            lang={lang}
           />
         </div>
         <div className='mb-[0.94vw] max-md:mb-[7.29vw]'>
-          <OptionBudget 
+          <OptionBudget
             onSelect={(data) => onBudget(data)}
             icon={moneyIcon}
             defaultValue={params?.budget}
             list={allBudget}
-            lang ={lang}
+            lang={lang}
           />
         </div>
       </div>

@@ -6,18 +6,18 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { useState } from 'react'
 import { sortBy } from 'lodash'
+import { useQueryState } from 'next-usequerystate'
 
-function FilterService({ handleDes, metaDestination, slug }) {
-  const [destination, SetDestination] = useState('')
+function FilterService({ handleDes, metaDestination }) {
+  const [destination, setDestination] = useQueryState('destination')
 
   const handleChangeDestination = (event) => {
-    SetDestination(event.target.value)
+    setDestination(event.target.value)
     handleDes(event.target.value)
   }
 
-  const allCountries = sortBy(metaDestination, item => {
-    return item?.country?.priority
-  })
+  console.log("metaDestination", metaDestination);
+  const allCountries = sortBy(metaDestination, item => item?.country?.priority)
 
   return (
     <div className='flex gap-[3.2vw] md:pt-[1.2vw] md:justify-normal justify-between md:mt-[3.5vw] ourBlog relative'>
@@ -41,7 +41,7 @@ function FilterService({ handleDes, metaDestination, slug }) {
             }}
           >
             <Select
-              value={destination}
+              value={destination || ""}
               onChange={handleChangeDestination}
               displayEmpty
               inputprops={{ 'aria-label': 'Without label' }}
@@ -64,10 +64,10 @@ function FilterService({ handleDes, metaDestination, slug }) {
                   Country
                 </span>
               </MenuItem>
-              {allCountries?.map((destination, index) => (
-                <MenuItem key={index} value={destination?.slug}>
+              {allCountries?.map((item, index) => (
+                <MenuItem key={index} value={item?.slug}>
                   <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                    {destination?.name}
+                    {item?.name}
                   </span>
                 </MenuItem>
               ))}

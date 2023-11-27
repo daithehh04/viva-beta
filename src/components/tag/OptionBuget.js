@@ -29,7 +29,6 @@ const Placeholder = ({ item, icon }) => (
 )
 
 export default function OptionBudget({icon, list, defaultValue, onSelect, lang }) {
-  const [personName, setPersonName] = useState('Budget')
   let price = '$'
   let budget = 'Budget'
   if(lang === 'fr' || lang === 'it') {
@@ -38,20 +37,14 @@ export default function OptionBudget({icon, list, defaultValue, onSelect, lang }
   if (lang === 'it') {
     budget = 'Budget'
   }
-  useEffect(() => {
-    if (defaultValue) {
-      setPersonName(defaultValue)
-    }
-  }, [defaultValue])
+
   const handleChange = (event) => {
     const {
       target: { value }
     } = event
     if(value === budget) {
-      setPersonName(budget)
       onSelect([])
     }else {
-      setPersonName(value)
       onSelect(value)
     }
   }
@@ -85,7 +78,7 @@ export default function OptionBudget({icon, list, defaultValue, onSelect, lang }
             width: '100%'
           }}
           displayEmpty
-          value={personName}
+          value={defaultValue || "Budgets"}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'Without label' }}
           renderValue={(selected) => {

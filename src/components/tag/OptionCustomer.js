@@ -1,11 +1,10 @@
 'use client'
 
-import MenuItem from '@mui/material/MenuItem'
+import { useMediaQuery } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
+import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import { useMediaQuery } from '@mui/material'
 import theme from '../ThemeRegistry/theme'
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -24,20 +23,13 @@ const Placeholder = ({ item, icon }) => (
     <span className='text-[0.875vw] font-normal max-md:text-[3.73vw]'>{item}</span>
   </div>
 )
-export default function OptionCustomer({ icon, list, defaultValue, onSelect,lang }) {
+export default function OptionCustomer({ icon, list, defaultValue, onSelect, lang }) {
+  console.log({ defaultValue });
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   let placeholderDefault = "Destination"
-  if(lang === 'it') {
+  if (lang === 'it') {
     placeholderDefault = 'Destinazione'
   }
-  const [personName, setPersonName] = useState(placeholderDefault)
-  useEffect(() => {
-    if (defaultValue) {
-      var nameV = list?.filter(item => item.slug === defaultValue)
-      var nameDef = nameV[0]?.name
-      setPersonName(nameDef)
-    }
-  }, [list, defaultValue])
 
   const handleChange = (event) => {
     const {
@@ -45,15 +37,13 @@ export default function OptionCustomer({ icon, list, defaultValue, onSelect,lang
     } = event
     if (value === placeholderDefault) {
       // console.log(value, placeholderDefault)
-      setPersonName(placeholderDefault)
       onSelect([])
     } else {
-      setPersonName(value)
       onSelect(value)
     }
   }
 
-  list?.sort(function(a, b) {
+  list?.sort(function (a, b) {
     var numA = parseInt(a?.country?.priority);
     var numB = parseInt(b?.country?.priority);
     return numA - numB;
@@ -79,7 +69,7 @@ export default function OptionCustomer({ icon, list, defaultValue, onSelect,lang
             width: '100%'
           }}
           displayEmpty
-          value={personName}
+          value={defaultValue || placeholderDefault}
           onChange={handleChange}
           inputProps={{ 'aria-label': 'Without label' }}
           renderValue={(selected) => {

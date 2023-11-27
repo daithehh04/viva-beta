@@ -4,15 +4,9 @@ import { SERVICES_SLUG_QUERY } from '@/data/getDataRcmServices'
 import { getMeta } from '@/data/metaData/getMeta'
 import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
 import Service from '@/pageComponent/Service'
+
 const GET_INITIAL_FILTER = `
 query($language : LanguageCodeFilterEnum!){
-  allTopic(where:{language: $language}){
-    nodes{
-      slug
-      taxonomyName
-      name
-    }
-  }
   categories (where:{language: $language}){
     nodes{
       taxonomyName
@@ -25,6 +19,9 @@ query($language : LanguageCodeFilterEnum!){
       taxonomyName
       slug
       name
+      country {
+        priority
+      }
     }
   }
 }
@@ -101,7 +98,6 @@ async function Page({ params: { lang, slug } }) {
     <Service lang={lang}
       slug={slugRcm?.data?.category?.translation?.slug}
       data1={data}
-      initTopic={dataInit?.data?.allTopic}
       initDestination={dataInit?.data?.allCountries}
       initCategories={dataInit?.data?.categories}
       allCountries={dataInit?.data?.allCountries}

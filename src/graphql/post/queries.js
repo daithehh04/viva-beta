@@ -58,6 +58,59 @@ const GET_ALL_POST = `
   }
 `
 
+export const FILTER_RECOMMENDED_SERVICE_QUERY = gql`
+  query GetAllPost(
+    $language: LanguageCodeEnum!
+    $offset: Int!
+    $size: Int!
+    $categorySlug: [String!]
+    $destinationSlug: [String!]
+  ) {
+    posts(
+      first: 100,
+      where: {
+        offsetPagination: { offset: $offset, size: $size }
+        orderby: { field: DATE, order: DESC }
+        taxQuery: {
+          taxArray: [
+             { taxonomy: CATEGORY, operator: IN, terms: $categorySlug, field: SLUG }
+            { taxonomy: COUNTRIES, operator: IN, terms: $destinationSlug, field: SLUG }
+          ]
+        }
+      }
+    ) {
+      nodes {
+        translation(language: $language) {
+          id
+          excerpt
+          title
+          slug
+          blogdetail {
+            heading
+            time
+            subtitle1
+          }
+          language {
+            code
+            locale
+          }
+          featuredImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+        }
+      }
+      pageInfo {
+        offsetPagination {
+          total
+        }
+      }
+    }
+  }
+`
+
 const GET_ALL_POST_FILTER = gql`
   query GetAllPost(
     $language: LanguageCodeEnum!

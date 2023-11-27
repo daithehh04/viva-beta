@@ -15,7 +15,7 @@ async function SectionActions({ lang, slug }) {
 
   const data = dataCountry?.data?.countries
 
-  const infoCountry = data.translation.country?.info
+  const infoCountry = data?.translation?.country?.info
 
   const arrInfoCountry = []
   arrInfoCountry.push(infoCountry?.population)
