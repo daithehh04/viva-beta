@@ -138,26 +138,26 @@ export default function Statistics({ data }) {
               {data?.slogan?.line4}
             </div>
           </div>
-          <Image
-            style={{
-              transform: `translateX(${scrollPositions[4]}px)`,
-              transition: 'transform 0.6s ease-in-out'
-            }}
-            ref={(e) => (imgRef.current[0] = e)}
-            src={wave}
-            alt='Wave'
-            className='wave absolute bottom-[8.75vw] -left-[3.12vw] max-md:w-[32.658vw] max-md:h-[2.23vw] '
-          />
-          <Image
-            style={{
-              transform: `translateX(${scrollPositions[5]}px)`,
-              transition: 'transform 0.6s ease-in-out'
-            }}
-            ref={(e) => (imgRef.current[0] = e)}
-            src={waveNormal}
-            alt='Wave'
-            className='wave absolute top-[9.69vw] right-[40%] max-md:w-[32.658vw] max-md:h-[2.23vw] max-md:right-0'
-          />
+          {/*<Image*/}
+          {/*  style={{*/}
+          {/*    transform: `translateX(${scrollPositions[4]}px)`,*/}
+          {/*    transition: 'transform 0.6s ease-in-out'*/}
+          {/*  }}*/}
+          {/*  ref={(e) => (imgRef.current[0] = e)}*/}
+          {/*  src={wave}*/}
+          {/*  alt='Wave'*/}
+          {/*  className='wave absolute bottom-[8.75vw] -left-[3.12vw] max-md:w-[32.658vw] max-md:h-[2.23vw] '*/}
+          {/*/>*/}
+          {/*<Image*/}
+          {/*  style={{*/}
+          {/*    transform: `translateX(${scrollPositions[5]}px)`,*/}
+          {/*    transition: 'transform 0.6s ease-in-out'*/}
+          {/*  }}*/}
+          {/*  ref={(e) => (imgRef.current[0] = e)}*/}
+          {/*  src={waveNormal}*/}
+          {/*  alt='Wave'*/}
+          {/*  className='wave absolute top-[9.69vw] right-[40%] max-md:w-[32.658vw] max-md:h-[2.23vw] max-md:right-0'*/}
+          {/*/>*/}
           <div className='slogan-img'>
             <Image
               src={data?.slogan?.image?.sourceUrl || sloganBg}
@@ -208,34 +208,31 @@ export default function Statistics({ data }) {
                 {data?.slogan?.line4}
               </div>
             </div>
-            <Image
-              style={{
-                transform: `translateX(${scrollPositions[4]}px)`,
-                transition: 'transform 0.6s ease-in-out'
-              }}
-              ref={(e) => (imgRef.current[0] = e)}
-              src={waveWhite}
-              alt='Wave'
-              className='wave absolute bottom-[8.75vw] -left-[3.12vw] max-md:w-[32.658vw] max-md:h-[2.23vw]'
-            />
-            <Image
-              style={{
-                transform: `translateX(${scrollPositions[5]}px)`,
-                transition: 'transform 0.6s ease-in-out'
-              }}
-              ref={(e) => (imgRef.current[0] = e)}
-              src={waveNormalWhite}
-              alt='Wave'
-              className='wave absolute top-[9.69vw] right-[40%] max-md:w-[32.658vw] max-md:h-[2.23vw] max-md:right-0'
-            />
-            <Image ref={numberRef}
+            {/*<Image*/}
+            {/*  style={{*/}
+            {/*    transform: `translateX(${scrollPositions[4]}px)`,*/}
+            {/*    transition: 'transform 0.6s ease-in-out'*/}
+            {/*  }}*/}
+            {/*  ref={(e) => (imgRef.current[0] = e)}*/}
+            {/*  src={waveWhite}*/}
+            {/*  alt='Wave'*/}
+            {/*  className='wave absolute bottom-[8.75vw] -left-[3.12vw] max-md:w-[32.658vw] max-md:h-[2.23vw]'*/}
+            {/*/>*/}
+            {/*<Image*/}
+            {/*  style={{*/}
+            {/*    transform: `translateX(${scrollPositions[5]}px)`,*/}
+            {/*    transition: 'transform 0.6s ease-in-out'*/}
+            {/*  }}*/}
+            {/*  ref={(e) => (imgRef.current[0] = e)}*/}
+            {/*  src={waveNormalWhite}*/}
+            {/*  alt='Wave'*/}
+            {/*  className='wave absolute top-[9.69vw] right-[40%] max-md:w-[32.658vw] max-md:h-[2.23vw] max-md:right-0'*/}
+            {/*/>*/}
+            <div ref={numberRef}
               style={{
                 transform: `translateX(${scrollPositions[6]}px)`,
                 transition: 'transform 0.6s ease-in-out'
               }}
-              src={waveShort}
-              alt='Wave'
-              className='wave absolute top-[50%] -translate-y-1/2 left-[30%] max-md:w-[14.64vw] max-md:h-[2.22vw]'
             />
           </div>
         </div>
