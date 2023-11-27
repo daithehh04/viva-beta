@@ -40,7 +40,7 @@ function Surveys({ data, button, lang, dataBookTour }) {
           >
             {data?.text}
           </p>
-          <ul className='grid grid-cols-3 md:pr-[11.69vw] gap-x-[3.75vw] justify-items-start gap-y-[2vw] mt-[2vw] max-md:mt-[6.93vw] max-md:gap-x-[15.75vw] max-md:gap-y-[3.2vw]'>
+          <ul className='grid grid-cols-3 md:pr-[11.69vw] gap-x-[3.75vw] justify-items-center gap-y-[2vw] mt-[2vw] max-md:mt-[6.93vw] max-md:gap-x-[15.75vw] max-md:gap-y-[3.2vw]'>
             {data?.type?.map((item, index) => (
               <li
                 data-aos-once='true'
@@ -48,7 +48,7 @@ function Surveys({ data, button, lang, dataBookTour }) {
                 data-aos='zoom-out-up'
                 data-aos-duration='1000'
                 key={index}
-                className='flex flex-col items-center'
+                className='flex flex-col items-center w-28'
               >
                 <Image
                   src={item?.icon?.sourceUrl}

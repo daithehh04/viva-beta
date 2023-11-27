@@ -27,6 +27,16 @@ query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
     translation(language: $language) {
       name
       slug
+      country {
+        info {
+          population
+          area
+          language
+          currency
+          wheather
+          timze
+        }
+      }
     }
   }
 }
