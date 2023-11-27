@@ -1,5 +1,6 @@
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { getDictionary } from '@/get-dictionary'
 import { GET_META_DATA_BLOG } from '@/graphql/metaData/queries'
 import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
 import Blog from '@/pageComponent/Blog'
@@ -46,6 +47,8 @@ async function Page({ params: { lang } }) {
     fetchData(GET_ALL_TOURS_BESTSELLER, { language: lang?.toUpperCase() }),
     fetchData(GET_INITIAL_FILTER, { language: lang?.toUpperCase() })
   ])
+  const dictionary = await getDictionary(lang)
+
   return (
     <div>
       <Blog
@@ -54,6 +57,7 @@ async function Page({ params: { lang } }) {
         initTopic={dataInit?.data?.allTopic}
         initCategories={dataInit?.data?.categories}
         allCountries={dataInit?.data?.allCountries}
+        dictionary={dictionary}
       />
     </div>
   )

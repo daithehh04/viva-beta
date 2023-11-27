@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { sortBy } from 'lodash'
 import { useQueryState } from 'next-usequerystate'
 
-function FilterService({ handleDes, metaDestination }) {
+function FilterService({ handleDes, metaDestination,dictionary }) {
   const [destination, setDestination] = useQueryState('destination')
 
   const handleChangeDestination = (event) => {
@@ -61,7 +61,7 @@ function FilterService({ handleDes, metaDestination }) {
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                  Country
+                  {dictionary.service.country}
                 </span>
               </MenuItem>
               {allCountries?.map((item, index) => (

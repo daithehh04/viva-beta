@@ -1,6 +1,7 @@
 import TripSlider from "./Slider"
 
 function InspectionTrip({ data, lang, dataSlide }) {
+  console.log(dataSlide);
   return (
     <div className='inspection-trip mt-[8.38vw] max-md:mt-[11.68vw]'>
       <h2

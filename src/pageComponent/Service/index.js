@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import FilterService from './FilterService'
 
-function Index({ data1, lang, initCategories, allCountries, slug }) {
+function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
     const metaDestination = allCountries?.nodes
     const metaCategories = initCategories?.nodes
 
@@ -78,6 +78,7 @@ function Index({ data1, lang, initCategories, allCountries, slug }) {
                     handleDes={(data) => setDestination(data)}
                     metaDestination={metaDestination}
                     metaCategories={metaCategories}
+                    dictionary={dictionary}
                 />
             </div>
 

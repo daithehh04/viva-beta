@@ -15,7 +15,7 @@ function ReviewItem({ className, data, lang }) {
     see = 'Voir plus'
   }
   if(lang === 'it') {
-    see = 'Vedi altro'
+    see = 'Leggi di più'
   }
   return (
     <div

@@ -6,5 +6,16 @@
     "booking_button": "Demander Un Devis",
     "hot": "Hot",
     "all_our_tours": "Tous Nos Voyages"
+  },
+  "about_us": {
+    "destination": "Destination",
+    "years" : "Years" 
+  },
+  "service": {
+    "country":"Country"
+  },
+  "blog":{
+    "destination": "Destination",
+    "topicFilter": "Thème"
   }
 }

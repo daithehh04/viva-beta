@@ -6,5 +6,16 @@
     "booking_button": "Richiedi Un Preventivo",
     "hot": "Speciali",
     "all_our_tours": "Tutti I Nostri Viaggi"
+  },
+  "about_us": {
+    "destination": "Destinazione",
+    "years" : "Anno" 
+  },
+  "service": {
+    "country":"Destinazione"
+  },
+  "blog":{
+    "destination": "Destinazione",
+    "topicFilter": "Tema"
   }
 }
