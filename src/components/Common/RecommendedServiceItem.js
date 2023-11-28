@@ -3,10 +3,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import moment from 'moment'
 
-function BlogItem({ className, data, lang, heightImage }) {
+function RecommendedServiceItem({ className, data, lang, heightImage,category }) {
   return (
     <Link
-      href={`/${lang}/blog/${data?.translation?.slug || data?.slug}`}
+      href={`/${lang}/recommended-services/${category}/${data?.translation?.slug || data?.slug}`}
       className={`blog-item md:!w-[19.0625vw] !h-auto w-[52.26667vw] max-md:flex flex-shrink-0 max-md:ml-[4.27vw] ${className}`}
     >
       <div className={`w-full`}>
@@ -46,4 +46,4 @@ function BlogItem({ className, data, lang, heightImage }) {
   )
 }
 
-export default BlogItem
+export default RecommendedServiceItem

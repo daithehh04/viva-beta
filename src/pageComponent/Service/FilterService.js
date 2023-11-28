@@ -16,7 +16,6 @@ function FilterService({ handleDes, metaDestination,dictionary }) {
     handleDes(event.target.value)
   }
 
-  console.log("metaDestination", metaDestination);
   const allCountries = sortBy(metaDestination, item => item?.country?.priority)
 
   return (
@@ -61,7 +60,7 @@ function FilterService({ handleDes, metaDestination,dictionary }) {
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                  {dictionary.service.country}
+                  {dictionary.service.destination}
                 </span>
               </MenuItem>
               {allCountries?.map((item, index) => (

@@ -43,7 +43,7 @@ const TripSlider = ({ dataSlide, lang }) => {
       {dataTrip?.map((item, index) => {
         return (
           <SwiperSlide key={index}>
-            <Link href={`/${lang}/blogs/${item?.translation?.slug}`}>
+            <Link href={`/${lang}/blog/${item?.translation?.slug}`}>
                 <div className='h-[28.75vw] rounded-[1vw] itemSlideTrip tour-item max-md:rounded-[2.13vw] relative max-md:h-[53.33vw] max-md:ml-[3.2vw]'>
                   <div className='w-full h-full'>
                     <Image

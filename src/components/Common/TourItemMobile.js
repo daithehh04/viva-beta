@@ -20,15 +20,15 @@ function TourItemMobile({ data, lang, loading }) {
   if(checkBestTour?.length > 0) {
     bestTour = true
   }
-  let tag = 'Best Tour'
+  let tag = 'Best Seller'
   let priceTour = '$'
 
   if(lang === 'fr') {
-    tag = 'Best Tour'
+    tag = 'Best Seller'
     priceTour = '€'
   }
   if (lang === 'it') {
-    tag = 'Best Tour'
+    tag = 'Best Seller'
     priceTour = '€'
   }
   

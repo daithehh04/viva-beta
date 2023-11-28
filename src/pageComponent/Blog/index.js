@@ -71,8 +71,8 @@ function Index({ data1, lang, initTopic, initCategories, allCountries, slug, dic
       size: 12
     })
   }
-  const allBlogData = data?.posts?.nodes
-  const pageInfo = data?.posts?.pageInfo?.offsetPagination?.total
+  const allBlogData = data?.blogs?.nodes
+  const pageInfo = data?.blogs?.pageInfo?.offsetPagination?.total
   const totalPage = Math.ceil(pageInfo / 12)
   return (
     <div>

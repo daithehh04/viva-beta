@@ -2,7 +2,6 @@
 import { createTheme, useMediaQuery } from '@mui/material'
 
 function HeaderBlog({ data }) {
-  const blogdetail = data?.data?.postBy?.translation?.blogdetail
 
   const theme = createTheme({
     breakpoints: {
@@ -15,7 +14,7 @@ function HeaderBlog({ data }) {
   return (
     <div className={`w-full md:mt-[9.75vw] mt-[23.47vw] ${onlySmallScreen ? 'px-[4.27vw]' : 'px-[8.3vw]'}`}>
       <h2 className=' text-textColor font-optima md:text-[4vw] text-[5.867vw] font-semibold capitalize md:leading-[110%] leading-[120%]'>
-        {blogdetail?.heading}
+        {data?.title}
       </h2>
       <div className='flex items-center md:mt-[1.375vw] mt-[2.13vw]'>
         <svg
@@ -31,7 +30,7 @@ function HeaderBlog({ data }) {
           />
         </svg>
         <span className='md:ml-[0.66vw] ml-[1.067vw] text-textColor font-manrope md:text-[1vw] md:mr-[1.75vw] mr-[4.8vw] text-[3.2vw] leading-[130%] '>
-          {blogdetail?.time}
+          {data?.blogdetail?.time}
         </span>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -46,7 +45,7 @@ function HeaderBlog({ data }) {
           />
         </svg>
         <span className='ml-[0.25vw]  text-textColor font-manrope md:text-[1vw] text-[3.2vw] leading-[130%] '>
-          {blogdetail?.username}
+          {data?.username}
         </span>
       </div>
       <div className='w-full md:mt-[1.31vw] mt-[5.067vw] h-[1px] bg-[#44444424]'></div>

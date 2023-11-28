@@ -24,10 +24,10 @@ query ($language: LanguageCodeEnum!, $slug: String!) {
   }
 }`
 
-export async function generateMetadata({ params: { lang, slug } }) {
+export async function generateMetadata({ params: { lang, post } }) {
   const res = await fetchData(GET_META_DATA_BLOG_DETAIL, {
     language: lang?.toUpperCase(),
-    slug
+    slug: post
   })
   if (!res) return
   const { excerpt, blogdetail } = res?.data?.postBy?.translation || ''
@@ -47,11 +47,13 @@ export async function generateMetadata({ params: { lang, slug } }) {
 //   }))
 // }
 
-function page({ params: { lang, slug } }) {
+function page({ params: { lang, post,slug } }) {
   return (
     <BlogDetail
       lang={lang}
-      slug={slug}
+      slug={post}
+      category={slug}
+      isRecommendOfBlog={true}
     />
   )
 }

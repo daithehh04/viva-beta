@@ -1,6 +1,8 @@
 {
   "home": {
-    "banner_explore": "Esplora ora"
+    "banner_explore": "Esplora ora",
+    "see_more": "Leggi di più",
+    "best_tour":"Best Tour"
   },
   "nav": {
     "booking_button": "Richiedi Un Preventivo",
@@ -12,7 +14,7 @@
     "years" : "Anno" 
   },
   "service": {
-    "country":"Destinazione"
+    "destination":"Destinazione"
   },
   "blog":{
     "destination": "Destinazione",

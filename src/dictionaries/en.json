@@ -1,6 +1,8 @@
 {
   "home": {
-    "banner_explore": "Explore now"
+    "banner_explore": "Explore now",
+    "see_more": "See more",
+    "best_tour":"Best Tour"
   },
   "nav": {
     "booking_button": "Request A Quote",
@@ -12,7 +14,7 @@
     "years" : "Years" 
   },
   "service": {
-    "country":"Country"
+    "destination": "Destination"
   },
   "blog":{
     "destination": "Destination",
