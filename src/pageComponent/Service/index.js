@@ -10,6 +10,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import FilterService from './FilterService'
+import RecommendedServiceItem from '@/components/Common/RecommendedServiceItem'
 
 function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
     const metaDestination = allCountries?.nodes
@@ -64,7 +65,8 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
             size: 12
         })
     }
-    const allBlogData = data?.posts?.nodes
+    const allBlogOfRecommendData = data?.posts?.nodes
+
     const pageInfo = data?.posts?.pageInfo?.offsetPagination?.total
     const totalPage = Math.ceil(pageInfo / 12)
 
@@ -87,11 +89,12 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
                 {!loading ? (
                     <div>
                         {pageInfo !== 0 ? <div className='grid md:grid-cols-4 md:px-[8.06vw] px-[4.27vw] grid-cols-2 md:gap-x-[2.5vw] md:gap-y-[3vw] gap-x-[4.27vw] gap-y-[6.4vw] md:mt-[4vw] mt-[7.73vw]'>
-                            { allBlogData?.map((item, index) => (
-                                <BlogItem
+                            { allBlogOfRecommendData?.map((item, index) => (
+                                <RecommendedServiceItem
                                     lang={lang}
                                     key={index}
                                     data={item?.translation}
+                                    category={slug}
                                     className={'max-md:w-[43.73333vw] max-md:h-[43.73333vw] !ml-0'}
                                 />
                             ))}

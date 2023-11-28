@@ -117,17 +117,15 @@ const GET_ALL_POST_FILTER = gql`
     $offset: Int!
     $size: Int!
     $topicSlug: [String!]
-    $categorySlug: [String!]
     $destinationSlug: [String!]
   ) {
-    posts(
-      first: 100,
+    blogs(
+      first: 8,
       where: {
         offsetPagination: { offset: $offset, size: $size }
         orderby: { field: DATE, order: DESC }
         taxQuery: {
           taxArray: [
-             { taxonomy: CATEGORY, operator: IN, terms: $categorySlug, field: SLUG }
             { taxonomy: TOPIC, operator: IN, terms: $topicSlug, field: SLUG }
             { taxonomy: COUNTRIES, operator: IN, terms: $destinationSlug, field: SLUG }
           ]

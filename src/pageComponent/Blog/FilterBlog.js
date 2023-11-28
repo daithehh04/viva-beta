@@ -6,18 +6,19 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { useState } from 'react'
+import { useQueryState } from 'next-usequerystate'
 
 function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, slug, dictionary }) {
-  const [destination, SetDestination] = useState('')
-  const [topic, SetTopic] = useState('')
-  const [category, SetCategory] = useState(slug ? slug : '')
+  const [destination, setDestination] = useQueryState('destination')
+
+  const [topic, setTopic] = useQueryState('topic')
 
   const handleChangeDestination = (event) => {
-    SetDestination(event.target.value)
+    setDestination(event.target.value)
     handleDes(event.target.value)
   }
   const handleChangeTopic = (event) => {
-    SetTopic(event.target.value)
+    setTopic(event.target.value)
     handleTopic(event.target.value)
   }
 
@@ -43,7 +44,7 @@ function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, 
             }}
           >
             <Select
-              value={destination}
+              value={destination || ""}
               onChange={handleChangeDestination}
               displayEmpty
               inputprops={{ 'aria-label': 'Without label' }}
@@ -96,7 +97,7 @@ function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, 
             }}
           >
             <Select
-              value={topic}
+              value={topic || ""}
               onChange={handleChangeTopic}
               displayEmpty
               inputprops={{ 'aria-label': 'Without label' }}

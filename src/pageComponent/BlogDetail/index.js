@@ -1,31 +1,32 @@
 import NotFound from '@/components/Common/NotFound'
 import fetchData from '@/data/fetchData'
-import { DATA_BLOG_DETAIL, GET_ARTICLE_NEWS } from '@/graphql/detail/queries'
+import { DATA_BLOG_DETAIL, GET_ARTICLE_NEWS, GET_RECOMMEND_SERVICE_ID } from '@/graphql/detail/queries'
 import HeaderBlog from './HeaderBlog'
 import OtherArticle from './OtherArticle'
 import TextBlogDetail from './TextBlogDetail'
 
-async function index({ lang, slug }) {
-  const [data, dataNews] = await Promise.all([
+async function index({ lang, slug, isRecommendOfBlog, category}) {
+  const [data, dataNews, dataRecommendSlug] = await Promise.all([
     fetchData(DATA_BLOG_DETAIL, { language: lang.toUpperCase(), slug }),
-    fetchData(GET_ARTICLE_NEWS, { language: lang?.toUpperCase() }),
+    fetchData(GET_ARTICLE_NEWS, { language: lang?.toUpperCase(), slug: category }),
+    fetchData(GET_RECOMMEND_SERVICE_ID, { slug }),
   ])
 
-  const dataBlog = data?.data?.postBy
+  const dataBlog = data?.data?.blog
+  const dataRecommendBlog = dataRecommendSlug?.data?.post
 
-  if (!dataBlog || !data || !dataNews) {
+  if ( !data || !dataNews) {
     return <NotFound lang={lang} />
   }
-
   return (
     <div>
-      <HeaderBlog data={data} />
-      <TextBlogDetail data={data} />
+      <HeaderBlog data={isRecommendOfBlog ? dataRecommendBlog : dataBlog?.translation} />
+      <TextBlogDetail data={isRecommendOfBlog ? dataRecommendBlog : dataBlog?.translation} />
       <OtherArticle
-        data={dataBlog}
+        data={isRecommendOfBlog ? dataBlog?.translation : dataRecommendBlog}
         dataNews={dataNews}
         lang={lang}
-        dataTitle={data}
+        dataTitle={isRecommendOfBlog ? dataRecommendBlog : dataBlog?.translation}
       />
     </div>
   )

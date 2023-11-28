@@ -28,8 +28,8 @@ query PostBySlug($slug: String!, $language: LanguageCodeEnum!) {
 }
 `
 
-const DATA_BLOG_DETAIL = `query ($slug: String!, $language: LanguageCodeEnum!) {
-  postBy(slug: $slug) {
+const DATA_BLOG_DETAIL = `query ($slug: ID!, $language: LanguageCodeEnum!) {
+  blog(id: $slug, idType: SLUG) {
     translation(language: $language) {
       id
       slug
@@ -83,10 +83,14 @@ const DATA_BLOG_DETAIL = `query ($slug: String!, $language: LanguageCodeEnum!) {
 }`
 
 const GET_ARTICLE_NEWS = `
-  query ($language: LanguageCodeFilterEnum!) {
+  query ($language: LanguageCodeFilterEnum!, $slug: ID!) {
     posts(
       first: 4
-      where: {orderby: {field: DATE, order: DESC}, language: $language}
+      where: {
+        taxQuery: {
+          taxArray: {field: SLUG, operator: IN, taxonomy: CATEGORY, terms: $slug}
+        }
+        orderby: {field: DATE, order: DESC}, language: $language}
     ) {
       nodes {
         blogdetail {
@@ -105,7 +109,33 @@ const GET_ARTICLE_NEWS = `
         title
         excerpt
       }
+      pageInfo {
+        offsetPagination {
+          total
+        }
+      }
     }
   }
 `
-export { DATA_DETAIL, DATA_BLOG_DETAIL, GET_ARTICLE_NEWS }
+
+const GET_RECOMMEND_SERVICE_ID = `
+  query ($slug: ID!) {
+    post(id: $slug, idType: SLUG) {
+      id
+    slug
+    content
+    title
+    blogdetail{
+      time
+      username
+      heading
+      transtitle{
+        heading
+        button
+        share
+      }
+    }
+    }
+  }
+`
+export { DATA_DETAIL, DATA_BLOG_DETAIL, GET_ARTICLE_NEWS, GET_RECOMMEND_SERVICE_ID }
