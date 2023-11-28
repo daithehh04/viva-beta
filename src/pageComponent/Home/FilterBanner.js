@@ -49,7 +49,7 @@ function FilterBanner({ lang, onClose }) {
   const allDuration = dataTaxonomiesDuration?.allDuration?.nodes
   const allCountries = dataTaxonomiesCountry?.allCountries?.nodes
   const allTourStyle = dataTaxonomiesStyleTour?.allTourStyle?.nodes
-  
+
   const handleSort = (fn = []) => {
     let clone = [...fn]
     if (clone?.length > 0) {
@@ -109,16 +109,16 @@ function FilterBanner({ lang, onClose }) {
         }
       });
       const queryString = new URLSearchParams(resultObject).toString();
-      var link = `/search?&${queryString}`
-      if (lang !== 'en') {
-        link = `/${lang}/search?&${queryString}`
-      }
+      const link = `/${lang}/search?&${queryString}`
+      // if (lang !== 'en') {
+      //   link = `/${lang}/search?&${queryString}`
+      // }
       router.push(link)
     } else {
-      var linkSearch = `/search`
-      if (lang !== 'en') {
-        linkSearch = `/${lang}/search`
-      }
+      const linkSearch = `/${lang}/search`
+      // if (lang !== 'en') {
+      //   linkSearch = `/${lang}/search`
+      // }
       router.push(linkSearch)
     }
     if (onClose) {
@@ -198,7 +198,7 @@ function FilterBanner({ lang, onClose }) {
                 renderValue={() => {
                   let name = option?.destination
                   if (destination !== "") {
-                    const nameCountry = arrCountry?.find((item, index) => item?.slug === destination)
+                    const nameCountry = arrCountry?.find((item) => item?.name === destination)
                     name = nameCountry?.name
                   }
                   return name
@@ -220,7 +220,7 @@ function FilterBanner({ lang, onClose }) {
                 {arrCountry?.map((item, index) => (
                   <MenuItem
                     className='select-item'
-                    value={item?.slug} key={index}
+                    value={item?.name} key={index}
                     sx={{
                       '&.Mui-selected': {
                         backgroundColor: 'rgba(255, 210, 32, 0.7)'

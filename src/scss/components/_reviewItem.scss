@@ -9,6 +9,13 @@
       transition: background-size 500ms;
     }
   }
+
+  .review-item-user {
+    .link-button-see-more {
+      margin-bottom: 0;
+    }
+  }
+
   .review-item-img {
     transition: all ease 0.4s;
   }

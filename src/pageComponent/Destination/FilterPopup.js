@@ -109,13 +109,13 @@ function FilterPopup() {
         }
       })
       const queryString = new URLSearchParams(resultObject).toString()
-      var link = `/search?&country=${slug}&${queryString}`
-      if (lang !== 'en') {
-        link = `/search?&country=${slug}&${queryString}`
-      }
+      var link = `/${lang}/search?&country=${slug}&${queryString}`
+      // if (lang !== 'en') {
+      //   link = `/search?&country=${slug}&${queryString}`
+      // }
       router.push(link)
     } else {
-      router.push(`/search`)
+      router.push(`${lang}/search`)
     }
   }
 
