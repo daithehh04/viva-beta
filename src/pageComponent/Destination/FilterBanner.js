@@ -76,7 +76,7 @@ function FilterBanner() {
   const arrBudget = handleSort(dataFilter?.budget)
 
   const arrDuration = handleSort(dataFilter?.duration)
-  
+
 
   const arrStyle = sortBy(dataFilter?.style, item => item?.banner?.travelStyleInfo?.priority)
 
@@ -102,13 +102,13 @@ function FilterBanner() {
         }
       });
       const queryString = new URLSearchParams(resultObject).toString();
-      var link = `/search?&country=${slug}&${queryString}`
-      if (lang !== 'en') {
-        link = `/search?&country=${slug}&${queryString}`
-      }
+      const link = `/${lang}/search?&country=${slug}&${queryString}`
+      // if (lang !== 'en') {
+      //   link = `/search?&country=${slug}&${queryString}`
+      // }
       router.push(link)
     } else {
-      router.push(`/search`)
+      router.push(`/${lang}/search`)
     }
   }
 

@@ -123,7 +123,15 @@ function ReviewItem({ className, data, lang }) {
                 <span className='leading-normal ml-[0.3vw]'>{data?.translation?.customerReview?.time}</span>
               </div>
             </div>
-            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more max-md:hidden whitespace-nowrap'>{see}</Link>
+            <Link
+              href={`/${lang}/reviews/${data?.translation?.slug}`}
+              className='link-button-see-more max-md:text-[3.73vw] font-[500] max-md:hidden whitespace-nowrap mb-0'
+            >
+              {/*{see}*/}
+              <button className='flex-shrink-0 btn-primary h-12'>
+                {see}
+              </button>
+            </Link>
           </div>
         </div>
       </div>
