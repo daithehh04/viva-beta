@@ -108,11 +108,12 @@ function FilterBanner({ lang, onClose }) {
           }
         }
       });
+      console.log({resultObject});
       const queryString = new URLSearchParams(resultObject).toString();
-      const link = `/${lang}/search?&${queryString}`
-      // if (lang !== 'en') {
-      //   link = `/${lang}/search?&${queryString}`
-      // }
+      let link = `/search?&${queryString}`
+      if (lang !== 'en') {
+        link = `/${lang}/search?&${queryString}`
+      }
       router.push(link)
     } else {
       const linkSearch = `/${lang}/search`

@@ -102,10 +102,10 @@ function FilterBanner() {
         }
       });
       const queryString = new URLSearchParams(resultObject).toString();
-      const link = `/${lang}/search?&country=${slug}&${queryString}`
-      // if (lang !== 'en') {
-      //   link = `/search?&country=${slug}&${queryString}`
-      // }
+      let link = `/search?&country=${slug}&${queryString}`
+      if (lang !== 'en') {
+        link = `/${lang}/search?&country=${slug}&${queryString}`
+      }
       router.push(link)
     } else {
       router.push(`/${lang}/search`)
