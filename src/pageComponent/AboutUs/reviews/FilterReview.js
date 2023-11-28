@@ -61,7 +61,7 @@ function FilterReview({ handleDes, handleYear, arrYear, arrDes, dictionary }) {
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                {dictionary.about_us.destination}
+                {dictionary?.about_us?.destination}
                 </span>
               </MenuItem>
               {arrDes?.map((destination, index) => (
@@ -115,7 +115,7 @@ function FilterReview({ handleDes, handleYear, arrYear, arrDes, dictionary }) {
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                {dictionary.about_us.years}
+                {dictionary?.about_us?.years}
                 </span>
               </MenuItem>
               {arrYear?.map((topic, index) => (

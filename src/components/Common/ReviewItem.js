@@ -15,9 +15,8 @@ async function ReviewItem({ className, data, lang }) {
 
   return (
     <div
-      className={`${
-        className || ''
-      } review-item-wrapper md:p-[1vw] px-[4.8vw] py-[6.4vw] rounded-[8px] md:border border-solid border-[#2e2e2e1a] flex md:flex-row flex-col md:gap-[1vw] gap-[4.8vw] bg-[#fff]`}
+      className={`${className || ''
+        } review-item-wrapper md:p-[1vw] px-[4.8vw] py-[6.4vw] rounded-[8px] md:border border-solid border-[#2e2e2e1a] flex md:flex-row flex-col md:gap-[1vw] gap-[4.8vw] bg-[#fff]`}
     >
       <div className='overflow-hidden rounded-lg max-md:rounded-[2.33vw]'>
         <Image
@@ -66,7 +65,7 @@ async function ReviewItem({ className, data, lang }) {
           </div>
 
           <div className='relative'>
-            <p className='lg:text-[0.875vw] md:text-[1.1vw] text-[3.73vw] opacity-60 md:opacity-70 leading-normal mt-[3.2vw] md:mt-0 lg:line-clamp-4 line-clamp-3 text-review' dangerouslySetInnerHTML={{ __html: `${data?.translation?.customerReview?.content}`}}>
+            <p className='lg:text-[0.875vw] md:text-[1.1vw] text-[3.73vw] opacity-60 md:opacity-70 leading-normal mt-[3.2vw] md:mt-0 lg:line-clamp-4 line-clamp-3 text-review' dangerouslySetInnerHTML={{ __html: `${data?.translation?.customerReview?.content}` }}>
             </p>
             <Image
               src={commaRes}
@@ -104,11 +103,11 @@ async function ReviewItem({ className, data, lang }) {
                   alt='location'
                   className='md:w-[1vw] w-[3.2vw] md:h-[1vw] h-[3.2vw] object-cover'
                 />
-                <span className=' leading-normal ml-[0.25vw] text-textColor opacity-70 md:w-[5vw] line-clamp-3'>
+                <span title={tourData?.banner?.location} className=' leading-normal ml-[0.25vw] text-textColor opacity-70 md:w-[5vw] truncate'>
                   {tourData?.banner?.location}
                 </span>
               </div>
-              <div className='ml-[1.75vw] flex items-center'>
+              <div className='ml-[1vw] xl:ml-[1.75vw] flex items-center'>
                 <Image
                   src={calendar}
                   width={100}
@@ -119,7 +118,11 @@ async function ReviewItem({ className, data, lang }) {
                 <span className='leading-normal ml-[0.3vw]'>{data?.translation?.customerReview?.time}</span>
               </div>
             </div>
-            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more max-md:hidden whitespace-nowrap'>{dictionary.home.see_more}</Link>
+            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more max-md:hidden whitespace-nowrap'>
+              <button className='flex-shrink-0 btn-primary h-12'>
+                {dictionary.home.see_more}
+              </button>
+            </Link>
           </div>
         </div>
       </div>
