@@ -4,7 +4,7 @@ import FilterPopup from './FilterPopup'
 import OurBlog from './OurBlog'
 import SectionActions from './SectionActions'
 import SlideDestination from './SlideDestination'
-async function index({ lang, slug }) {
+async function index({ lang, slug, dictionary }) {
   return (
     <div>
       <Banner

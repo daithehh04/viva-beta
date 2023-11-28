@@ -3,6 +3,7 @@ import NotFound from '@/components/Common/NotFound'
 import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { getDictionary } from '@/get-dictionary'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
@@ -33,14 +34,15 @@ export async function generateMetadata({ params: { slug, lang } }) {
 // }
 
 export default async function page({ params: { lang, slug } }) {
-  const [headerData, result, res, result4, dataBookTour] = await Promise.all([
+  const [headerData, result, res, result4, dataBookTour, dictionary] = await Promise.all([
     fetchData(GET_TOUR_DETAIL_HEADER, { language: lang?.toUpperCase() }),
     fetchData(GET_TOUR_DETAIL, { slug: slug, language: lang?.toUpperCase() }),
     fetchData(GET_RANDOM_TOUR, {
       language: lang?.toUpperCase()
     }),
     fetchData(GET_ALL_REVIEWS, { language: lang?.toUpperCase() }),
-    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
+    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    getDictionary(lang)
   ])
 
   const styleTourArr = result?.data?.tours?.translation?.tourStyle?.nodes
@@ -74,6 +76,7 @@ export default async function page({ params: { lang, slug } }) {
       slug={slug}
       styleTourArr={styleTourArr}
       countriesTourArr={countriesTourArr}
+      dictionary={dictionary}
     />
   )
 }

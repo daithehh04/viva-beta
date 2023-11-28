@@ -23,7 +23,7 @@ import Link from 'next/link'
 import ZoomImg from './ZoomImg'
 
 export default function AboutTour(props) {
-  const { type, data, headerData = {}, relatedTours = [], lang, dataBookTour, price, tourContent,styleTourArr,countriesTourArr } = props
+  const { type, data, headerData = {}, relatedTours = [], lang, dataBookTour, price, tourContent,styleTourArr,countriesTourArr, dictionary } = props
   const { contentHeader, relatedTourHeader, bannerHeaders } = headerData
   const { reviews, banner, content = {} } = data || []
 
@@ -605,11 +605,13 @@ export default function AboutTour(props) {
                       className='hidden destinations-item md:flex'
                       data={item}
                       lang={lang}
+                      dictionary={dictionary}
                     />
                     <ReviewItem
                       data={item}
                       className='md:hidden block destinations-item-mobile w-[74.66vw]'
                       lang={lang}
+                      dictionary={dictionary}
                     />
                   </div>
                 )

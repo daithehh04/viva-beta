@@ -17,7 +17,8 @@ export default function Promotion({
   reviewsList,
   slug,
   lang,
-  dataBookTour
+  dataBookTour,
+  dictionary
 }) {
   const [openModal, setOpenModal] = useState(false)
   const { banner, content, map, priceTour } = data
@@ -80,6 +81,7 @@ export default function Promotion({
             lang={lang}
             dataBookTour={dataBookTour}
             price={priceTour}
+            dictionary={dictionary}
           />
         </div>
       </main>

@@ -4,14 +4,12 @@ import calendar from '@/assets/images/calendar.svg'
 import commaRes from '@/assets/images/about/commaRes.svg'
 import Image from 'next/image'
 import Link from 'next/link'
-import { getDictionary } from '@/get-dictionary'
 
-async function ReviewItem({ className, data, lang }) {
+async function ReviewItem({ className, data, lang, dictionary }) {
   // className prop is mush have a wrapper's class to overwrite css
   const tourData = data?.translation?.customerReview?.tours?.tourDetail
   const authorInfo = data?.translation?.customerReview?.authorInformation
   const tourSlug = data?.translation?.customerReview?.tours?.slug
-  const dictionary = await getDictionary(lang)
 
   return (
     <div

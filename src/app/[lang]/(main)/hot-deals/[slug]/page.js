@@ -1,6 +1,7 @@
 import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { getDictionary } from '@/get-dictionary'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { GET_LIST_PROMOTION_TOUR, PROMOTION_TOUR_SLUG_QUERY } from '@/graphql/hotDeal/queries'
@@ -38,13 +39,15 @@ export default async function page({ params: { lang, slug } }) {
     headerData,
     res,
     result4,
-    dataBookTour
+    dataBookTour,
+    dictionary
   ] = await Promise.all([
     fetchData(GET_TOUR_DETAIL, { slug: slug, language: lang?.toUpperCase() }),
     fetchData(GET_TOUR_DETAIL_HEADER, { language: lang?.toUpperCase() }),
     fetchData(GET_LIST_PROMOTION_TOUR, { language: lang?.toUpperCase() }),
     fetchData(GET_ALL_REVIEWS, { language: lang?.toUpperCase() }),
-    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() })
+    fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language: lang?.toUpperCase() }),
+    getDictionary(lang)
   ])
   const promotionList = res?.data?.page?.hotDeals?.promotionList
   // get Default list Reviews
@@ -64,6 +67,7 @@ export default async function page({ params: { lang, slug } }) {
       slug={slug}
       lang={lang}
       dataBookTour={dataBookTour}
+      dictionary={dictionary}
     />
   )
 }

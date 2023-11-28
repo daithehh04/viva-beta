@@ -89,6 +89,7 @@ const Reviews = ({ lang, data, arrYear, arrCountry, dictionary }) => {
                 <ReviewItem
                   data={item}
                   lang={lang}
+                  dictionary={dictionary}
                 />
               </div>
             )
