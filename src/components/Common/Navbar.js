@@ -70,8 +70,8 @@ export default function Navbar({
     const menuNavs = refMenu?.current?.querySelectorAll('.nav-link:has(.menu-item)')
     // check header transpent or not
     const isTrans = onlySmallScreen
-      ? !pathName.includes(pathNameMbExclude) && pathName !== "/"
-      : !pathName.includes(pathNamePcExclude) && pathName !== "/"
+      ? !pathNameMbExclude.some((item) => pathName.includes(item)) && pathName !== "/"
+      : !pathNamePcExclude.some((item) => pathName.includes(item)) && pathName !== "/"
 
     if (isTrans) {
       nav.classList.add('nav-mb-special')
