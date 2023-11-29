@@ -4,24 +4,32 @@ import TourItem from '@/components/Common/TourItem'
 import TourItemMobile from '@/components/Common/TourItemMobile'
 import fetchData from '@/data/fetchData'
 import { DATA_COUNTRY_TITLE, DATA_SLIDE_OTHER_TOUR, GET_DATA_BEST_SELLER_OURTOUR } from '@/graphql/country/queries'
+import { GET_INITIAL_FILTER } from '@/graphql/home/queries'
 import '@/scss/pages/_slideDestination.scss'
 import { Skeleton } from '@mui/material'
 import Link from 'next/link'
 
 async function SlideDestination({ lang, slug }) {
+  const dataAllCountry = await fetchData(GET_INITIAL_FILTER, { language: lang?.toUpperCase() })
+  let arraySlugCountry = []
+  await dataAllCountry?.data?.allCountries?.nodes.map((value) => {
+    if (value.slug !== slug) {
+      arraySlugCountry.push(value.slug)
+    }
+  })
   const [
     dataOtherTypeTrip,
     dataBestSeller,
-    dataCountry
+    dataCountry,
   ] = await Promise.all([
     fetchData(DATA_SLIDE_OTHER_TOUR, {
       language: lang?.toUpperCase(),
-      taxonomyValue: slug,
+      taxonomyValue: arraySlugCountry,
       taxonomyName: 'COUNTRIES',
     }),
     fetchData(GET_DATA_BEST_SELLER_OURTOUR, {
       language: lang?.toUpperCase(),
-      taxonomyValue: slug,
+      taxonomyValue: arraySlugCountry,
       taxonomyName: 'COUNTRIES',
     }),
     fetchData(DATA_COUNTRY_TITLE, {
@@ -29,6 +37,7 @@ async function SlideDestination({ lang, slug }) {
       taxonomyValue: slug
     })
   ])
+
 
   const dataTitle = dataCountry?.data?.countries?.translation
 
@@ -128,7 +137,7 @@ SlideDestination.Skeleton = function SlideDestinationSkeleton() {
             height={100}
           /></span>
         <div className='max-md:mt-[6.4vw] flex place-self-start gap-8'>
-        {[...Array(10)].map((_, index) => (
+          {[...Array(10)].map((_, index) => (
             <Skeleton
               key={index}
               variant='rounded'

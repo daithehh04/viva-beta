@@ -163,40 +163,33 @@ query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxono
 }
 `
 const DATA_SLIDE_OTHER_TOUR = `
-query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxonomyName: TaxonomyEnum) {
+query getTourStyle($language: LanguageCodeFilterEnum!, $taxonomyValue: [String!], $taxonomyName: TaxonomyEnum) {
   allTours(
-    first: 8,
-    where: {
-      taxQuery: {
-        taxArray: { terms: [$taxonomyValue], taxonomy: $taxonomyName, field: SLUG, operator: IN }
-        relation: AND
-      }
-    }
+    first: 8
+    where: {taxQuery: {taxArray: {terms: $taxonomyValue, taxonomy: $taxonomyName, operator: NOT_IN, field: SLUG}, relation: AND}, language: $language}
   ) {
     nodes {
-      translation(language: $language) {
-          slug
-          bestSeller {
-            nodes {
-              name
-            }
+        slug
+        bestSeller {
+          nodes {
+            name
           }
-          countries {
-            nodes {
-              name
-            }
+        }
+        countries {
+          nodes {
+            name
           }
-          tourDetail {
-            priceTour
-            banner {
-              location
-              rate
+        }
+        tourDetail {
+          priceTour
+          banner {
+            location
+            rate
+            title
+            gallery {
+              sourceUrl
+              altText
               title
-              gallery {
-                sourceUrl
-                altText
-                title
-              }
             }
           }
         }
@@ -206,17 +199,14 @@ query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxono
 `
 
 const GET_DATA_BEST_SELLER_OURTOUR = `
-query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxonomyName: TaxonomyEnum) {
+query getTourStyle($language: LanguageCodeFilterEnum!, $taxonomyValue: [String!], $taxonomyName: TaxonomyEnum) {
   allTours(
-    first: 7,
-    where: {
-      taxQuery: {
-        taxArray: [
-        { terms: [$taxonomyValue], taxonomy: $taxonomyName, field: SLUG, operator: IN },
-        { taxonomy: BESTSELLER, operator: IN, terms:"best-seller-tours", field: SLUG }]
-        relation: AND
-      }
-    }
+    first: 7
+    where: {taxQuery: 
+      {taxArray: [
+        {terms: $taxonomyValue, taxonomy: $taxonomyName, field: SLUG, operator: NOT_IN}, 
+        {taxonomy: BESTSELLER, operator: IN, terms: "best-seller-tours", field: SLUG}], relation: AND}, 
+      language: $language}
   ) {
     pageInfo {
       offsetPagination {
@@ -224,29 +214,27 @@ query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxono
       }
     }
     nodes {
-      translation(language: $language) {
-          slug
-          bestSeller {
-            nodes {
-              name
-            }
+        slug
+        bestSeller {
+          nodes {
+            name
           }
-          countries {
-            nodes {
-              name
-            }
+        }
+        countries {
+          nodes {
+            name
           }
-          tourDetail {
-            priceTour
-            banner {
-              location
-              rate
+        }
+        tourDetail {
+          priceTour
+          banner {
+            location
+            rate
+            title
+            gallery {
+              sourceUrl
+              altText
               title
-              gallery {
-                sourceUrl
-                altText
-                title
-              }
             }
           }
         }

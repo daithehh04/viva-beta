@@ -15,7 +15,15 @@ function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, 
 
   const handleChangeDestination = (event) => {
     setDestination(event.target.value)
-    handleDes(event.target.value)
+    // handleDes(event.target.value)
+
+    const test = metaDestination.filter((value) => value.slug !== event.target.value);
+
+    if (test.length === metaDestination.length) {
+      handleDes([])
+    } else {
+      handleDes(test.map((value) => value.slug))
+    }
   }
   const handleChangeTopic = (event) => {
     setTopic(event.target.value)
@@ -118,7 +126,7 @@ function FilterBlog({ handleDes, handleTopic, metaTopic, lang, metaDestination, 
             >
               <MenuItem value=''>
                 <span className='md:text-[1.0625vw] md:font-[500] leading-[130%] text-textColor text-[2.93333vw] font-[400]'>
-                {dictionary.blog.topicFilter}
+                  {dictionary.blog.topicFilter}
                 </span>
               </MenuItem>
               {metaTopic?.map((topic, index) => (

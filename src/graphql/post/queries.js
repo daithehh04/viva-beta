@@ -286,50 +286,52 @@ query ($language: LanguageCodeEnum!, $lang: LanguageCodeFilterEnum!) {
 
 const GET_BEST_TOUR_BLOG_BY_COUNTRY = gql`
 query GetFilterTour(
-    $language: LanguageCodeEnum!
-    $countrySlug: [String!]
-  ) {
-    allTours(
-      first: 100,
-      where: {
-        taxQuery: {
-          taxArray: [
-            { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: SLUG }
-            { taxonomy: BESTSELLER, operator: IN, terms:"best-seller-tours", field: SLUG }
-          ]
-        }
-        orderby: { field: DATE, order: DESC }
-      }
-    ) {
+  $countrySlug: [String!]
+$language: LanguageCodeFilterEnum!
+){
+allTours(
+  first: 100
+  where: {
+    taxQuery: {
+      taxArray: [
+        {taxonomy: COUNTRIES, terms: $countrySlug, operator: NOT_IN, field: SLUG}, 
+        {taxonomy: BESTSELLER, terms: "best-seller-tours", field: SLUG}]}, 
+    orderby: {field: DATE, order: DESC}, language: $language}
+) {
+  nodes {
+    id
+    title
+    slug
+    bestSeller {
       nodes {
-        translation(language: $language) {
-          id
-          title
-          slug
-          bestSeller {
-            nodes {
-              name
-            }
-          }
-          tourDetail {
-            priceTour
-            numberDay
-            banner {
-              title
-              gallery {
-                sourceUrl
-                altText
-                title
-              }
-              location
-              rate
-              icons
-            }
-          }
-        }
+        name
       }
     }
-  }`
+    countries {
+      nodes {
+        id
+        name
+        slug
+      }
+    }
+    tourDetail {
+      priceTour
+      numberDay
+      banner {
+        title
+        gallery {
+          sourceUrl
+          altText
+          title
+        }
+        location
+        rate
+        icons
+      }
+    }
+  }
+}
+}`
 
 export default GET_SERVICE_BY_CATEGORY
 export { GET_POST, GET_ALL_POST, GET_ALL_POST_FILTER, GET_ALL_TOURS_BESTSELLER, GET_SERVICE_BY_CATEGORY, GET_BEST_TOUR_BLOG_BY_COUNTRY, GET_ALL_BLOG_FILTER }
