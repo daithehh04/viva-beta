@@ -70,8 +70,8 @@ export default function Navbar({
     const menuNavs = refMenu?.current?.querySelectorAll('.nav-link:has(.menu-item)')
     // check header transpent or not
     const isTrans = onlySmallScreen
-      ? !pathNameMbExclude.some((item) => pathName.includes(item)) && pathName !== "/"
-      : !pathNamePcExclude.some((item) => pathName.includes(item)) && pathName !== "/"
+      ? !pathNameMbExclude.some((item) => pathName.includes(item)) && pathName !== "/" && pathName !== "/fr" && pathName !== "/it"
+      : !pathNamePcExclude.some((item) => pathName.includes(item)) && pathName !== "/" && pathName !== "/fr" && pathName !== "/it"
 
     if (isTrans) {
       nav.classList.add('nav-mb-special')
@@ -357,8 +357,8 @@ export default function Navbar({
       </div>
       <div
         className={`${(pathName.includes('tours') && !pathName.includes('destinations')) || pathName.includes('hot-deals/')
-            ? 'max-md:hidden'
-            : ''
+          ? 'max-md:hidden'
+          : ''
           } books-footer h-[15.2vw] fixed bottom-0 left-0 right-0 z-[99] hidden max-md:flex`}
       >
         <Link
