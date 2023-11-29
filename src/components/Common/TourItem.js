@@ -33,7 +33,7 @@ function TourItem({ data, menu, lang, loading, className, onCloseMenu }) {
   return (
     <Link
       onClick={onCloseMenu}
-      href={`/${lang}/${isPromotion || menu ? 'hot-deals' : 'tours'}/${encodeURIComponent(data?.translation?.slug)}`}
+      href={`/${lang}${isPromotion || menu ? '/hot-deals' : ''}/${encodeURIComponent(data?.translation?.slug)}`}
       className={`${menu
           ? 'lg:h-[13.5vw] md:w-[30vw] md:h-[35vw] w-[52.5vw] h-[67.23vw]'
           : 'lg:h-[24.5vw] md:h-[28vw] h-[62.7vw] w-full'
@@ -89,7 +89,7 @@ function TourItem({ data, menu, lang, loading, className, onCloseMenu }) {
 
         <h3 className='line-clamp-2'>
           <Link
-            href={`/${lang}/${isPromotion || menu ? 'hot-deals' : 'tours'}/${encodeURIComponent(
+            href={`/${lang}${isPromotion || menu ? '/hot-deals' : ''}/${encodeURIComponent(
               data?.translation?.slug
             )}`}
             className={`text-white ${!loading ? 'title-tour' : ''

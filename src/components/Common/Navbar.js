@@ -55,20 +55,14 @@ export default function Navbar({
     AboutUs: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.title,
     whoWeAreSlug: dataAboutUs?.wwrRes?.who_we_are?.banner?.slug,
     ResTravelSlug: dataAboutUs?.rtRes?.responsibleTravel?.banner?.slug,
-    AboutUsSlug: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.slug,
+    AboutUsSlug: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.slug
   }
   //check pathName
   const pathName = usePathname()
   const [openModal, setOpenModal] = useState(false)
-  const pathNameMb = [
-    'destinations',
-    'types-of-trips',
-    'tours',
-    'about-us',
-    'hot-deals/',
-    'check-visa'
-  ]
-  const pathNamePc = ['tours']
+
+  const pathNameMbExclude = ['/blog', '/book-tour', 'recommended-services', '/review', '/search', '/voucher']
+  const pathNamePcExclude = ['/destinations', '/types-of-trips', '/about-us', '/hot-deals', '/check-visa', '/blog', '/book-tour', 'recommended-services', '/review', '/search', '/voucher']
 
   useEffect(() => {
     const nav = document.querySelector('.navbar')
@@ -76,8 +70,8 @@ export default function Navbar({
     const menuNavs = refMenu?.current?.querySelectorAll('.nav-link:has(.menu-item)')
     // check header transpent or not
     const isTrans = onlySmallScreen
-      ? pathNameMb.some((item) => pathName.includes(item))
-      : pathName.includes(pathNamePc) && !pathName.includes('destinations')
+      ? !pathName.includes(pathNameMbExclude) && pathName !== "/"
+      : !pathName.includes(pathNamePcExclude) && pathName !== "/"
 
     if (isTrans) {
       nav.classList.add('nav-mb-special')
@@ -194,7 +188,10 @@ export default function Navbar({
         className={`bg-white w-[100vw] navbar h-[5.375vw] max-lg:h-[14.93vw]`}
         ref={refNav}
       >
-        <div className={`bg-trans flex items-center h-full w-full bg-white ${lang === 'fr' ? 'px-[6.125%]' : 'px-[8.125%]'}`}>
+        <div
+          className={`bg-trans flex items-center h-full w-full bg-white ${lang === 'fr' ? 'px-[6.125%]' : 'px-[8.125%]'
+            }`}
+        >
           <div className='flex items-center gap-x-[2vw]'>
             <Link href={`/${lang}`}>
               <Image
@@ -223,7 +220,6 @@ export default function Navbar({
                     />
                   </div>
                 </div>
-
               </div>
               <div
                 className='capitalize text-[1vw] nav-link cursor-pointer'
@@ -328,7 +324,6 @@ export default function Navbar({
                 onCloseNav={handleCloseNav}
               />
             </DataProvider>
-
           </div>
           <Image
             src={bars}
@@ -359,12 +354,11 @@ export default function Navbar({
             contactInfo={contactInfo}
           />
         </DataProvider>
-
       </div>
       <div
         className={`${(pathName.includes('tours') && !pathName.includes('destinations')) || pathName.includes('hot-deals/')
-          ? 'max-md:hidden'
-          : ''
+            ? 'max-md:hidden'
+            : ''
           } books-footer h-[15.2vw] fixed bottom-0 left-0 right-0 z-[99] hidden max-md:flex`}
       >
         <Link

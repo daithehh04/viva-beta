@@ -116,10 +116,10 @@ function FilterBanner({ lang, onClose }) {
       }
       router.push(link)
     } else {
-      const linkSearch = `/${lang}/search`
-      // if (lang !== 'en') {
-      //   linkSearch = `/${lang}/search`
-      // }
+      let linkSearch = `/search`
+      if (lang !== 'en') {
+        linkSearch = `/${lang}/search`
+      }
       router.push(linkSearch)
     }
     if (onClose) {
