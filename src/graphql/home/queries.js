@@ -439,6 +439,7 @@ const GET_DATA_iNSEPECT = `query getDataInsepect(
         categories {
           nodes {
             name
+            slug
           }
         }
         countries {
