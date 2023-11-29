@@ -33,7 +33,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
   })
 
   const [activePage, setActivePage] = useState(0)
-  const [destination, setDestination] = useState(arrayDesInit || '')
+  const [destination, setDestination] = useState([] || '')
   const [topic, setTopic] = useState(arrayTopicInit || '')
   const [category, setCategory] = useState(slug || '')
   const language = lang?.toUpperCase() || 'EN'
