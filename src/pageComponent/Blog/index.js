@@ -11,7 +11,7 @@ import Link from 'next/link'
 import { GET_ALL_POST_FILTER, GET_BEST_TOUR_BLOG_BY_COUNTRY } from '@/graphql/post/queries'
 import { useQuery } from '@apollo/client'
 
-function Index({ data1, lang, initTopic, initCategories, allCountries, slug, dictionary }) {
+function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, slug, dictionary }) {
   const metaTopic = initTopic?.nodes
   const metaDestination = allCountries?.nodes
   const metaCategories = initCategories?.nodes
@@ -78,7 +78,7 @@ function Index({ data1, lang, initTopic, initCategories, allCountries, slug, dic
     <div>
       <div className='content'>
         <h2 className='heading-1 mdpt-[14.755vw] lg:pt-[9.755vw] pt-[23.53vw] md:mb-0 mb-[4.27vw]'>
-          {data1?.data?.page?.translation?.ourblog?.heading1}
+          {dataBestSeller?.data?.page?.translation?.ourblog?.heading1}
         </h2>
         <FilterBlog
           handleDes={(data) => setDestination(data)}
@@ -131,17 +131,17 @@ function Index({ data1, lang, initTopic, initCategories, allCountries, slug, dic
         )}
 
         {/* besst seller tour */}
-        {data1?.data?.page?.translation?.ourblog ? (
+        {dataBestSeller?.data?.page?.translation?.ourblog ? (
           <div>
             <h2 className='heading-1 md:mt-[5.25vw] mt-[12.8vw] md:pl-[8.06vw] pl-[4.27vw] mb-[3.5vw]'>
-              {data1?.data?.page?.translation?.ourblog?.heading2}
+              {dataBestSeller?.data?.page?.translation?.ourblog?.heading2}
             </h2>
             <div className='md:px-[8.06vw]'>
               <SlideTour data={dataBestTour?.data?.allTours?.nodes} lang={lang} />
             </div>
             <Link href={`/${lang}/search`}>
-              <Button content={data1?.data?.page?.translation?.ourblog?.button} className='btn-secondary m-auto md:mb-[6.25vw] mb-[6.25vw] md:mt-[3.5vw] relative mt-[10.01vw] '>
-                <span>{data1?.data?.page?.translation?.ourblog?.button}</span>
+              <Button content={dataBestSeller?.data?.page?.translation?.ourblog?.button} className='btn-secondary m-auto md:mb-[6.25vw] mb-[6.25vw] md:mt-[3.5vw] relative mt-[10.01vw] '>
+                <span>{dataBestSeller?.data?.page?.translation?.ourblog?.button}</span>
               </Button>
             </Link>
           </div>

@@ -37,6 +37,22 @@ const DATA_BLOG_DETAIL = `query ($slug: ID!, $language: LanguageCodeEnum!) {
       link
       title
       excerpt
+      topic {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
+      countries {
+        edges {
+          node {
+            id
+            slug
+          }
+        }
+      }
       featuredImage {
         node {
           sourceUrl
@@ -57,33 +73,14 @@ const DATA_BLOG_DETAIL = `query ($slug: ID!, $language: LanguageCodeEnum!) {
       }
       username
       heading
-      otherarticle {
-        ... on Post {
-          id
-          blogdetail {
-            heading
-            subtitle1
-            subtitle2
-            time
-            username
-          }
-          translation(language: $language) {
-            slug
-            featuredImage {
-              node {
-                sourceUrl
-              }
-            }
-          }
-        }
-      }
+      
     }
     }
   }
 }`
 
 const GET_ARTICLE_NEWS = `
-  query ($language: LanguageCodeFilterEnum!, $slug: ID!) {
+  query ($language: LanguageCodeFilterEnum!, $slug: [String]!) {
     posts(
       first: 4
       where: {

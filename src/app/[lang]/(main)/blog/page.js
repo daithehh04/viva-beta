@@ -53,7 +53,7 @@ async function Page({ params: { lang } }) {
     <div>
       <Blog
         lang={lang}
-        data1={data}
+        dataBestSeller={data}
         initTopic={dataInit?.data?.allTopic}
         initCategories={dataInit?.data?.categories}
         allCountries={dataInit?.data?.allCountries}
