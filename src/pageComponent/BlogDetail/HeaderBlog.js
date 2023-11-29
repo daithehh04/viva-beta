@@ -2,7 +2,6 @@
 import { createTheme, useMediaQuery } from '@mui/material'
 
 function HeaderBlog({ data }) {
-
   const theme = createTheme({
     breakpoints: {
       values: {
@@ -45,7 +44,7 @@ function HeaderBlog({ data }) {
           />
         </svg>
         <span className='ml-[0.25vw]  text-textColor font-manrope md:text-[1vw] text-[3.2vw] leading-[130%] '>
-          {data?.username}
+          {data?.blogdetail?.username}
         </span>
       </div>
       <div className='w-full md:mt-[1.31vw] mt-[5.067vw] h-[1px] bg-[#44444424]'></div>
