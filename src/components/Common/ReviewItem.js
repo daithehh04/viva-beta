@@ -5,7 +5,7 @@ import commaRes from '@/assets/images/about/commaRes.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 
-async function ReviewItem({ className, data, lang, dictionary }) {
+function ReviewItem({ className, data, lang, dictionary }) {
   // className prop is mush have a wrapper's class to overwrite css
   const tourData = data?.translation?.customerReview?.tours?.tourDetail
   const authorInfo = data?.translation?.customerReview?.authorInformation
@@ -70,7 +70,7 @@ async function ReviewItem({ className, data, lang, dictionary }) {
               alt='commaRes'
               className='review-icon-comma md:hidden block w-[8.2136vw] h-[5.866vw] absolute top-[37.5%] left-0'
             />
-            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more mt-[2vw] w-max ml-auto !hidden max-md:!block'>{dictionary.home.see_more}</Link>
+            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more hover:after:!w-0 mt-[2vw] w-max ml-auto !hidden max-md:!block'>{dictionary.home.see_more}</Link>
           </div>
         </div>
         <div className='review-item-user'>
@@ -116,8 +116,8 @@ async function ReviewItem({ className, data, lang, dictionary }) {
                 <span className='leading-normal ml-[0.3vw]'>{data?.translation?.customerReview?.time}</span>
               </div>
             </div>
-            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more max-md:hidden whitespace-nowrap'>
-              <button className='flex-shrink-0 btn-primary h-12'>
+            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] ml-3 max-md:text-[3.73vw] font-[500] link-see_more hover:after:!w-0 max-md:hidden whitespace-nowrap no-underline'>
+              <button className='flex-shrink-0 btn-primary h-8 xl:h-12'>
                 {dictionary.home.see_more}
               </button>
             </Link>
