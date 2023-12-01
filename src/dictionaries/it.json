@@ -2,7 +2,10 @@
   "home": {
     "banner_explore": "Esplora ora",
     "see_more": "Leggi di più",
-    "best_tour":"Best Tour"
+    "best_seller":"Best Seller",
+    "no_data": "Nessun dato trovato!",
+    "not_found_tour": "Tour non trovato !",
+    "other" : "Altri tour"
   },
   "nav": {
     "booking_button": "Richiedi Un Preventivo",

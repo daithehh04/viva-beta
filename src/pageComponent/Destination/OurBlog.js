@@ -19,11 +19,11 @@ async function OurBlog({ lang,slug }) {
       <div className='md:grid md:grid-cols-4 md:grid-rows-2 md:gap-[2.5vw] flex md:overflow-x-visible overflow-x-auto gap-0 listBlog'>
         <div className='flex flex-shrink-0 md:col-span-2 md:row-span-2 h-full md:pl-0 pl-[4.27vw]'>
           {dataInfo?.slice(0, 1).map((item, index) => (
-            <div key={index}>
+            <div key={index} className='h-full'>
               <div className='hidden max-md:block'>
               <BlogItem2 data={item} lang={lang}/>
               </div>
-              <div className='block max-md:hidden'>
+              <div className='block max-md:hidden h-full'>
               <BlogItem2 data={item} lang={lang} className='bigger' />
               </div>
             </div>
@@ -35,7 +35,7 @@ async function OurBlog({ lang,slug }) {
       </div>
       <div className='flex justify-center md:mb-[7.37vw] md:mt-[3.5vw] mt-[7.47vw]'>
         <Link href='/blog'>
-            <Button className='btn-secondary' content={data?.ourTour?.btn}><span>{data?.ourTour?.btn}</span></Button>
+            <Button className='btn-secondary' content={data?.ourTour?.titleBlogs}><span>{data?.ourTour?.titleBlogs}</span></Button>
         </Link>
       </div>
     </div>

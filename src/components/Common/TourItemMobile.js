@@ -9,9 +9,9 @@ import { iconsTour } from '@/lib/Icons'
 import { Skeleton } from '@mui/material'
 
 function TourItemMobile({ data, lang, loading }) {
-  const tourData = data?.translation?.tourDetail?.banner
+  const tourData = data?.translation?.tourDetail?.banner || data?.tourDetail?.banner
   const checkBestTour = data?.translation?.bestSeller?.nodes || data?.bestSeller?.nodes
-  const price = data?.translation?.tourDetail?.priceTour
+  const price = data?.translation?.tourDetail?.priceTour || data?.tourDetail?.priceTour
   let listRate = null
   if (tourData?.rate) listRate = new Array(Math.round(tourData?.rate)).fill(0)
   const pathName = usePathname()

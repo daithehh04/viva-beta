@@ -2,7 +2,10 @@
   "home": {
     "banner_explore": "Explore now",
     "see_more": "See more",
-    "best_tour":"Best Tour"
+    "best_seller":"Best Seller",
+    "no_data": "No data found!",
+    "not_found_tour": "Not Found Tour !",
+    "other" : "Other tours"
   },
   "nav": {
     "booking_button": "Request A Quote",

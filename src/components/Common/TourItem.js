@@ -11,7 +11,7 @@ import { Skeleton } from '@mui/material'
 function TourItem({ data, menu, lang, loading, className, onCloseMenu }) {
   const tourData = data?.translation?.tourDetail?.banner || data?.tourDetail?.banner
   const checkBestTour = data?.translation?.bestSeller?.nodes || data?.bestSeller?.nodes
-  const price = data?.translation?.tourDetail?.priceTour
+  const price = data?.translation?.tourDetail?.priceTour || data?.tourDetail?.priceTour
   let icons = null
   if (tourData?.rate) icons = new Array(Math.round(tourData?.rate)).fill(0)
   const pathName = usePathname()
@@ -33,7 +33,7 @@ function TourItem({ data, menu, lang, loading, className, onCloseMenu }) {
   return (
     <Link
       onClick={onCloseMenu}
-      href={`/${lang}${isPromotion || menu ? '/hot-deals' : ''}/${encodeURIComponent(data?.translation?.slug)}`}
+      href={`/${lang}${isPromotion || menu ? '/hot-deals' : ''}/${encodeURIComponent(data?.translation?.slug || data?.slug)}`}
       className={`${menu
           ? 'lg:h-[13.5vw] md:w-[30vw] md:h-[35vw] w-[52.5vw] h-[67.23vw]'
           : 'lg:h-[24.5vw] md:h-[28vw] h-[62.7vw] w-full'
@@ -90,7 +90,7 @@ function TourItem({ data, menu, lang, loading, className, onCloseMenu }) {
         <h3 className='line-clamp-2'>
           <Link
             href={`/${lang}${isPromotion || menu ? '/hot-deals' : ''}/${encodeURIComponent(
-              data?.translation?.slug
+              data?.translation?.slug || data?.slug
             )}`}
             className={`text-white ${!loading ? 'title-tour' : ''
               } max-lg:text-[1.6vw] !line-clamp-2 text-[1.125vw] max-md:text-[2.93vw] font-bold tracking-tight leading-[1.2] mt-[0.25vw] ${className || ''

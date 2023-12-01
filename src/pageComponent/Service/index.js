@@ -31,6 +31,7 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
 
     const [activePage, setActivePage] = useState(0)
     const [destination, setDestination] = useState(arrayDesInit || '')
+    const [destinationByBestTour, setDestinationByBestTour] = useState([] || '')
     const language = lang?.toUpperCase() || 'EN'
 
     const { data, refetch, loading } = useQuery(FILTER_RECOMMENDED_SERVICE_QUERY, {
@@ -47,7 +48,7 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
         {
             variables: {
                 language: language,
-                countrySlug: destination === '' ? arrayDesInit : destination
+                countrySlug: destination === '' ? [] : destinationByBestTour
             }
         })
 
@@ -78,6 +79,7 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
                 </h2>
                 <FilterService
                     handleDes={(data) => setDestination(data)}
+                    handleDesByBestTour={(data) => setDestinationByBestTour(data)}
                     metaDestination={metaDestination}
                     metaCategories={metaCategories}
                     dictionary={dictionary}
@@ -99,7 +101,7 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
                                 />
                             ))}
                         </div> : <div className='md:px-[8.06vw] px-[4.27vw] md:mt-[4vw] mt-[7.73vw] text-center text-[3.5vw] pt-[4vw] w-full font-optima max-md:text-[5.67vw]'>
-                            No data found!
+                            {dictionary?.home?.no_data}
                           </div>}
 
                         <div className='flex md:gap-[0.75vw] gap-[3.2vw] justify-center items-center relative md:mt-[4.5vw] mt-[8.53vw]'>

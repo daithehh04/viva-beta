@@ -12,7 +12,7 @@ import theme from '@/components/ThemeRegistry/theme'
 import Image from 'next/image'
 import { useQueryState } from 'next-usequerystate'
 const tourBackup = new Array(6).fill()
-const Search = ({ lang, listBlog, searchInfo }) => {
+const Search = ({ lang, listBlog, searchInfo, dictionary }) => {
   const [des, setDes] = useQueryState('country')
   const [bud, setBud] = useQueryState('budget')
   const [day, setDay] = useQueryState('duration')
@@ -204,6 +204,7 @@ const Search = ({ lang, listBlog, searchInfo }) => {
             onTravelStyle={(data) => setTravelStyle(data)}
             onBudget={(data) => setBud(data)}
             isOpenModal={isOpenModal}
+            dictionary={dictionary}
           />
         )}
         {

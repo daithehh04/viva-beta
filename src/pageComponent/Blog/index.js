@@ -34,6 +34,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
 
   const [activePage, setActivePage] = useState(0)
   const [destination, setDestination] = useState([] || '')
+  const [destinationByBlog, setDestinationByBlog] = useState(arrayDesInit || '')
   const [topic, setTopic] = useState(arrayTopicInit || '')
   const [category, setCategory] = useState(slug || '')
   const language = lang?.toUpperCase() || 'EN'
@@ -45,7 +46,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
       size: 12,
       categorySlug: 'blog',
       topicSlug: topic === '' ? arrayTopicInit : topic,
-      destinationSlug: destination === '' ? arrayDesInit : destination
+      destinationSlug: destinationByBlog === '' ? arrayDesInit : destinationByBlog
     }
   })
 
@@ -53,7 +54,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
     {
       variables: {
         language: language,
-        countrySlug: destination === '' ? arrayDesInit : destination
+        countrySlug: destination === '' ? [] : destination
       }
     })
 
@@ -82,6 +83,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
         </h2>
         <FilterBlog
           handleDes={(data) => setDestination(data)}
+          handleDesByBlog={(data) => setDestinationByBlog(data)}
           handleTopic={(data) => setTopic(data)}
           handleCate={(data) => setCategory(data)}
           metaTopic={metaTopic}
@@ -106,7 +108,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
                   className={'max-md:w-[43.73333vw] max-md:h-[43.73333vw] !ml-0'}
                 />
               ))}
-            </div> : <div className='text-center text-[3.5vw] w-full font-optima pt-[4vw] max-md:text-[5.67vw]'>Not Found !</div>}
+            </div> : <div className='text-center text-[3.5vw] w-full font-optima pt-[4vw] max-md:text-[5.67vw]'>{dictionary?.home?.no_data}</div>}
             
 
             <div className='flex md:gap-[0.75vw] gap-[3.2vw] justify-center items-center relative md:mt-[4.5vw] mt-[8.53vw]'>
