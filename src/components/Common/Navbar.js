@@ -303,7 +303,7 @@ export default function Navbar({
             // onClick={handleOpenPopup}
             onClick={() => setOpenModal(true)}
           >
-            <Button className='flex-shrink-0 btn-primary mr-[3vw] px-4'>
+            <Button className='flex-shrink-0 btn-primary mr-[3vw] px-4 ml-2.5'>
               <Image
                 src={bookTourIcon}
                 width={50}

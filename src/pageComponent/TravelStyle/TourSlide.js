@@ -20,6 +20,7 @@ function TourSlide({
   lang,
   slug,
   tourStyleName,
+  dictionary
 }) {
   const eleRef = useRef()
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
@@ -156,7 +157,7 @@ function TourSlide({
           ))
         ) : (
           <div className='text-center text-[3.5vw] w-full text-[#c23a3a] font-optima max-md:text-[5.67vw]'>
-            Not Found Tour !
+            {dictionary?.home?.not_found_tour}
           </div>
         )}
         {/* ) : (

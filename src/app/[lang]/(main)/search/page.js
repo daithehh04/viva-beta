@@ -1,6 +1,7 @@
 import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { getDictionary } from '@/get-dictionary'
 import { GET_ALL_POST } from '@/graphql/post/queries'
 import { GET_META_DATA, GET_SEARCH_INFO } from '@/graphql/search/queries'
 import Search from '@/pageComponent/Search/Search'
@@ -23,12 +24,15 @@ async function page({ params: { lang } }) {
     ])
   const listBlog = resListBlog?.data?.posts?.nodes
   const searchInfo = searchInfoData?.data?.page?.translation?.search
+  const dictionary = await getDictionary(lang)
+
   return (
     <div>
       <Search
         searchInfo={searchInfo}
         lang={lang}
         listBlog={listBlog}
+        dictionary={dictionary}
       />
     </div>
   )

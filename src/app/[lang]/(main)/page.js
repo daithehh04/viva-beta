@@ -4,6 +4,7 @@ import AboutVideo from '@/components/Common/Video'
 import { LANGUAGE_BOOK_IDS, LANGUAGE_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
+import { getDictionary } from '@/get-dictionary'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { GET_DATA_iNSEPECT, GET_HOME_PAGE, GET_INITIAL_FILTER, GET_META_DATA, GET_NEXT_STEP } from '@/graphql/home/queries'
 import Banner from '@/pageComponent/Home/Banner'
@@ -66,6 +67,7 @@ export default async function page({ params, searchParams }) {
   const blog = finalData?.blogs
   const nextStepBookTour = nextStep?.data?.page?.translation?.aboutUsReviews?.steps
   const button = finalData?.groupbutton
+  const dictionary = await getDictionary(lang)
 
   return (
     <main>
@@ -100,6 +102,7 @@ export default async function page({ params, searchParams }) {
           <BestTour
             finalData={finalData}
             button={button}
+            dictionary={dictionary}
           />
           <TravelStyle
             data={travelStyleList?.travelStyleList}

@@ -10,6 +10,7 @@ import Banner from './Banner'
 import HotTour from './HotTour'
 import TourSlide from './TourSlide'
 import fetchData from '@/data/fetchData'
+import { getDictionary } from '@/get-dictionary'
 
 async function index({ lang, slug }) {
   const getPageInfo = await fetchData(GET_INFO_PAGE_TRAVEL_STYLE, {
@@ -20,6 +21,7 @@ async function index({ lang, slug }) {
   if (!getPageInfo?.data?.tourStyle?.translation?.banner) {
     return <NotFound lang={lang} />
   }
+  const dictionary = await getDictionary(lang)
 
   const dataTaxonomiesCountry = await fetchData(DATA_TAXONOMIES_COUNTRY, { language: lang?.toUpperCase() })
   const dataTaxonomiesStyleTour = await fetchData(DATA_TAXONOMIES_TOUR_STYLE, { language: lang?.toUpperCase() })
@@ -36,6 +38,7 @@ async function index({ lang, slug }) {
         dataTaxonomiesStyleTour={dataTaxonomiesStyleTour}
         dataTaxonomiesBudget={dataTaxonomiesBudget}
         dataTaxonomiesDuration={dataTaxonomiesDuration}
+        dictionary={dictionary}
       />
       <HotTour
         slug={slug}

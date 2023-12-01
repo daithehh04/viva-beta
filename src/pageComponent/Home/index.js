@@ -1,8 +1,6 @@
 import BookingProcessSteps from '@/components/Common/BookingProcessSteps'
 import OurBlogHomePage from '@/components/Common/OurBlogHomePage'
 import AboutVideo from '@/components/Common/Video'
-import { GET_DATA_iNSEPECT } from '@/graphql/home/queries'
-import { useQuery } from '@apollo/client'
 import Banner from './Banner'
 import BestTour from './BestTour'
 import InspectionTrip from './InspectionTrip/InspectionTrip'
@@ -11,6 +9,7 @@ import Review from './Reviews/Review'
 import Surveys from './Surveys'
 import TravelStyle from './TravelStyle/TravelStyle'
 import TravelStyleMb from './TravelStyle/TravelStyleMb'
+import { getDictionary } from '@/get-dictionary'
 export default async function Home({
   data,
   lang,
@@ -22,11 +21,8 @@ export default async function Home({
 
   const language = lang?.toUpperCase() || 'EN'
 
-
-
-
-
   // =================================================================
+  const dictionary = await getDictionary(lang)
 
 
   return (
@@ -62,6 +58,7 @@ export default async function Home({
           <BestTour
             finalData={finalData}
             button={button}
+            dictionary={dictionary}
           />
           <TravelStyle
             data={travelStyleList?.travelStyleList}

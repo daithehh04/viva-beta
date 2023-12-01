@@ -47,7 +47,8 @@ export default function Sidebar({
   onTravelStyle,
   onBudget,
   onDay,
-  lang
+  lang,
+  dictionary
 }) {
   // const [travelStyle, setTravelStyle] = useState([])
   const refStyle = useRef()
@@ -194,6 +195,38 @@ export default function Sidebar({
               <p className='text-[0.875vw] max-md:text-[3.73vw]'>{item?.quantity}</p>
             </div>
           ))}
+        </div>
+      </div>
+      <div
+        className='search-option px-[1.8vw] mb-[1.88vw] w-full border pb-[2vw] pt-[1.5vw] 
+        max-md:mx-[4.26vw] max-md:pt-[7.46vw] max-md:px-[4.26vw] max-md:rounded-[2.66vw] max-md:w-auto max-md:mb-[8vw] max-md:pb-[8.53vw]'
+        style={{ boxShadow: '0px 0px 30px 0px rgba(0, 0, 0, 0.08)' }}
+      >
+        <h3 className='mb-[1.32vw] text-[1.25vw] font-bold max-md:text-[5.33vw] max-md:mb-[5.6vw]'>{dictionary?.home?.best_seller}</h3>
+        <div className='flex flex-col justify-center gap-[0.75vw] max-md:gap-[3.2vw]' ref={refStyle}>
+          <div className='flex items-center justify-between'>
+            <div className='flex gap-[0.4375vw] items-center cursor-pointer max-md:gap-[1.86vw]'>
+              <Checkbox
+                // checked={params?.style?.includes("bestseller")}
+                value={"bestseller"}
+                color='info'
+                id={"bestseller"}
+                sx={{
+                  color: '#C7D0D9',
+                  '& .MuiSvgIcon-root': { fontSize: onlySmallScreen ? '5.5vw' : '1.25vw' },
+                  '&.Mui-checked': {
+                    color: '#228B22'
+                  }
+                }}
+                className='w-[1.25vw] h-[1.25vw]'
+                // onChange={handleCheckStyle}
+              />
+              <label className='text-[0.875vw] cursor-pointer max-md:text-[3.73vw]' for={"bestseller"}>
+                {dictionary?.home?.best_seller}
+              </label>
+            </div>
+            {/* <p className='text-[0.875vw] max-md:text-[3.73vw]'>{item?.quantity}</p> */}
+          </div>
         </div>
       </div>
       <div

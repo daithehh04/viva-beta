@@ -4,16 +4,20 @@ import Button from '@/components/Common/Button'
 import Link from 'next/link'
 import { DATA_WHY_TRAVEL, GET_HOT_TOUR_TRAVEL_STYLE } from '@/graphql/travelStyle/queries'
 import fetchData from '@/data/fetchData'
+import { getDictionary } from '@/get-dictionary'
 async function HotTour({slug, lang }) {
+  const dictionary = await getDictionary(lang)
+
   const getPageInfo = await fetchData(GET_HOT_TOUR_TRAVEL_STYLE, {
     language: lang?.toUpperCase(),
     taxonomyValue: slug,
   })
   const hotTour=getPageInfo?.data?.tourStyle?.translation?.banner?.hotTour
   const data = getPageInfo?.data?.tourStyle?.translation?.banner?.groupbutton?.buttonseemore
-
   const dataWhyTravel = await fetchData(DATA_WHY_TRAVEL, { language: lang?.toUpperCase() })
   const reason = dataWhyTravel?.data?.page?.translation?.tourStyle?.whytravel
+
+  console.log("hotTour: ",hotTour);
   return (
     <div className='w-[83.75%] ml-auto mr-auto max-md:w-full'>
       <div className='md:mt-[3.12vw] mt-[14.67vw]'>
@@ -28,9 +32,9 @@ async function HotTour({slug, lang }) {
           <Link href={`/${lang}/search`}>
             <Button
               className='btn-secondary'
-              content={data}
+              content={data ? data : dictionary.home.see_more}
             >
-              <span>{data}</span>
+              <span>{data ? data : dictionary.home.see_more}</span>
             </Button>
           </Link>
         </div>
