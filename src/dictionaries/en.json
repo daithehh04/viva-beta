@@ -22,5 +22,8 @@
   "blog":{
     "destination": "Destination",
     "topicFilter": "Topic"
+  },
+  "message": {
+    "not_found_information": "Not found information about this country !!!"
   }
 }
