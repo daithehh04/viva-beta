@@ -46,6 +46,7 @@ export default function Sidebar({
   onDestination,
   onTravelStyle,
   onBudget,
+  onBestSeller,
   onDay,
   lang,
   dictionary
@@ -62,9 +63,29 @@ export default function Sidebar({
         onTravelStyle([value])
       }
     } else {
-      var rs = params?.style?.filter((item) => item !== value)
+      let paramStyle = null
+      if(typeof params?.style === 'string' && params?.style !== ''){
+        paramStyle = params?.style.split(',').filter((item) => item !== value)
+
+      } else {
+        paramStyle = params?.style?.filter((item) => item !== value)
+      }
+
       // setTravelStyle(rs)
-      onTravelStyle(rs)
+      onTravelStyle(paramStyle)
+    }
+  }
+
+  function handleCheckBestSeller(e) {
+    const value = e.target.value
+    if (e.target.checked) {
+      if (params?.seller) {
+        onBestSeller([...params?.seller, value])
+      } else {
+        onBestSeller([value])
+      }
+    } else {
+      onBestSeller([])
     }
   }
   // const [duration, setDuration] = useState([])
@@ -72,18 +93,24 @@ export default function Sidebar({
   function handleCheckDuration(e) {
     const value = e.target.value
     if (e.target.checked) {
+      
       // setDuration([...duration, value])
-      console.log({ value });
-      if (params?.day) {
+      if (params?.day && typeof params?.day !== 'string') {
         onDay([...params?.day, value])
-      } else {
+      } 
+       else {
         onDay([value])
       }
     } else {
-      console.log("params?.day", params?.day);
-      var rs = params?.day?.filter((item) => item !== value)
+      let paramDuration = null
+      if(typeof params?.day === 'string' && params?.day !== ''){
+        paramDuration = params?.day.split(',').filter((item) => item !== value)
+
+      } else {
+        paramDuration = params?.day?.filter((item) => item !== value)
+      }
       // setDuration(rs)
-      onDay(rs)
+      onDay(paramDuration)
     }
   }
 
@@ -207,10 +234,10 @@ export default function Sidebar({
           <div className='flex items-center justify-between'>
             <div className='flex gap-[0.4375vw] items-center cursor-pointer max-md:gap-[1.86vw]'>
               <Checkbox
-                // checked={params?.style?.includes("bestseller")}
-                value={"bestseller"}
+                checked={params?.seller?.includes("best-seller-tours")}
+                value={"best-seller-tours"}
                 color='info'
-                id={"bestseller"}
+                id={"best-seller-tours"}
                 sx={{
                   color: '#C7D0D9',
                   '& .MuiSvgIcon-root': { fontSize: onlySmallScreen ? '5.5vw' : '1.25vw' },
@@ -219,9 +246,9 @@ export default function Sidebar({
                   }
                 }}
                 className='w-[1.25vw] h-[1.25vw]'
-                // onChange={handleCheckStyle}
+                onChange={handleCheckBestSeller}
               />
-              <label className='text-[0.875vw] cursor-pointer max-md:text-[3.73vw]' for={"bestseller"}>
+              <label className='text-[0.875vw] cursor-pointer max-md:text-[3.73vw]' for={"best-seller-tours"}>
                 {dictionary?.home?.best_seller}
               </label>
             </div>

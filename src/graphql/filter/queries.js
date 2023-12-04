@@ -92,6 +92,75 @@ query durationTaxonomies {
   }
 }`
 
+export const getDataBestSeller = (bestSellerSlug) => {
+  const isBestSeller = bestSellerSlug && bestSellerSlug.length !== 0
+  return gql`
+  query GetFilterTour(
+    $language: LanguageCodeEnum!
+    $countrySlug: [String!]
+    $styleTourSlug: [String!]
+    $budget: [String!]
+    $duration: [String!]
+    ${isBestSeller ? '$bestSellerSlug: [String!]' : ''}
+    $offset: Int!
+    $size: Int!
+  ) {
+    allTours(
+      where: {
+        offsetPagination: { offset: $offset, size: $size }
+        taxQuery: {
+          taxArray: [
+            { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
+            { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
+            { taxonomy: BUDGET, operator: IN, terms: $budget, field: NAME }
+            { taxonomy: DURATION, operator: IN, terms: $duration, field: NAME }
+            ${isBestSeller ? '{ taxonomy: BESTSELLER, operator: IN, terms: $bestSellerSlug, field: SLUG }' : ''}
+          ]
+        }
+        orderby: { field: DATE, order: DESC }
+      }
+    ) {
+      pageInfo {
+        offsetPagination {
+          total
+        }
+      }
+      nodes {
+        translation(language: $language) {
+          id
+          title
+          slug
+          bestSeller {
+            nodes {
+              name
+            }
+          }
+          tourStyle {
+            nodes {
+              slug
+            }
+          }
+          tourDetail {
+            priceTour
+            numberDay
+            banner {
+              title
+              gallery {
+                sourceUrl
+                altText
+                title
+              }
+              location
+              rate
+              icons
+            }
+          }
+        }
+      }
+    }
+  }
+  `
+}
 const DATA_BEST_TOUR = gql`
 query GetFilterTour(
   $language: LanguageCodeEnum!

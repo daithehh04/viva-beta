@@ -10,8 +10,8 @@ import { useRef, useState } from 'react'
 import ModalCustom from '@/components/Common/ModalCustom'
 import BookTour from '@/components/Common/BookTour'
 
-function Information({ data, lang, dataBookTour }) {
-  const { dataB } = useData()
+function Information({ data, lang, dataBookTour, dictionary }) {
+  const { dataB, isInitPage } = useData()
   const [openModal, setOpenModal] = useState(false)
   const refBtnBookTour = useRef()
   const dataInfo = data?.checkvisa?.infodetail
@@ -24,19 +24,11 @@ function Information({ data, lang, dataBookTour }) {
   })
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
-  let choose = 'Not found information about this country !!!'
-  if(lang === 'fr') {
-    choose = 'Aucune information trouvée sur ce pays !!!'
-  } 
-  if(lang === 'it') {
-    choose = 'Non sono state trovate informazioni su questo paese !!!'
-  }
-
   const check = dataB?.titleVisa || dataB?.contentVisa
   return (
     <div className='relative w-full'>
       <div className='w-full md:mt-[6.13vw] mt-[11.47vw] md:px-[8.13vw] px-[4.27vw]'>
-        {check ? <ExemptVisa title={dataB?.titleVisa} desc={dataB?.contentVisa} dataInfo={dataInfo} /> : <h2 className='text-[#bf4242] font-optima md:text-[2.5vw] text-[5.86667vw] font-semibold leading-[110%] md:mb-[1.5vw] mb-[2.13vw]'>{choose}</h2>}
+        {isInitPage && (check ? <ExemptVisa title={dataB?.titleVisa} desc={dataB?.contentVisa} dataInfo={dataInfo} /> : <h2 className='text-[#bf4242] font-optima md:text-[2.5vw] text-[5.86667vw] font-semibold leading-[110%] md:mb-[1.5vw] mb-[2.13vw]'>{dictionary?.message?.not_found_information}</h2>)}
         <div className='md:mt-[1vw] flex md:flex-row flex-col md:gap-[5.6vw] items-center'>
           <div className='flex flex-col'>
             <h2 className='md:text-[2.875vw] font-optima text-[5.86667vw] md:leading-[120%] capitalize md:mb-[1.5vw] mb-[2.1333vw] md:w-[44.625vw] w-[74.66667vw] font-semibold'>

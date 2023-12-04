@@ -8,6 +8,7 @@ import BestSellerTour from './BestSellerTour'
 import { DataProvider } from './DataContext'
 import Information from './Information'
 import fetchData from '@/data/fetchData'
+import { getDictionary } from '@/get-dictionary'
 
 async function index({ lang }) {
   const [dataBookTour,data,dataCountryFrom,dataCountryTo] = await Promise.all([
@@ -41,10 +42,12 @@ async function index({ lang }) {
     countryFrom: listArrCountryFrom,
     countryTo: listArrCountryTo
   }
+  const dictionary = await getDictionary(lang)
+
   return (
     <DataProvider>
       <Banner data={dataCheckVisa} dataFilter={dataFilter} lang={lang} />
-      <Information data={dataCheckVisa} lang={lang} dataBookTour={dataBookTour} />
+      <Information data={dataCheckVisa} lang={lang} dataBookTour={dataBookTour} dictionary={dictionary}/>
       <BestSellerTour dataCheckVisa={dataCheckVisa} data={data} lang={lang} />
     </DataProvider>
   )

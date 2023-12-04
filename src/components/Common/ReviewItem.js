@@ -70,7 +70,7 @@ function ReviewItem({ className, data, lang, dictionary }) {
               alt='commaRes'
               className='review-icon-comma md:hidden block w-[8.2136vw] h-[5.866vw] absolute top-[37.5%] left-0'
             />
-            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more mt-[2vw] w-max ml-auto !hidden max-md:!block'>{dictionary.home.see_more}</Link>
+            <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] max-md:text-[3.73vw] font-[500] link-see_more mt-[2vw] w-max ml-auto !hidden max-md:!block text-[#007200]'>{dictionary.home.see_more}</Link>
           </div>
         </div>
         <div className='review-item-user'>
@@ -117,7 +117,7 @@ function ReviewItem({ className, data, lang, dictionary }) {
               </div>
             </div>
             <Link href={`/${lang}/reviews/${data?.translation?.slug}`} className='text-[1vw] ml-3 max-md:text-[3.73vw] font-[500] link-see_more max-md:hidden whitespace-nowrap no-underline'>
-              <button className='flex-shrink-0'>
+              <button className='flex-shrink-0 text-[#007200]'>
                 {dictionary.home.see_more}
               </button>
             </Link>

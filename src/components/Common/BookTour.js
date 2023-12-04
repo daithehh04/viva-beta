@@ -363,7 +363,7 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                                 <DatePicker
                                   name='date'
                                   views={['month', 'year']}
-                                  format="MM/YYYY"
+                                  format="MM/yyyy"
                                   value={formik.values.date}
                                   onChange={(value) => formik.setFieldValue("date", value, true)}
                                   slotProps={{
