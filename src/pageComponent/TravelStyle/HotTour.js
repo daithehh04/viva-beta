@@ -17,7 +17,6 @@ async function HotTour({slug, lang }) {
   const dataWhyTravel = await fetchData(DATA_WHY_TRAVEL, { language: lang?.toUpperCase() })
   const reason = dataWhyTravel?.data?.page?.translation?.tourStyle?.whytravel
 
-  console.log("hotTour: ",hotTour);
   return (
     <div className='w-[83.75%] ml-auto mr-auto max-md:w-full'>
       <div className='md:mt-[3.12vw] mt-[14.67vw]'>
@@ -29,7 +28,7 @@ async function HotTour({slug, lang }) {
           />
         </div>
         <div className='flex justify-center'>
-          <Link href={`/${lang}/search`}>
+          <Link href={`/${lang}/search?seller=best-seller-tours`}>
             <Button
               className='btn-secondary'
               content={data ? data : dictionary.home.see_more}

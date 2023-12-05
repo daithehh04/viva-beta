@@ -238,11 +238,11 @@ export default function Navbar({
                 href={`/${lang}/hot-deals`}
                 className='capitalize text-[1vw] nav-link cursor-pointer relative'
                 menu={dataHome?.nav3}
-                onClick={handleCloseMenu}
+                // onClick={handleCloseMenu}
               >
                 <span>{dataHome?.nav3}</span>
 
-                <div className='hidden menu-item menu-item3'>
+                {/* <div className='hidden menu-item menu-item3'>
                   <HotDeal
                     hotDeals={hotDeals}
                     listVoucher={listVoucher}
@@ -250,7 +250,7 @@ export default function Navbar({
                     lang={lang}
                     onCloseMenu={handleCloseMenu}
                   />
-                </div>
+                </div> */}
                 <span className='icon-hot absolute top-[-0.75vw] right-[-0.375vw] px-[0.625vw] rounded-[99px] bg-primaryColor text-[0.75vw]'>
                   {hot}
                 </span>

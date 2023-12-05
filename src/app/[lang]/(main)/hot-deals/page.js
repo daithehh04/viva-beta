@@ -16,8 +16,11 @@ export async function generateMetadata({ params: { lang } }) {
 }
 
 async function page({ params: { lang } }) {
-  const result = await fetchData(GET_HOT_DEAL_DATA, { language: lang?.toUpperCase() })
-  const hotDeals = result?.data?.page?.translation?.hotDeals
+  
+  const dataHotDeal = await fetchData(GET_HOT_DEAL_DATA, { language: lang?.toUpperCase() })
+
+  const hotDeals = dataHotDeal?.data?.page?.translation?.hotDeals
+  
   return (
     <HotDeal
       hotDeals={hotDeals}

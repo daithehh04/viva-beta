@@ -5,6 +5,7 @@ import { useRef, useState } from 'react'
 import TourItem from './TourItem'
 import vw from '@/helpers/convertToVw'
 import { Skeleton } from '@mui/material'
+import VoucherItem from '@/components/Common/VoucherItem'
 
 function SlideVoucher({ data, slug, isLoading, lang }) {
   const [indexSlider, setIndexSlider] = useState(0)
@@ -25,9 +26,13 @@ function SlideVoucher({ data, slug, isLoading, lang }) {
     <div className='relative'>
       <Swiper
         breakpoints={{
+          414: {
+            spaceBetween: vw(1),
+            slidesPerView: 1
+          },
           767: {
             spaceBetween: vw(1),
-            slidesPerView: 4
+            slidesPerView: 2
           },
           1023: {
             spaceBetween: vw(2),
@@ -49,7 +54,8 @@ function SlideVoucher({ data, slug, isLoading, lang }) {
             <SwiperSlide key={index}>
               {({ isActive }) => (
                 <div className='max-md:pl-[4.27vw] block box-border'>
-                  <TourItem
+                  <VoucherItem
+                    className='promo-voucher-item'
                     data={item}
                     lang={lang}
                   />
