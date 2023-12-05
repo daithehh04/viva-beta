@@ -1,8 +1,9 @@
 import BestSeller from '@/components/Common/BestSeller'
 import Button from '@/components/Common/Button'
 import React from 'react'
+import Link from 'next/link'
 
-const NewRelease = ({ data, lang, title, button }) => {
+const NewRelease = ({ data, lang, title, button, dictionary }) => {
   return (
     <div>
       <div className='mt-[6.69vw]'>
@@ -16,7 +17,10 @@ const NewRelease = ({ data, lang, title, button }) => {
         </div>
       </div>
       <div className='flex md:mt-[4vw] mt-[9.87vw] md:mb-[5.75vw] mb-[14.93vw] justify-center'>
-        <Button className='btn-secondary' content={button}><span>{button}</span></Button>
+        <Link href={`/${lang}/blog`}>
+          {/* <Button className='btn-secondary' content={button}><span>{button === '' ? dictionary.home.see_more : button}</span></Button> */}
+          <Button className='btn-secondary' content={dictionary.home.see_more}><span>{dictionary.home.see_more}</span></Button>
+        </Link>
       </div>
     </div>
   )

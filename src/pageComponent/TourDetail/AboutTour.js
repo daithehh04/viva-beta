@@ -633,7 +633,7 @@ export default function AboutTour(props) {
           lang={lang}
         />
         <Link
-          href={`/${lang}/search`}
+          href={`${lang !== 'en' ? `/${lang}/search?seller=best-seller-tours` : '/search?seller=best-seller-tours'}`}
           className='btn-secondary mx-auto mt-[9.83vw] md:mt-[3.5vw] md:w-[10vw] w-[35.6vw] flex justify-center'
           content={relatedTourHeader?.buttonContent}
         >

@@ -161,7 +161,7 @@ function BestTour({
               </span>
               <div className='flex justify-center max-md:hidden mt-[1.25vw] max-md:mt-[8.53vw]'>
                 <Link
-                  href={`/${lang}/search`}
+                  href={`${lang !== 'en' ? `/${lang}/search?seller=best-seller-tours` : '/search?seller=best-seller-tours'}`}
                   className='btn-secondary'
                   content={button?.buttonseemore}
                 >
@@ -175,7 +175,7 @@ function BestTour({
         )}
       </div>
       <div className='flex justify-center md:hidden mt-[8.53vw] mb-[7.93vw]'>
-        <Link href={`/${lang}/search`}>
+        <Link href={`/${lang}/search?seller=best-seller-tours`}>
           <Button className='btn-secondary'>{button?.buttonseemore}</Button>
         </Link>
       </div>

@@ -243,6 +243,7 @@ const Search = ({ lang, listBlog, searchInfo, dictionary }) => {
           button={searchInfo?.button}
           lang={lang}
           data={listBlog}
+          dictionary={dictionary}
         />
       )}
     </div>

@@ -5,6 +5,7 @@ import { useRef, useState } from 'react'
 import Link from 'next/link'
 import TourItem from './TourItem'
 import BlogItem from './BlogItem'
+import RecommendedServiceItem from '@/components/Common/RecommendedServiceItem'
 
 function BestSeller({ isBlogItem, listBlog, lang }) {
   const [indexSlider, setIndexSlider] = useState(0)
@@ -12,7 +13,6 @@ function BestSeller({ isBlogItem, listBlog, lang }) {
   const handleNextSlide = () => {
     swiperRef.current?.slideNext()
   }
-
   const handlePrevSlide = () => {
     swiperRef.current?.slidePrev()
   }
@@ -49,7 +49,7 @@ function BestSeller({ isBlogItem, listBlog, lang }) {
                 <div>
                   {isBlogItem ? (
                     <BlogItem
-                      data={item}
+                      data={item.translation}
                       className={'articleMb'}
                       lang={lang}
                     />
