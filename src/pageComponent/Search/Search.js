@@ -11,8 +11,9 @@ import { Button, SwipeableDrawer, useMediaQuery } from '@mui/material'
 import theme from '@/components/ThemeRegistry/theme'
 import Image from 'next/image'
 import { useQueryState } from 'next-usequerystate'
+import { GET_ALL_POST_FILTER_BY_COUNTRY } from '@/graphql/post/queries'
 const tourBackup = new Array(6).fill()
-const Search = ({ lang, listBlog, searchInfo, dictionary }) => {
+const Search = ({ lang, searchInfo, dictionary }) => {
   const [des, setDes] = useQueryState('country')
   const [bud, setBud] = useQueryState('budget')
   const [day, setDay] = useQueryState('duration')
@@ -92,7 +93,16 @@ const Search = ({ lang, listBlog, searchInfo, dictionary }) => {
       size: 9
     }
   })
+  const { data: dataBlog } = useQuery(GET_ALL_POST_FILTER_BY_COUNTRY, {
+    variables: {
+      language: lang?.toUpperCase(),
+      destinationName: !des || !des?.length ? newArrDataTaxonomiesCountry : des
+    }
+  })
+
   let allTours = dataBestTours?.allTours?.nodes
+  const listBlog = dataBlog?.blogs?.nodes
+
   if (!allTours) {
     allTours = tourBackup
   }
@@ -242,7 +252,7 @@ const Search = ({ lang, listBlog, searchInfo, dictionary }) => {
           title={searchInfo?.newRelated}
           button={searchInfo?.button}
           lang={lang}
-          data={listBlog}
+          listBlog={listBlog}
           dictionary={dictionary}
         />
       )}

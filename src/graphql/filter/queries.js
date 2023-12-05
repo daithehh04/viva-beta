@@ -110,7 +110,7 @@ export const getDataBestSeller = (bestSellerSlug) => {
         offsetPagination: { offset: $offset, size: $size }
         taxQuery: {
           taxArray: [
-            { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
+            { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: SLUG }
             { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
             { taxonomy: BUDGET, operator: IN, terms: $budget, field: NAME }
             { taxonomy: DURATION, operator: IN, terms: $duration, field: NAME }

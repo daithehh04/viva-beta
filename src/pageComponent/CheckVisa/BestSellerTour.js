@@ -5,13 +5,11 @@ import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
 
 function BestSellerTour({ data, lang, dataCheckVisa }) {
-  const router = useRouter();
   const dataTour = data?.data?.bestSeller?.tours?.nodes
   const dataTourNotNull = dataTour?.filter((tour) => tour.translation !== null)
   if(!dataTourNotNull?.length) {
     return
   }
-  const handleLink = () => router.push(`/${lang}/search?&country=vietnam-tours`)
   return (
     <div className='w-full md:mt-[6.87vw]'>
       <h2 className='md:px-[8.13vw] md:mb-[3vw] mb-[7.73vw] heading-1 max-md:pl-[4.27vw]'>
@@ -32,8 +30,8 @@ function BestSellerTour({ data, lang, dataCheckVisa }) {
           </div>
         ))}
       </div>
-      {/* <Link href={`/${lang}/search?seller=best-seller-tours`}> */}
-        <Button className='flex mb-[8.77vw] md:mb-[6.25vw] m-auto md:mt-[3.5vw] mt-[8.77vw]' onClick={handleLink}>
+      <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}>
+        <Button className='flex mb-[8.77vw] md:mb-[6.25vw] m-auto md:mt-[3.5vw] mt-[8.77vw]'>
           <Button
             className='btn-secondary'
             content={dataCheckVisa?.checkvisa?.button}
@@ -41,7 +39,7 @@ function BestSellerTour({ data, lang, dataCheckVisa }) {
             <span>{dataCheckVisa?.checkvisa?.button}</span>
           </Button>
         </Button>
-      {/* </Link> */}
+      </Link>
     </div>
   )
 }

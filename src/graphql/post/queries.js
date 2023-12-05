@@ -171,10 +171,10 @@ const GET_ALL_POST_FILTER = gql`
     }
   }
 `
-const GET_ALL_POST_FILTER_BY_COUNTRY = `
+const GET_ALL_POST_FILTER_BY_COUNTRY = gql`
   query GetAllPost(
     $language: LanguageCodeEnum!
-    $destinationSlug: [String!]
+    $destinationName: [String!]
   ) {
     blogs(
       first: 8,
@@ -182,7 +182,7 @@ const GET_ALL_POST_FILTER_BY_COUNTRY = `
         orderby: { field: DATE, order: DESC }
         taxQuery: {
           taxArray: [
-            { taxonomy: COUNTRIES, operator: IN, terms: $destinationSlug, field: SLUG }
+            { taxonomy: COUNTRIES, operator: IN, terms: $destinationName, field: NAME }
           ]
         }
       }
@@ -388,4 +388,13 @@ allTours(
 }`
 
 export default GET_SERVICE_BY_CATEGORY
-export { GET_POST, GET_ALL_POST, GET_ALL_POST_FILTER, GET_ALL_TOURS_BESTSELLER, GET_SERVICE_BY_CATEGORY,GET_ALL_POST_FILTER_BY_COUNTRY, GET_BEST_TOUR_BLOG_BY_COUNTRY, GET_ALL_BLOG_FILTER }
+export { 
+  GET_POST, 
+  GET_ALL_POST, 
+  GET_ALL_POST_FILTER, 
+  GET_ALL_TOURS_BESTSELLER,
+  GET_SERVICE_BY_CATEGORY, 
+  GET_ALL_POST_FILTER_BY_COUNTRY, 
+  GET_BEST_TOUR_BLOG_BY_COUNTRY, 
+  GET_ALL_BLOG_FILTER 
+}

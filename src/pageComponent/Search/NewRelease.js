@@ -3,7 +3,7 @@ import Button from '@/components/Common/Button'
 import React from 'react'
 import Link from 'next/link'
 
-const NewRelease = ({ data, lang, title, button, dictionary }) => {
+const NewRelease = ({ listBlog, lang, title, button, dictionary }) => {
   return (
     <div>
       <div className='mt-[6.69vw]'>
@@ -11,7 +11,7 @@ const NewRelease = ({ data, lang, title, button, dictionary }) => {
         <div className='related-news__search'>
           <BestSeller
             isBlogItem={true}
-            listBlog={data}
+            listBlog={listBlog}
             lang={lang}
           />
         </div>

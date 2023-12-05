@@ -141,7 +141,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
             <div className='md:px-[8.06vw]'>
               <SlideTour data={dataBestTour?.data?.allTours?.nodes} lang={lang} />
             </div>
-            <Link href={`/${lang}/search`}>
+            <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}>
               <Button content={dataBestSeller?.data?.page?.translation?.ourblog?.button} className='btn-secondary m-auto md:mb-[6.25vw] mb-[6.25vw] md:mt-[3.5vw] relative mt-[10.01vw] '>
                 <span>{dataBestSeller?.data?.page?.translation?.ourblog?.button}</span>
               </Button>
