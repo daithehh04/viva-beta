@@ -37,7 +37,7 @@ export default function OptionCustomer({ icon, list, defaultValue, onSelect, lan
     } = event
     if (value === placeholderDefault) {
       // console.log(value, placeholderDefault)
-      onSelect([])
+      onSelect('')
     } else {
       onSelect(value)
     }

@@ -100,7 +100,7 @@ async function SlideDestination({ lang, slug }) {
                     </span>
                     <div className='flex justify-center mt-[1.25vw]'>
                       <Link
-                        href={`${lang !== 'en' ? `/${lang}/search?seller=best-seller-tours` : '/search?seller=best-seller-tours'}`}
+                        href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}
                         className='btn-secondary'
                         content={dataTitle?.ourTour?.btn}
                       >
@@ -115,7 +115,7 @@ async function SlideDestination({ lang, slug }) {
           </div>
         </div>
         <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
-          {totalTour > 0 && <Link href={`/${lang}/search?seller=best-seller-tours`}>
+          {totalTour > 0 && <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}>
             <Button className='btn-secondary' content={dataTitle?.ourTour?.btn}><span>{dataTitle?.ourTour?.btn}</span></Button>
           </Link>}
 
