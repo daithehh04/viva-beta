@@ -97,6 +97,7 @@ export const DATA_COUNTRY_BANNER = `query getInfoCountry($taxonomyValue: ID!,$la
 export const DATA_COUNTRY_TITLE =  `query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
   countries(id: $taxonomyValue, idType: SLUG) {
     translation(language: $language) {
+      name
       ourTour{
         subtitle
         btn
