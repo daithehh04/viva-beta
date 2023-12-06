@@ -10,7 +10,6 @@ function ReviewItem({ className, data, lang, dictionary }) {
   const tourData = data?.translation?.customerReview?.tours?.tourDetail
   const authorInfo = data?.translation?.customerReview?.authorInformation
   const tourSlug = data?.translation?.customerReview?.tours?.slug
-
   return (
     <div
       className={`${className || ''

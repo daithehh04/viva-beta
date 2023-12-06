@@ -12,7 +12,7 @@ function HeaderBlog({ data }) {
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   return (
     <div className={`w-full md:mt-[9.75vw] mt-[23.47vw] ${onlySmallScreen ? 'px-[4.27vw]' : 'px-[8.3vw]'}`}>
-      <h2 className=' text-textColor font-optima md:text-[4vw] text-[5.867vw] font-semibold capitalize md:leading-[110%] leading-[120%]'>
+      <h2 className=' text-textColor font-optima md:text-[3.5vw] text-[5.867vw] font-semibold capitalize md:leading-[110%] leading-[120%]'>
         {data?.title}
       </h2>
       <div className='flex items-center md:mt-[1.375vw] mt-[2.13vw]'>

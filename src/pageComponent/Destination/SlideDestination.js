@@ -114,12 +114,12 @@ async function SlideDestination({ lang, slug }) {
 
           </div>
         </div>
-        <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
+        {totalTour <= 7 && <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
           {totalTour > 0 && <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&country=${dataTitle?.name}`}>
             <Button className='btn-secondary' content={dataTitle?.ourTour?.btn}><span>{dataTitle?.ourTour?.btn}</span></Button>
           </Link>}
 
-        </div>
+        </div>}
       </div>
     </div>
   )

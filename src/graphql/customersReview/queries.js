@@ -95,6 +95,7 @@ export const GET_ALL_REVIEWS = `query GetAllCustomersReview($language: LanguageC
       slug
        customerReview {
         content
+        time
         authorInformation {
           country
           name

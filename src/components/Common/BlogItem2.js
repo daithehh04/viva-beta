@@ -22,9 +22,9 @@ function BlogItem2({ className, data, lang, isHomePage }) {
             alt={data?.featuredImage?.node?.altText || 'img blog'}
             className='md:h-[19.0625vw] h-[81.33333vw] md:w-full w-[74.93333vw] object-cover md:rounded-[1vw] rounded-[2.13333vw] img-blog_2'
           />
-          <span className='absolute md:top-[1.62vw] top-[6.93vw] md:left-[-0.375vw] left-[-1.375vw] md:px-[1vw] md:py-[0.25vw] py-[1.07vw] px-[4.27vw] bg-[#FFD220] md:text-[1vw] lg:text-[0.75vw] text-[2.66667vw] font-[500] rounded-r-[0.25vw] tip-review'>
+          {/* <span className='absolute md:top-[1.62vw] top-[6.93vw] md:left-[-0.375vw] left-[-1.375vw] md:px-[1vw] md:py-[0.25vw] py-[1.07vw] px-[4.27vw] bg-[#FFD220] md:text-[1vw] lg:text-[0.75vw] text-[2.66667vw] font-[500] rounded-r-[0.25vw] tip-review'>
             {data?.blogdetail?.subtitle1}
-          </span>
+          </span> */}
           </div>
           }
         </div>

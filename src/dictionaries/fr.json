@@ -5,7 +5,8 @@
     "best_seller":"Best Seller",
     "no_data": "Aucune donnée disponible!",
     "not_found_tour": "Visite introuvable !",
-    "other" : "Autres visites"
+    "other" : "Autres visites",
+    "date": "Date"
   },
   "nav": {
     "booking_button": "Demander Un Devis",
