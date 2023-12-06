@@ -1,10 +1,9 @@
 'use client'
 import Link from 'next/link'
 
-function VoucherItem({ className, headerData = {}, data = {}, lang }) {
+function VoucherItem({ className, headerData = {}, data = {}, lang, dictionary }) {
   const voucherData = data?.translation?.voucher || {}
   const expireDate = voucherData?.content?.expireDate.slice(0, voucherData?.content?.expireDate?.indexOf(' '))
-
   return (
     <Link href={`/${lang}/voucher/${data?.translation?.slug}`}>
       <div
@@ -26,7 +25,7 @@ function VoucherItem({ className, headerData = {}, data = {}, lang }) {
             {voucherData?.content?.title}
           </h4>
           <span className='text-[0.75vw] leading-[1.16] mt-[0.5vw] text-textColor max-md:text-[2.66vw] max-md:mt-[2.13vw] max-lg:text-[1.4vw]'>
-            Date: {expireDate}
+            {dictionary?.home?.date}: {expireDate}
           </span>
           <button className='bg-primaryColor max-md:font-medium flex items-center justify-center rounded-[0.25vw] 
           px-[4vw] py-[0.5vw] max-md:mt-[3.2vw] text-[1vw] leading-[1.25] 

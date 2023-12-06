@@ -1,6 +1,6 @@
 'use client'
 import bgTourItemMB from '@/assets/images/bg-fb-mb.jpg'
-import imgPerson from '@/assets/images/survey-person.JPG'
+import imgPerson from '@/assets/images/survey-person.png'
 import BookTour from '@/components/Common/BookTour'
 import Button from '@/components/Common/Button'
 import ModalCustom from '@/components/Common/ModalCustom'

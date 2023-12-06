@@ -3,11 +3,11 @@
 import SlideVoucher from '@/components/Common/SlideVoucher'
 import VoucherItem from '@/components/Common/VoucherItem'
 
-export default function ListVoucher({ headerData, listVoucher, lang }) {
+export default function ListVoucher({ headerData, listVoucher, lang, dictionary }) {
   return (
     <div className=''>
       <div className='w-full'>
-        <SlideVoucher data={listVoucher} lang={lang} />
+        <SlideVoucher data={listVoucher} lang={lang} dictionary={dictionary}/>
       </div>
       {/* {listVoucher?.map((voucher, index) => {
         return (

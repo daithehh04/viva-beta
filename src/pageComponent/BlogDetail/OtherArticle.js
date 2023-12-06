@@ -36,7 +36,7 @@ async function OtherArticle({ data,category, dataRecommendArticle,dataBlogArticl
       </div>
 
       <div className='flex justify-center md:mb-[1vw]'>
-        <Link href={`/${lang}/blog`}>
+        <Link href={`/${lang}/recommended-services/${category}`}>
           <Button className='btn-secondary'>
             {dictionary.home.see_more}
             {dataTitle?.data?.postBy?.translation?.blogdetail?.transtitle?.button}

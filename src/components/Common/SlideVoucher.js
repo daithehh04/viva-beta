@@ -7,7 +7,7 @@ import vw from '@/helpers/convertToVw'
 import { Skeleton } from '@mui/material'
 import VoucherItem from '@/components/Common/VoucherItem'
 
-function SlideVoucher({ data, slug, isLoading, lang }) {
+function SlideVoucher({ data, slug, isLoading, lang, dictionary }) {
   const [indexSlider, setIndexSlider] = useState(0)
   const swiperRef = useRef()
   const handleNextSlide = () => {
@@ -35,8 +35,8 @@ function SlideVoucher({ data, slug, isLoading, lang }) {
             slidesPerView: 2
           },
           1023: {
-            spaceBetween: vw(2),
-            slidesPerView: 4
+            spaceBetween: vw(1),
+            slidesPerView: 3
           }
         }}
         slidesPerView={1.7}
@@ -58,6 +58,7 @@ function SlideVoucher({ data, slug, isLoading, lang }) {
                     className='promo-voucher-item'
                     data={item}
                     lang={lang}
+                    dictionary={dictionary}
                   />
                 </div>
               )}

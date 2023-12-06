@@ -1,9 +1,12 @@
 import BlogItem2 from '@/components/Common/BlogItem2'
 import Button from '@/components/Common/Button'
 import fetchData from '@/data/fetchData'
+import { getDictionary } from '@/get-dictionary'
 import { DATA_COUNTRY_BLOG } from '@/graphql/country/queries'
 import Link from 'next/link'
 async function OurBlog({ lang,slug }) {
+  const dictionary = await getDictionary(lang)
+
   const dataCountry = await fetchData(DATA_COUNTRY_BLOG, {
     language: lang?.toUpperCase(),
     taxonomyValue: slug
@@ -34,8 +37,8 @@ async function OurBlog({ lang,slug }) {
         ))}
       </div>
       <div className='flex justify-center md:mb-[7.37vw] md:mt-[3.5vw] mt-[7.47vw]'>
-        <Link href='/blog'>
-            <Button className='btn-secondary' content={data?.ourTour?.titleBlogs}><span>{data?.ourTour?.titleBlogs}</span></Button>
+        <Link href={`/${lang}/blog`}>
+            <Button className='btn-secondary' content={dictionary.home.see_more}><span>{dictionary.home.see_more}</span></Button>
         </Link>
       </div>
     </div>
