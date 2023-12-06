@@ -7,7 +7,7 @@ import { getDictionary } from '@/get-dictionary'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
-import { GET_RANDOM_TOUR, GET_RELATED_TOUR, GET_PROMOTION_TOUR_DETAIL, GET_TOUR_DETAIL_HEADER, GET_RANDOM_PROMOTION_TOUR, GET_RELATED_PROMOTION_TOUR } from '@/graphql/tourDetail/queries'
+import { GET_RANDOM_TOUR, GET_RELATED_TOUR, GET_PROMOTION_TOUR_DETAIL, GET_TOUR_DETAIL_HEADER, GET_RANDOM_PROMOTION_TOUR, GET_RELATED_PROMOTION_TOUR, PROMOTION_TOUR_SLUGS } from '@/graphql/tourDetail/queries'
 import TourDetail from '@/pageComponent/TourDetail'
 
 export async function generateMetadata({ params: { slug, lang } }) {
@@ -23,15 +23,15 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-// export async function generateStaticParams({ params }) {
-//   const { data } = await fetchData(TOURS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(PROMOTION_TOUR_SLUGS, { language: params.lang?.toUpperCase() })
 
-//   const tours = data?.allTours?.nodes || []
+  const tours = data?.promotionTours?.nodes || []
 
-//   return tours.map((tour) => ({
-//     slug: tour?.translation?.slug || undefined
-//   }))
-// }
+  return tours.map((tour) => ({
+    slug: tour?.translation?.slug || undefined
+  }))
+}
 
 export default async function page({ params: { lang, slug } }) {
   const [headerData, result, res, result4, dataBookTour, dictionary] = await Promise.all([

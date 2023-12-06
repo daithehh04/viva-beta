@@ -391,3 +391,14 @@ export const GET_RANDOM_PROMOTION_TOUR = `query ($language: LanguageCodeEnum!) {
     }
   }
 }`
+
+
+export const PROMOTION_TOUR_SLUGS = `query ($language: LanguageCodeEnum!) {
+  promotionTours {
+    nodes {
+      translation(language: $language) {
+        slug
+      }
+    }
+  }
+}`

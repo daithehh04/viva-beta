@@ -119,6 +119,29 @@ export const FILTER_RECOMMENDED_SERVICE_QUERY = gql`
   }
 `
 
+export const RECOMMENDED_SERVICES_POST_SLUGS = `
+  query GetAllPost(
+    $language: LanguageCodeEnum!
+    $categorySlug: [String!]
+  ) {
+    posts(
+      where: {
+        taxQuery: {
+          taxArray: [
+             { taxonomy: CATEGORY, operator: IN, terms: $categorySlug, field: SLUG }
+          ]
+        }
+      }
+    ) {
+      nodes {
+        translation(language: $language) {
+          slug
+        }
+      }
+    }
+  }
+`
+
 const GET_ALL_POST_FILTER = gql`
   query GetAllPost(
     $language: LanguageCodeEnum!
@@ -388,13 +411,13 @@ allTours(
 }`
 
 export default GET_SERVICE_BY_CATEGORY
-export { 
-  GET_POST, 
-  GET_ALL_POST, 
-  GET_ALL_POST_FILTER, 
+export {
+  GET_POST,
+  GET_ALL_POST,
+  GET_ALL_POST_FILTER,
   GET_ALL_TOURS_BESTSELLER,
-  GET_SERVICE_BY_CATEGORY, 
-  GET_ALL_POST_FILTER_BY_COUNTRY, 
-  GET_BEST_TOUR_BLOG_BY_COUNTRY, 
-  GET_ALL_BLOG_FILTER 
+  GET_SERVICE_BY_CATEGORY,
+  GET_ALL_POST_FILTER_BY_COUNTRY,
+  GET_BEST_TOUR_BLOG_BY_COUNTRY,
+  GET_ALL_BLOG_FILTER
 }

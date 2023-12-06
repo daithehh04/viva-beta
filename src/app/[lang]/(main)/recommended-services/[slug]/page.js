@@ -72,19 +72,6 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, featuredImage)
 }
 
-
-// Return a list of `params` to populate the [slug] dynamic segment
-// export async function generateStaticParams({ params }) {
-//   const { data } = await fetchData(SERVICES_SLUG_QUERY, { language: params.lang?.toUpperCase() })
-
-//   const services = data?.categories?.nodes || []
-
-//   return services.map((service) => ({
-//     slug: service?.slug
-//   }))
-// }
-
-
 async function Page({ params: { lang, slug } }) {
   const [data, dataInit, slugRcm] = await Promise.all([
     fetchData(GET_ALL_TOURS_BESTSELLER, { id: LANGUAGE_BOOK_IDS?.[lang], language: lang?.toUpperCase() }),

@@ -396,7 +396,19 @@ const GET_INFO_CONTACT = `query getInfoContact($language: LanguageCodeEnum!) {
 export const ALL_POST_QUERY = `query getDataInsepect(
   $language: LanguageCodeEnum!
 ) {
-posts(first: 10000) {
+posts {
+  nodes {
+    translation(language: $language) {
+      slug
+    }
+  }
+}
+}`
+
+export const BLOGS_SLUG_QUERY = `query getDataInsepect(
+  $language: LanguageCodeEnum!
+) {
+blogs {
   nodes {
     translation(language: $language) {
       slug

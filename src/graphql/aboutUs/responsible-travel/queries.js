@@ -12,6 +12,19 @@ export const ABOUT_US_QUERY = `{
   }
 }`
 
+export const RESPONSIBLE_TRAVEL_SLUG = `query($language: LanguageCodeEnum!) {
+  page(id: "cG9zdDoxMjg1") {
+    translation(language: $language) {
+      responsibleTravel {
+        banner {
+          slug
+        }
+        
+      }
+    }
+  }
+}`
+
 export const GET_RESPONSIBLE_TRAVEL_DATA = `query ($language: LanguageCodeEnum!) {
     page(id: "cG9zdDoxMjg1") {
       translation(language: $language) {

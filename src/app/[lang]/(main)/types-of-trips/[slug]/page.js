@@ -16,15 +16,15 @@ export async function generateMetadata({ params: { lang, slug } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-// export async function generateStaticParams({ params }) {
-//   const { data } = await fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: params.lang?.toUpperCase() })
 
-//   const tours = data?.allTourStyle?.nodes || []
+  const tours = data?.allTourStyle?.nodes || []
 
-//   return tours.map((tour) => ({
-//     slug: tour?.translation?.slug || undefined
-//   }))
-// }
+  return tours.map((tour) => ({
+    slug: tour?.translation?.slug || undefined
+  }))
+}
 
 function page({ params: { lang, slug } }) {
   return (

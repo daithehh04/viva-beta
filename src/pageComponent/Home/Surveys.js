@@ -84,7 +84,7 @@ function Surveys({ data, button, lang, dataBookTour }) {
             width={500}
             height={500}
             alt='img'
-            className='relative z-20 w-[47vw] h-[34vw] object-contain max-md:w-full max-md:h-[70.9vw] md:right-[-7%]'
+            className='relative z-20 w-[47vw] h-[34vw] object-contain max-md:w-full max-md:h-[70.9vw] md:right-[-14%]'
           />
           <div
             className='circle w-[33.54285vw] h-[33.54285vw] max-md:w-[69.828vw] max-md:h-[69.828vw] rounded-full bg-bgCircle opacity-60 absolute bottom-[9.73vw] left-[20%]'

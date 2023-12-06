@@ -11,15 +11,15 @@ export async function generateMetadata({ params: { slug, lang } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-// export async function generateStaticParams({ params }) {
-//   const { data } = await fetchData(VOUCHER_SLUG_QUERY, { language: params.lang?.toUpperCase() })
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(VOUCHER_SLUG_QUERY, { language: params.lang?.toUpperCase() })
 
-//   const vouchers = data?.page?.translation?.hotDeals?.voucherHeader?.listVoucher || []
+  const vouchers = data?.page?.translation?.hotDeals?.voucherHeader?.listVoucher || []
 
-//   return vouchers.map((voucher) => ({
-//     slug: voucher?.translation?.slug
-//   }))
-// }
+  return vouchers.map((voucher) => ({
+    slug: voucher?.translation?.slug
+  }))
+}
 
 async function page({ params: { lang, slug } }) {
   const [result, data] = await Promise.all([

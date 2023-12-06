@@ -1,6 +1,6 @@
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
-import { ALL_POST_QUERY } from '@/graphql/home/queries'
+import { ALL_POST_QUERY, BLOGS_SLUG_QUERY } from '@/graphql/home/queries'
 import BlogDetail from '@/pageComponent/BlogDetail'
 
 const GET_META_DATA_BLOG_DETAIL = `
@@ -37,15 +37,17 @@ export async function generateMetadata({ params: { lang, slug } }) {
 }
 
 // Return a list of `params` to populate the [slug] dynamic segment
-// export async function generateStaticParams({ params }) {
-//   const { data } = await fetchData(ALL_POST_QUERY, { language: params.lang?.toUpperCase() })
+export async function generateStaticParams({ params }) {
+  const { data } = await fetchData(BLOGS_SLUG_QUERY, { language: params.lang?.toUpperCase() })
 
-//   const posts = data?.posts?.nodes || []
+  const blogs = data?.blogs?.nodes || []
 
-//   return posts.map((post) => ({
-//     slug: post?.translation?.slug || undefined
-//   }))
-// }
+  return blogs.map((blog) => {
+    return ({
+      slug: blog?.translation?.slug || undefined
+    })
+  })
+}
 
 function page({ params: { lang, slug } }) {
   return (
