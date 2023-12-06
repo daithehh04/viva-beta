@@ -241,6 +241,7 @@ const Search = ({ lang, searchInfo, dictionary }) => {
                 dataQuery={dataQuery}
                 dataFilter={dataFilter}
                 lang={lang}
+                params={params}
                 results={searchInfo?.foundResults}
                 searchInfo={searchInfo} />
             )}
