@@ -6,12 +6,11 @@ import Image from 'next/image'
 import { DATA_BEST_TOUR } from '@/graphql/filter/queries'
 import { useQuery } from '@apollo/client'
 
-function OtherTours({dataQuery,dataFilter, searchInfo,results, lang}) {
-  
+function OtherTours({dataQuery,dataFilter, searchInfo,results, lang,params}) {
   const {data:dataBestTours, refetch, loading} = useQuery(DATA_BEST_TOUR, {
     variables: {
       language: lang?.toUpperCase(),
-      countrySlug: dataQuery.country ,
+      countrySlug: !params.country || !params.country.length ? dataQuery.country : params.country,
       styleTourSlug:dataQuery.style,
       budget: dataQuery.budget,
       duration: dataQuery.duration,
