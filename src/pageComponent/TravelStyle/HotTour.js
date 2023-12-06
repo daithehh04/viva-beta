@@ -28,7 +28,7 @@ async function HotTour({slug, lang }) {
           />
         </div>
         <div className='flex justify-center'>
-          <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}>
+          <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&style=${slug}`}>
             <Button
               className='btn-secondary'
               content={data ? data : dictionary.home.see_more}
