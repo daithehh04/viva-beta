@@ -1,19 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // reactStrictMode: true,
-  //   i18n: {
-  //     locales: ["en", "vi", "ja"],
-  //     defaultLocale: "en",
-  //   },
+    // i18n: {
+    //   locales: ["en", "vi", "ja"],
+    //   defaultLocale: "en",
+    // },
   // images: {
   //   remotePatterns: [
   //     {
   //       protocol: 'https',
-  //       hostname: 'viva-cms-en.okhub.tech',
+  //       hostname: 'cms.asiavivatravel.com',
   //     },
   //     {
   //       protocol: 'https',
-  //       hostname: 'viva-cms.okhub.tech'
+  //       hostname: 'cms.asiavivatravel.com'
   //     },{
   //       protocol: 'https',
   //       hostname: 'res.cloudinary.com'
@@ -25,6 +25,7 @@ const nextConfig = {
     loaderFile: './loader.js'
   },
   staticPageGenerationTimeout: 1000,
+  output: 'standalone',
 }
 
 module.exports = nextConfig

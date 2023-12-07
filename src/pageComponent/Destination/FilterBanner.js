@@ -43,7 +43,6 @@ function FilterBanner() {
   const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.allBudget?.nodes
   const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.allDuration?.nodes
   const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.allTourStyle?.nodes
-  console.log({arrDataTaxonomiesStyleTour});
   const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.allCountries?.nodes
 
 
