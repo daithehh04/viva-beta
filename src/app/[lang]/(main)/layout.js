@@ -33,6 +33,18 @@ import SearchButton from '@/pageComponent/Home/SearchButton'
 import '@/scss/main.scss'
 import { getDictionary } from '@/get-dictionary'
 
+// const IDS = {
+//   en: '65717866bfb79148e59af6da',
+//   fr: '6551cf91958be55aeaaefe7b',
+//   if: '6551cfd4958be55aeaaefe8f'
+// }
+
+// const WIDGET_ID = {
+//   en: '1hh1jskkj',
+//   fr: '1hf3p5kpr',
+//   if: '1hf3p7lvq'
+// }
+const linkChatEn = 'https://embed.tawk.to/65717866bfb79148e59af6da/1hh1jskkj'
 const linkChatFr = 'https://embed.tawk.to/6551cf91958be55aeaaefe7b/1hf3p5kpr'
 const linkChatIt = 'https://embed.tawk.to/6551cfd4958be55aeaaefe8f/1hf3p7lvq'
 
@@ -98,6 +110,7 @@ export default async function MainLayout({ children, params }) {
         />
         <SearchButton lang={params.lang} />
         {!isPopup && <PopupPromotion lang={params.lang} data={dataPopupVoucher?.data?.page?.translation} />}
+        {params.lang === 'en' && <ChatTawkto url={linkChatEn} />}
         {params.lang === 'fr' && <ChatTawkto url={linkChatFr} />}
         {params.lang === 'it' && <ChatTawkto url={linkChatIt} />}
         <AosInit />
