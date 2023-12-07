@@ -3,6 +3,7 @@ version: '3'
 services:
   next-app:
     container_name: viva
+    image: ngotheson/viva:latest
     build:
       context: .
       dockerfile: Dockerfile
