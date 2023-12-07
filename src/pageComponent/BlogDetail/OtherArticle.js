@@ -36,10 +36,10 @@ async function OtherArticle({ data,category, dataRecommendArticle,dataBlogArticl
       </div>
 
       <div className='flex justify-center md:mb-[1vw]'>
-        <Link href={`/${lang}/recommended-services/${category}`}>
-          <Button className='btn-secondary'>
-            {dictionary.home.see_more}
-            {dataTitle?.data?.postBy?.translation?.blogdetail?.transtitle?.button}
+        <Link href={`/${lang}/${dataRecommendArticle ? `recommended-services/${category}` : 'blog'}`}>
+          <Button content={dictionary.home.see_more} className='btn-secondary m-auto md:mb-[6.25vw] mb-[6.25vw] md:mt-[3.5vw] relative mt-[10.01vw]'>
+            <span>{dictionary.home.see_more}</span>
+            {/* {dataTitle?.data?.postBy?.translation?.blogdetail?.transtitle?.button} */}
           </Button>
         </Link>
       </div>

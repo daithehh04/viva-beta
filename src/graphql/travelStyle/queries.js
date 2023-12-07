@@ -24,41 +24,49 @@ export const GET_BANNER_TRAVEL_STYLE = `query getInfoPageTravelStyle($taxonomyVa
   }
 }`
 
-export const GET_HOT_TOUR_TRAVEL_STYLE = `
-query getInfoPageTravelStyle($taxonomyValue: ID!, $language: LanguageCodeEnum!) {
-  tourStyle(id: $taxonomyValue, idType: SLUG) {
-    translation(language: $language) {
-      slug
-      banner {
-        hotTour {
-          title
-          hotTour {
-            ... on Tours {
-              translation(language: $language) {
-                id
-                slug
-                bestSeller {
-                  nodes {
-                    name
-                  }
-                }
-                tourDetail {
-                  priceTour
-                  banner {
-                    gallery {
-                      title
-                      altText
-                      sourceUrl
-                    }
-                    rate
-                    title
-                    location
-                    icons
-                  }
-                }
-              }
-             
+export const GET_HOT_TOUR_TRAVEL_STYLE = gql`
+query getInfoPageTravelStyle($taxonomyValue: [String!], $language: LanguageCodeEnum!, $destinationSlug: [String!]) 
+{
+  allTours(
+    where: {
+      taxQuery: {
+        taxArray:[
+          {taxonomy: TOURSTYLE,terms: $taxonomyValue,field:SLUG},
+          {taxonomy: COUNTRIES,terms:$destinationSlug,field:NAME},
+          {taxonomy: BESTSELLER, terms: "best-seller-tours", field: SLUG}
+        ]
+      }
+          orderby: {field: DATE, order: DESC}
+    }
+  ){
+    nodes {
+      translation(language: $language) {
+        id
+        title
+        slug
+        bestSeller {
+          nodes {
+            name
+          }
+        }
+        tourStyle {
+          nodes {
+            slug
+          }
+        }
+        tourDetail {
+          priceTour
+          numberDay
+          banner {
+            title
+            gallery {
+              sourceUrl
+              altText
+              title
             }
+            location
+            rate
+            icons
           }
         }
       }
@@ -168,7 +176,7 @@ const GET_META_DATA = `query ($slug: ID!, $language: LanguageCodeEnum!) {
   }
 }`
 
-const DATA_WHY_TRAVEL = `query getWhyTravel(
+const DATA_WHY_TRAVEL = gql`query getWhyTravel(
   $language: LanguageCodeEnum!
 ){
 page(id: "cG9zdDozMDYw") {

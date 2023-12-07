@@ -24,6 +24,11 @@ export function middleware(request) {
     // We are on the default locale
     // Rewrite so Next.js understands
 
+    if (request.nextUrl.searchParams) {
+      const newUrl = new URL(`/${defaultLocale}${pathname}`, request.url)
+      newUrl.search = request.nextUrl.searchParams.toString()
+      return NextResponse.rewrite(newUrl)
+  }
     // e.g. incoming request is /products
     // Tell Next.js it should pretend it's /en/products
     return NextResponse.rewrite(new URL(`/${defaultLocale}${pathname}`, request.url))

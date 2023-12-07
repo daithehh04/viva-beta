@@ -2,6 +2,7 @@ import calendar from '@/assets/images/calendar_blogItem.svg'
 import Image from 'next/image'
 import Link from 'next/link'
 import moment from 'moment'
+import imgTour from '@/assets/images/banner.jpg'
 
 function BlogItem({ className, data, lang, heightImage }) {
   return (
@@ -12,7 +13,7 @@ function BlogItem({ className, data, lang, heightImage }) {
       <div className={`w-full`}>
         <div className='relative image'>
           <Image
-            src={data?.featuredImage?.node?.sourceUrl || data?.translation?.featuredImage?.node?.sourceUrl || 'https://res.cloudinary.com/asiavivatravel/images/w_2560,h_1708,c_scale/v1699806445/cover_02/cover_02.jpg?_i=AA'}
+            src={data?.featuredImage?.node?.sourceUrl || data?.translation?.featuredImage?.node?.sourceUrl || imgTour}
             width={1000}
             height={1000}
             alt={data?.featuredImage?.node?.altText || data?.translation?.featuredImage?.node?.altText || 'img blog'}

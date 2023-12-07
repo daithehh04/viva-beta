@@ -11,27 +11,36 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import FilterService from './FilterService'
 import RecommendedServiceItem from '@/components/Common/RecommendedServiceItem'
+import { useQueryState } from 'next-usequerystate'
 
-function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
+function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) {
+    const [destinationPathname] = useQueryState('destination')
+
     const metaDestination = allCountries?.nodes
     const metaCategories = initCategories?.nodes
 
     const arrayDesInit = []
+    const arrayDesOfSellerInit = []
+
     const arrayCateInit = []
 
     metaDestination?.map((des, index) => {
-        arrayDesInit.push(des?.slug)
+        if(destinationPathname === "" || !destinationPathname) {
+            arrayDesInit.push(des?.slug)
+        }else if (des?.slug !== destinationPathname) {
+            arrayDesOfSellerInit.push(des?.slug)
+        }
     })
 
     metaCategories.map((cate, index) => {
         arrayCateInit.push(cate?.slug)
     })
 
-    const namePage = metaCategories?.find((item,index) => item.slug === slug)
+    const namePage = metaCategories?.find((item, index) => item.slug === slug)
 
     const [activePage, setActivePage] = useState(0)
     const [destination, setDestination] = useState(arrayDesInit || '')
-    const [destinationByBestTour, setDestinationByBestTour] = useState([] || '')
+    const [destinationByBestTour, setDestinationByBestTour] = useState(arrayDesOfSellerInit || '')
     const language = lang?.toUpperCase() || 'EN'
 
     const { data, refetch, loading } = useQuery(FILTER_RECOMMENDED_SERVICE_QUERY, {
@@ -91,7 +100,7 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
                 {!loading ? (
                     <div>
                         {pageInfo !== 0 ? <div className='grid md:grid-cols-4 md:px-[8.06vw] px-[4.27vw] grid-cols-2 md:gap-x-[2.5vw] md:gap-y-[3vw] gap-x-[4.27vw] gap-y-[6.4vw] md:mt-[4vw] mt-[7.73vw]'>
-                            { allBlogOfRecommendData?.map((item, index) => (
+                            {allBlogOfRecommendData?.map((item, index) => (
                                 <RecommendedServiceItem
                                     lang={lang}
                                     key={index}
@@ -102,7 +111,7 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
                             ))}
                         </div> : <div className='md:px-[8.06vw] px-[4.27vw] md:mt-[4vw] mt-[7.73vw] text-center text-[3.5vw] pt-[4vw] w-full font-optima max-md:text-[5.67vw]'>
                             {dictionary?.home?.no_data}
-                          </div>}
+                        </div>}
 
                         <div className='flex md:gap-[0.75vw] gap-[3.2vw] justify-center items-center relative md:mt-[4.5vw] mt-[8.53vw]'>
                             {Array.from({ length: totalPage }, (_, index) => (
@@ -127,6 +136,7 @@ function Index({ data1, lang, initCategories, allCountries, slug,dictionary }) {
 
                 {/* besst seller tour */}
                 {data1?.data?.page?.translation?.ourblog ? (
+                    dataBestTour?.data?.allTours?.nodes?.length !== 0 &&
                     <div>
                         <h2 className='heading-1 md:mt-[5.25vw] mt-[12.8vw] md:pl-[8.06vw] pl-[4.27vw] mb-[3.5vw]'>
                             {data1?.data?.page?.translation?.ourblog?.heading2}

@@ -13,18 +13,18 @@ function Album({album,lang}) {
   if(lang === 'it') {
     view = 'Visualizza altro'
   }
-  const handleMoreAlbum = () => {
-    setIndexAlbum(indexAlbum+1)
-  }
-  const dataAlbum = album?.slice(0,indexAlbum*2)
+  // const handleMoreAlbum = () => {
+  //   setIndexAlbum(indexAlbum+1)
+  // }
+  // const dataAlbum = album?.slice(0,indexAlbum*2)
   return (
     <div>
       <div className="grid grid-cols-2 gap-[1.2vw] max-md:gap-[3vw] max-md:grid-cols-1">
-        {dataAlbum?.map((img,index) => (
+        {album?.map((img,index) => (
           <Image key={index} src={img?.sourceUrl} alt={img?.altText || img?.title || 'img tour'} width={500} height={400} className="w-full h-[26vw] object-cover max-md:h-[73vw]"/>
         ))}
       </div>
-      {totalPage > 1 && indexAlbum < totalPage && <div className="mx-auto w-max mt-[2vw] max-md:mt-[6vw]"><Button onClick={handleMoreAlbum} className='btn btn-secondary' content={view}><span>{view}</span> </Button></div>}
+      {/* {totalPage > 1 && indexAlbum < totalPage && <div className="mx-auto w-max mt-[2vw] max-md:mt-[6vw]"><Button onClick={handleMoreAlbum} className='btn btn-secondary' content={view}><span>{view}</span> </Button></div>} */}
     </div>
   )
 }

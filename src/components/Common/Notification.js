@@ -133,7 +133,7 @@ export default function Notification(props) {
 
   const Confirm = () => {
     return (
-      <div className='w-full h-full md:rounded-[1vw] rounded-[8px] bg-white box-border'>
+      <div className='w-full h-full md:rounded-[1vw] rounded-[8px] !bg-white box-border'>
         <div className='md:text-[2vw] text-[4.27vw] font-medium uppercase w-full md:px-[2.94vw] px-[3.5vw] md:py-[1.44vw] py-[2.5vw] bg-primaryColor md:rounded-t-[1vw] rounded-t-[8px]'>
         {notification?.confirm?.text1}
         </div>

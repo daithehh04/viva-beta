@@ -1,5 +1,7 @@
 import calendarY from '@/assets/images/calendarY.svg'
 import calendarW from '@/assets/images/calendarW.svg'
+import imgTour from '@/assets/images/banner.jpg'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import moment from 'moment'
@@ -14,9 +16,9 @@ function BlogItem2({ className, data, lang, isHomePage }) {
         <div className='relative image'>
           <div className='overlay-blog'></div>
           <div className='overlay-blog-left'></div>
-          {data?.featuredImage?.node?.sourceUrl && <div className='w-full h-full'>
+          <div className='w-full h-full'>
             <Image
-            src={data?.featuredImage?.node?.sourceUrl || 'https://res.cloudinary.com/asiavivatravel/images/w_2560,h_1708,c_scale/v1699806445/cover_02/cover_02.jpg?_i=AA'}
+            src={data?.featuredImage?.node?.sourceUrl || imgTour}
             width={1000}
             height={1000}
             alt={data?.featuredImage?.node?.altText || 'img blog'}
@@ -26,7 +28,7 @@ function BlogItem2({ className, data, lang, isHomePage }) {
             {data?.blogdetail?.subtitle1}
           </span> */}
           </div>
-          }
+          
         </div>
         <div className='absolute bottom-0 md:pb-[1vw] pb-[5.3vw] md:pl-[1.13vw] pl-[4.8vw] md:pr-[2vw] pr-[2.4vw] info'>
           <div className='flex items-center gap-x-[0.64vw] md:mb-0 mb-[1vw] md:mt-[0.78vw]'>

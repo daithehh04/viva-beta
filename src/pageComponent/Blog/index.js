@@ -10,14 +10,18 @@ import background from '@/assets/images/ourBlog_background.png'
 import Link from 'next/link'
 import { GET_ALL_POST_FILTER, GET_BEST_TOUR_BLOG_BY_COUNTRY } from '@/graphql/post/queries'
 import { useQuery } from '@apollo/client'
+import { useQueryState } from 'next-usequerystate'
 
 function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, slug, dictionary }) {
+  const [destinationPathname] = useQueryState('destination')
+
   const metaTopic = initTopic?.nodes
   const metaDestination = allCountries?.nodes
   const metaCategories = initCategories?.nodes
 
   const arrayTopicInit = []
   const arrayDesInit = []
+  const arrayDesOfSellerInit = []
   const arrayCateInit = []
 
   metaTopic?.map((topic, index) => {
@@ -25,7 +29,11 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
   })
 
   metaDestination?.map((des, index) => {
-    arrayDesInit.push(des?.slug)
+    if(destinationPathname === "" || !destinationPathname) {
+      arrayDesInit.push(des?.slug)
+  }else if(des?.slug !== destinationPathname){
+      arrayDesOfSellerInit.push(des?.slug)
+    }
   })
 
   metaCategories?.map((cate, index) => {
@@ -33,7 +41,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
   })
 
   const [activePage, setActivePage] = useState(0)
-  const [destination, setDestination] = useState([] || '')
+  const [destination, setDestination] = useState(arrayDesOfSellerInit || '')
   const [destinationByBlog, setDestinationByBlog] = useState(arrayDesInit || '')
   const [topic, setTopic] = useState(arrayTopicInit || '')
   const [category, setCategory] = useState(slug || '')
@@ -109,7 +117,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
                 />
               ))}
             </div> : <div className='text-center text-[3.5vw] w-full font-optima pt-[4vw] max-md:text-[5.67vw]'>{dictionary?.home?.no_data}</div>}
-            
+
 
             <div className='flex md:gap-[0.75vw] gap-[3.2vw] justify-center items-center relative md:mt-[4.5vw] mt-[8.53vw]'>
               {Array.from({ length: totalPage }, (_, index) => (
@@ -134,6 +142,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
 
         {/* besst seller tour */}
         {dataBestSeller?.data?.page?.translation?.ourblog ? (
+          dataBestTour?.data?.allTours?.nodes?.length !== 0 &&
           <div>
             <h2 className='heading-1 md:mt-[5.25vw] mt-[12.8vw] md:pl-[8.06vw] pl-[4.27vw] mb-[3.5vw]'>
               {dataBestSeller?.data?.page?.translation?.ourblog?.heading2}
