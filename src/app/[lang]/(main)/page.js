@@ -89,6 +89,7 @@ export default async function page({ params, searchParams }) {
             lang={lang}
             button={button}
             dataBookTour={dataBookTour}
+            dictionary={dictionary}
           />
         </div>
         <div className='trip-wrapper'>

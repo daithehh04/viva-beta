@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 
-function Surveys({ data, button, lang, dataBookTour }) {
+function Surveys({ data, button, lang, dataBookTour, dictionary }) {
   const [openModal, setOpenModal] = useState(false)
   const refBtnBookTour = useRef()
 
@@ -69,7 +69,7 @@ function Surveys({ data, button, lang, dataBookTour }) {
             data-aos='fade-up'
             data-aos-duration='1000' className='flex gap-x-[1vw] mt-[3.25vw] max-md:gap-x-[2.67vw] max-md:mt-[8.53vw]'>
             <div className='flex' ref={refBtnBookTour} onClick={() => setOpenModal(true)}>
-              <Button className='btn-primary' content={button?.buttonbooktour}><span>{button?.buttonbooktour}</span>
+              <Button className='btn-primary' content={dictionary?.nav.booking_button}><span>{dictionary?.nav.booking_button}</span>
               </Button>
             </div>
             <Link href={`/${lang}/about-us/who-we-are`}>

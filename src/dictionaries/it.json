@@ -6,7 +6,8 @@
     "no_data": "Nessun dato trovato!",
     "not_found_tour": "Tour non trovato !",
     "other" : "Altri tour",
-    "date": "Data"
+    "date": "Data",
+    "best_tour": "Il miglior giro"
   },
   "nav": {
     "booking_button": "Richiedi Un Preventivo",

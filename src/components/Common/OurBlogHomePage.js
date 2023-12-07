@@ -13,6 +13,9 @@ function OurBlogHomePage({ data, button, lang }) {
     }
   })
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  if(!data?.listBlog) {
+    return null
+  }
   return (
     <div className={`flex flex-col ${onlySmallScreen ? 'w-full' : 'content'}`}>
       <span className='heading-1 md:mb-[3vw] mb-[6.4vw] md:pl-0 pl-[4.27vw]'>{data?.title}</span>
@@ -20,13 +23,13 @@ function OurBlogHomePage({ data, button, lang }) {
         <div className='hidden md:flex flex-shrink-0 md:col-span-2 md:row-span-2 h-full md:pl-0 pl-[4.27vw]'>
           <BlogItem2
             isHomePage={true}
-            data={data?.listBlog ? data?.listBlog[4] : null}
+            data={data?.listBlog ? data?.listBlog[0] : null}
             className={`max-md:hidden ${onlySmallScreen ? '' : 'bigger'}`}
             lang={lang}
           />
         </div>
         {data?.listBlog?.map((blog, index) => {
-          if (index < 4)
+          if (index > 0 && index <= 4)
             return (
               <div key={index}>
                 <BlogItem2
@@ -35,7 +38,6 @@ function OurBlogHomePage({ data, button, lang }) {
                   data={blog}
                   className='max-md:hidden flex flex-shrink-0 blogItem max-md:pl-[4.27vw] '
                 />
-
                 <BlogItem
                   isHomePage={true}
                   className='md:hidden !ml-0 !w-[43vw]'

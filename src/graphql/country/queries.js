@@ -41,30 +41,58 @@ query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
   }
 }
 `
-
-export const DATA_COUNTRY_BLOG = `
+export const DATA_COUNTRY_BLOG_TITLE = `
 query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
   countries(id: $taxonomyValue, idType: SLUG) {
     translation(language: $language) {
       ourTour{
         titleBlogs
       }
-      country {
-        blogs {
-          ... on Post {
-            title
-            slug
-            featuredImage{
-              node{
-                sourceUrl
-              }
-            }
-            blogdetail{
-              subtitle1
-            }
-            dateGmt
+    }
+  }
+}
+`
+export const DATA_COUNTRY_BLOG = `
+query GetAllPostByCountry(
+  $language: LanguageCodeEnum!
+  $destinationName: [String!]
+) {
+  blogs(
+    first: 8,
+    where: {
+      orderby: { field: DATE, order: DESC }
+      taxQuery: {
+        taxArray: [
+          { taxonomy: COUNTRIES, operator: IN, terms: $destinationName, field: SLUG }
+        ]
+      }
+    }
+  ) {
+    nodes {
+      translation(language: $language) {
+        id
+        excerpt
+        title
+        slug
+        blogdetail {
+          heading
+          time
+        }
+        language {
+          code
+          locale
+        }
+        featuredImage {
+          node {
+            altText
+            sourceUrl
           }
         }
+      }
+    }
+    pageInfo {
+      offsetPagination {
+        total
       }
     }
   }

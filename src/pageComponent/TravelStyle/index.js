@@ -43,6 +43,7 @@ async function index({ lang, slug }) {
       <HotTour
         slug={slug}
         lang={lang}
+        dictionary={dictionary}
       />
     </div>
   )

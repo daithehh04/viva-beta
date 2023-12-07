@@ -6,7 +6,8 @@
     "no_data": "Aucune donnée disponible!",
     "not_found_tour": "Visite introuvable !",
     "other" : "Autres visites",
-    "date": "Date"
+    "date": "Date",
+    "best_tour":"Meilleure tournée"
   },
   "nav": {
     "booking_button": "Demander Un Devis",
