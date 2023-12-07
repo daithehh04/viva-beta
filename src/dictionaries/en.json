@@ -6,7 +6,8 @@
     "no_data": "No data found!",
     "not_found_tour": "Not Found Tour !",
     "other" : "Other tours",
-    "date": "Date"
+    "date": "Date",
+    "best_tour":"Best Tour"
   },
   "nav": {
     "booking_button": "Request A Quote",

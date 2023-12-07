@@ -65,7 +65,7 @@ async function SlideDestination({ lang, slug }) {
         </div>
 
         <div className='flex flex-col md:mt-[7.5vw] mt-[11.2vw] '>
-          <span className='heading-1 md:mb-[3vw] md:pl-0 pl-[4.27vw]'>{dataTitle?.ourTour?.titleTours}</span>
+          {dataTours?.length !== 0 && <span className='heading-1 md:mb-[3vw] md:pl-0 pl-[4.27vw]'>{dataTitle?.ourTour?.titleTours}</span>}
           <div>
             <div className='grid md:grid-cols-4 gap-x-[2.5vw] gap-y-[3vw] md:bg-transparent bg-[#F3F6FB]'>
               {dataTours?.map((tour, index) => {
