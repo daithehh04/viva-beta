@@ -17,6 +17,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import ReCAPTCHA from 'react-google-recaptcha'
+import addYears from 'date-fns/addYears'
 // queries form
 const SUBMIT_FORM = gql`
   mutation ($input: SubmitGfFormInput!) {
@@ -45,6 +46,8 @@ function BookTour({ data, setOpenModal, lang,detail }) {
 
   const formRef = useRef()
 
+  let timeBookTourFuture = addYears(new Date(), 1);
+
   const handleClose = () => {
     // setOpen(false);
     setIsConfirm(true)
@@ -56,9 +59,11 @@ function BookTour({ data, setOpenModal, lang,detail }) {
   let arrCountry =[]
   if(detail?.detail === true) {
     detail?.styleTourArr?.forEach((item,index) =>{arrStyle.push(item?.name)})
-    arrValueStyle = arrStyle.join(", ")
+    arrValueStyle = arrStyle.join(",")
+
     detail?.countriesTourArr?.forEach((item,index) =>{arrCountry.push(item?.name)})
     arrValueCountry = arrCountry.join(", ")
+
   }
   // init value
   const INITAL_FORM_STATE = {
@@ -77,7 +82,6 @@ function BookTour({ data, setOpenModal, lang,detail }) {
     budget: '',
     confirm: false
   }
-
   //validate
   const FORM_VALIDATION = Yup.object().shape({
     nationality: Yup.string(),
@@ -85,17 +89,17 @@ function BookTour({ data, setOpenModal, lang,detail }) {
     telephone: Yup.string()
       .matches(/^[0-9]+$/, 'Enter a valid number')
       .min(9, 'Must have 9 number')
-      .required(lang === 'en' ? 'Please fill in the blank' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
+      .required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
     email: Yup.string().email('Invalid email.'),
     confirmEmail: Yup.string().oneOf([Yup.ref('email'), null], 'Email must match'),
     numberAdult: Yup.number().min(0),
     numberChildren: Yup.number().min(0),
-    date: Yup.date().required(lang === 'en' ? 'Please fill in the blank' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    destination: Yup.array().required(lang === 'en' ? 'Please fill in the blank' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    accommodation: Yup.string().required(lang === 'en' ? 'Please fill in the blank' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    typeOfTrip: Yup.string().required(lang === 'en' ? 'Please fill in the blank' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
+    date: Yup.date().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
+    destination: Yup.array().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
+    accommodation: Yup.array().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
+    typeOfTrip: Yup.mixed().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
     message: Yup.string(),
-    budget: Yup.number().integer().required(lang === 'en' ? 'Please fill in the blank' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
+    budget: Yup.number().integer().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
     confirm: Yup.boolean()
   })
 
@@ -119,8 +123,8 @@ function BookTour({ data, setOpenModal, lang,detail }) {
               { id: 20, value: values.numberAdult },
               { id: 21, value: values.date },
               { id: 24, value: detail?.detail === true ? arrValueCountry : values.destination.join(', ') },
-              { id: 22, value: values.accommodation },
-              { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip},
+              { id: 22, value: values.accommodation.join(', ') },
+              { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip.join(', ')},
               { id: 14, value: values.message },
               { id: 15, value: values.budget },
               { id: 16, value: values.confirm }
@@ -371,6 +375,11 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                                       variant: "outlined",
                                     }
                                   }}
+                                  defaultValue={[new Date()]} 
+                                  // disableFuture
+                                  minDate={new Date()}
+                                  maxDate={timeBookTourFuture}
+                                  // disablePast
                                 />
                               </LocalizationProvider>
                               <ErrorMessage
@@ -388,7 +397,6 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                                 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.destinationchoice}` }}
                               ></h4>
                               <div
-                                id='checkbox-group'
                                 role='group'
                                 aria-labelledby='checkbox-group'
                                 className='grid grid-cols-2 grid-rows-2 md:gap-y-[1vw] md:gap-x-[1vw] gap-[4.27vw] items-center max-md:w-full '
@@ -418,20 +426,25 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                             <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full'>
                               <h4 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.accomodation?.labelaccom}` }}></h4>
                               <div
-                                role='group'
-                                aria-labelledby='radio-group'
+                               role='group'
+                               aria-labelledby='checkbox-group'
                                 className='radio-group'
                               >
                                 {dataParticipant?.accomodation?.acommodationchoice?.map((choice, index) => (
                                   <label key={index}>
                                     <Field
-                                      type='radio'
+                                      type='checkbox'
                                       name='accommodation'
                                       value={choice?.listchoice}
                                     />
                                     <span className='md:text-[1rem] font-medium md:leading-[1.5]'>{choice?.listchoice}</span>
                                   </label>
                                 ))}
+                                <ErrorMessage
+                                  name='accommodation'
+                                  component='div'
+                                  className='md:text-[0.8vw] text-[3.2vw] text-[red]'
+                                />
                               </div>
                             </div>
 
@@ -447,19 +460,24 @@ function BookTour({ data, setOpenModal, lang,detail }) {
                         ></h4>
                         <div
                           role='group'
-                          aria-labelledby='my-radio-group'
+                          aria-labelledby='checkbox-group'
                           className='grid grid-cols-1 md:gap-[1vw] gap-[4.27vw] typeOfTrip 2xl:grid-cols-2'
                         >
                           {data?.data?.allTourStyle?.nodes?.map((tour, index) => (
                             <label key={index}>
                               <Field
-                                type='radio'
+                                type='checkbox'
                                 name='typeOfTrip'
                                 value={tour?.name}
                               />
-                              <span className='md:text-[1rem] font-medium md:leading-[1.5] whitespace-nowrap'>{tour?.name}</span>
+                              <span className='md:text-[1.2rem] font-medium md:leading-[1.5] whitespace-nowrap'>{tour?.name}</span>
                             </label>
                           ))}
+                          <ErrorMessage
+                                  name='typeOfTrip'
+                                  component='div'
+                                  className='md:text-[0.8vw] text-[3.2vw] text-[red]'
+                                />
                         </div>
                       </div>}
 
