@@ -15,7 +15,6 @@ export default function Notification(props) {
     handleConfirm && isConfirm && handleConfirm()
     setOpenNoti(false)
   }
-
   let notification = {
     success: {
       text1: 'Successful !',

@@ -674,6 +674,7 @@ export default function AboutTour(props) {
               detail={{detail: true, styleTourArr, countriesTourArr}}
               data={dataBookTour}
               setOpenModal={setOpenModal}
+              lang={lang}
             />
           </div>
         </ModalCustom>
