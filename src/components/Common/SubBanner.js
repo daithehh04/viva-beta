@@ -2,6 +2,8 @@
 
 import subBannerBg from '@/assets/images/about/subBannerBg.png'
 import subBannerBg2 from '@/assets/images/about/subBannerBg2.png'
+import imgPerson from '@/assets/images/survey-person.png'
+
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Button from './Button'

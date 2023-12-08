@@ -672,6 +672,7 @@ export default function AboutTour(props) {
           <div className='w-full h-full overflow-y-auto md:rounded-[16px] overflow-x-hidden'>
             <BookTour
               detail={{detail: true, styleTourArr, countriesTourArr}}
+              nameTour={data?.banner?.title}
               data={dataBookTour}
               setOpenModal={setOpenModal}
               lang={lang}
