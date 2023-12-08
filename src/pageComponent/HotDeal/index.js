@@ -96,6 +96,7 @@ export default function Promotion({
             <BookTour
               data={dataBookTour}
               setOpenModal={setOpenModal}
+              lang={lang}
             />
           </div>
         </ModalCustom>
