@@ -32,7 +32,7 @@ const SUBMIT_FORM = gql`
   }
 `
 
-function BookTour({ data, setOpenModal, lang,detail }) {
+function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
   const [capcha,setCapcha] = useState(null)
   const [errCapcha,setErrCapcha] = useState("")
   const [open, setOpen] = useState(true);
@@ -113,7 +113,7 @@ function BookTour({ data, setOpenModal, lang,detail }) {
       mutate({
         variables: {
           input: {
-            id: 3,
+            id: detail?.detail ? 4 : 3,
             fieldValues: [
               { id: 1, value: values.nationality },
               { id: 3, value: values.fullName },
@@ -127,7 +127,8 @@ function BookTour({ data, setOpenModal, lang,detail }) {
               { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip.join(', ')},
               { id: 14, value: values.message },
               { id: 15, value: values.budget },
-              { id: 16, value: values.confirm }
+              { id: 16, value: values.confirm },
+              { id: 26, value: detail?.detail ? nameTour : ''}
             ]
           }
         }
