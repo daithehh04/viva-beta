@@ -8,7 +8,7 @@ import Select from '@mui/material/Select'
 import { useState } from 'react'
 import { useQueryState } from 'next-usequerystate'
 
-function FilterBlog({ handleDes, handleDesByBlog, handleTopic, metaTopic, lang, metaDestination, slug, dictionary }) {
+function FilterBlog({ handleDes, handleDesByBlog, handleTopic, metaTopic, lang, metaDestination, slug, dictionary, handleDesName }) {
   const [destination, setDestination] = useQueryState('destination')
 
   const [topic, setTopic] = useQueryState('topic')
@@ -19,6 +19,14 @@ function FilterBlog({ handleDes, handleDesByBlog, handleTopic, metaTopic, lang, 
     handleDesByBlog(event.target.value)
     const metaDesFilter = metaDestination.filter((value) => value.slug !== event.target.value);
 
+    metaDestination.map((value) => {
+      if(event.target.value === ""){
+        handleDesName('')
+      }
+      if(value.slug === event.target.value){
+        handleDesName(value.name)
+      }
+    })
     if (metaDesFilter.length === metaDestination.length) {
       handleDes([])
     } else {

@@ -21,13 +21,18 @@ function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) 
 
     const arrayDesInit = []
     const arrayDesOfSellerInit = []
+    let initDesName = ''
 
     const arrayCateInit = []
 
     metaDestination?.map((des, index) => {
-        if(destinationPathname === "" || !destinationPathname) {
+        if (des?.slug === destinationPathname) {
+            initDesName = des?.name
+        }
+
+        if (destinationPathname === "" || !destinationPathname) {
             arrayDesInit.push(des?.slug)
-        }else if (des?.slug !== destinationPathname) {
+        } else if (des?.slug !== destinationPathname) {
             arrayDesOfSellerInit.push(des?.slug)
         }
     })
@@ -41,6 +46,8 @@ function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) 
     const [activePage, setActivePage] = useState(0)
     const [destination, setDestination] = useState(arrayDesInit || '')
     const [destinationByBestTour, setDestinationByBestTour] = useState(arrayDesOfSellerInit || '')
+    const [destinationName, setDestinationName] = useState(initDesName || '')
+
     const language = lang?.toUpperCase() || 'EN'
 
     const { data, refetch, loading } = useQuery(FILTER_RECOMMENDED_SERVICE_QUERY, {
@@ -60,6 +67,8 @@ function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) 
                 countrySlug: destination === '' ? [] : destinationByBestTour
             }
         })
+
+    const listBestTour = dataBestTour?.data?.allTours?.nodes;
 
     const eleRef = useRef()
 
@@ -89,6 +98,7 @@ function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) 
                 <FilterService
                     handleDes={(data) => setDestination(data)}
                     handleDesByBestTour={(data) => setDestinationByBestTour(data)}
+                    handleDesName={(data) => setDestinationName(data)}
                     metaDestination={metaDestination}
                     metaCategories={metaCategories}
                     dictionary={dictionary}
@@ -136,7 +146,7 @@ function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) 
 
                 {/* besst seller tour */}
                 {data1?.data?.page?.translation?.ourblog ? (
-                    dataBestTour?.data?.allTours?.nodes?.length !== 0 &&
+                    (listBestTour && listBestTour?.length !== 0) &&
                     <div>
                         <h2 className='heading-1 md:mt-[5.25vw] mt-[12.8vw] md:pl-[8.06vw] pl-[4.27vw] mb-[3.5vw]'>
                             {data1?.data?.page?.translation?.ourblog?.heading2}
@@ -144,7 +154,7 @@ function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) 
                         <div className='md:px-[8.06vw]'>
                             <SlideTour data={dataBestTour?.data?.allTours?.nodes} lang={lang} />
                         </div>
-                        <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}>
+                        <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&country=${destinationName}`}>
                             <Button content={data1?.data?.page?.translation?.ourblog?.button} className='btn-secondary m-auto md:mb-[6.25vw] mb-[6.25vw] md:mt-[3.5vw] relative mt-[10.01vw] '>
                                 <span>{data1?.data?.page?.translation?.ourblog?.button}</span>
                             </Button>
