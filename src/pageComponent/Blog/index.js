@@ -23,15 +23,20 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
   const arrayDesInit = []
   const arrayDesOfSellerInit = []
   const arrayCateInit = []
+  let initDesName = ''
 
   metaTopic?.map((topic, index) => {
     arrayTopicInit.push(topic?.slug)
   })
 
   metaDestination?.map((des, index) => {
-    if(destinationPathname === "" || !destinationPathname) {
+    if (des?.slug === destinationPathname) {
+      initDesName = des?.name
+    }
+
+    if (destinationPathname === "" || !destinationPathname) {
       arrayDesInit.push(des?.slug)
-  }else if(des?.slug !== destinationPathname){
+    } else if (des?.slug !== destinationPathname) {
       arrayDesOfSellerInit.push(des?.slug)
     }
   })
@@ -46,6 +51,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
   const [topic, setTopic] = useState(arrayTopicInit || '')
   const [category, setCategory] = useState(slug || '')
   const language = lang?.toUpperCase() || 'EN'
+  const [destinationName, setDestinationName] = useState(initDesName || '')
 
   const { data, refetch, loading } = useQuery(GET_ALL_POST_FILTER, {
     variables: {
@@ -66,6 +72,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
       }
     })
 
+  const listBestTour = dataBestTour?.data?.allTours?.nodes;
   const eleRef = useRef()
 
   useEffect(() => {
@@ -94,6 +101,7 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
           handleDesByBlog={(data) => setDestinationByBlog(data)}
           handleTopic={(data) => setTopic(data)}
           handleCate={(data) => setCategory(data)}
+          handleDesName={(data) => setDestinationName(data)}
           metaTopic={metaTopic}
           metaDestination={metaDestination}
           metaCategories={metaCategories}
@@ -142,15 +150,15 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
 
         {/* besst seller tour */}
         {dataBestSeller?.data?.page?.translation?.ourblog ? (
-          dataBestTour?.data?.allTours?.nodes?.length !== 0 &&
+          (listBestTour && listBestTour?.length !== 0) &&
           <div>
             <h2 className='heading-1 md:mt-[5.25vw] mt-[12.8vw] md:pl-[8.06vw] pl-[4.27vw] mb-[3.5vw]'>
               {dataBestSeller?.data?.page?.translation?.ourblog?.heading2}
             </h2>
             <div className='md:px-[8.06vw]'>
-              <SlideTour data={dataBestTour?.data?.allTours?.nodes} lang={lang} />
+              <SlideTour data={listBestTour} lang={lang} />
             </div>
-            <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}>
+            <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&country=${destinationName}`}>
               <Button content={dataBestSeller?.data?.page?.translation?.ourblog?.button} className='btn-secondary m-auto md:mb-[6.25vw] mb-[6.25vw] md:mt-[3.5vw] relative mt-[10.01vw] '>
                 <span>{dataBestSeller?.data?.page?.translation?.ourblog?.button}</span>
               </Button>

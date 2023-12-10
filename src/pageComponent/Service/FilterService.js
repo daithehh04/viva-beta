@@ -8,14 +8,22 @@ import { useState } from 'react'
 import { sortBy } from 'lodash'
 import { useQueryState } from 'next-usequerystate'
 
-function FilterService({ handleDes,handleDesByBestTour, metaDestination,dictionary }) {
+function FilterService({ handleDes, handleDesByBestTour, metaDestination, dictionary, handleDesName }) {
   const [destination, setDestination] = useQueryState('destination')
 
   const handleChangeDestination = (event) => {
     setDestination(event.target.value)
     handleDes(event.target.value)
     const metaDesFilter = metaDestination.filter((value) => value.slug !== event.target.value);
-
+    
+    metaDestination.map((value) => {
+      if(event.target.value === ""){
+        handleDesName('')
+      }
+      if(value.slug === event.target.value){
+        handleDesName(value.name)
+      }
+    })
     if (metaDesFilter.length === metaDestination.length) {
       handleDesByBestTour([])
     } else {

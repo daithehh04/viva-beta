@@ -248,7 +248,7 @@ const Search = ({ lang, searchInfo, dictionary }) => {
           </div>
         }
       </div>
-      {(
+      {(listBlog && listBlog?.length !== 0) &&
         <NewRelease
           title={searchInfo?.newRelated}
           button={searchInfo?.button}
@@ -256,7 +256,7 @@ const Search = ({ lang, searchInfo, dictionary }) => {
           listBlog={listBlog}
           dictionary={dictionary}
         />
-      )}
+      }
     </div>
   )
 }
