@@ -26,6 +26,11 @@
     "topicFilter": "Thème"
   },
   "message": {
-    "not_found_information": "Aucune information trouvée sur ce pays !!!"
+    "not_found_information": "Aucune information trouvée sur ce pays !!!",
+    "is_required": "Veuillez remplir le champ vide ici.",
+    "is_match": "L'e-mail doit correspondre",
+    "invalid": "Email invalide.",
+    "invalid_phone": "Entrez un numéro valide",
+    "min_phone": "Doit avoir le numéro 9"
   }
 }

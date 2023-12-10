@@ -676,6 +676,7 @@ export default function AboutTour(props) {
               data={dataBookTour}
               setOpenModal={setOpenModal}
               lang={lang}
+              dictionary={dictionary}
             />
           </div>
         </ModalCustom>

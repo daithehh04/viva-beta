@@ -400,6 +400,7 @@ export default function Navbar({
               data={dataBookTour}
               setOpenModal={setOpenModal}
               lang={lang}
+              dictionary={dictionary}
             />
           </div>
         </ModalCustom>
