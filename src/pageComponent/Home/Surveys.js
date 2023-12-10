@@ -101,7 +101,7 @@ function Surveys({ data, button, lang, dataBookTour, dictionary }) {
           className='w-[91.46vw] md:w-[82.93vw] md:h-[90vh] h-[80vh]'
         >
           <div className='w-full h-full overflow-y-auto md:rounded-[16px] overflow-x-hidden'>
-            <BookTour data={dataBookTour} setOpenModal={setOpenModal} lang={lang}/>
+            <BookTour data={dataBookTour} setOpenModal={setOpenModal} lang={lang} dictionary={dictionary} />
           </div>
         </ModalCustom>
       )}

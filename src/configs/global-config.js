@@ -9,3 +9,8 @@ export const LANGUAGE_IDS = {
   fr: 'cG9zdDoyOTk=',
   it: 'cG9zdDozMDE=',
 }
+
+export const FORM_IDS = {
+  PERSONALIZE: 11,
+  BOOK_TOUR: 3,
+}

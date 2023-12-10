@@ -18,6 +18,7 @@ import DialogContent from '@mui/material/DialogContent';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 import ReCAPTCHA from 'react-google-recaptcha'
 import addYears from 'date-fns/addYears'
+import { FORM_IDS } from '@/configs/global-config'
 // queries form
 const SUBMIT_FORM = gql`
   mutation ($input: SubmitGfFormInput!) {
@@ -32,9 +33,9 @@ const SUBMIT_FORM = gql`
   }
 `
 
-function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
-  const [capcha,setCapcha] = useState(null)
-  const [errCapcha,setErrCapcha] = useState("")
+function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
+  const [capcha, setCapcha] = useState(null)
+  const [errCapcha, setErrCapcha] = useState("")
   const [open, setOpen] = useState(true);
   const [mutate, { loading }] = useMutation(SUBMIT_FORM)
   const [openNoti, setOpenNoti] = useState(false)
@@ -54,16 +55,15 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
     setOpenNoti(true)
   };
   let arrValueStyle = ""
-  let arrStyle =[]
+  let arrStyle = []
   let arrValueCountry = ""
-  let arrCountry =[]
-  if(detail?.detail === true) {
-    detail?.styleTourArr?.forEach((item,index) =>{arrStyle.push(item?.name)})
+  let arrCountry = []
+  if (detail?.detail === true) {
+    detail?.styleTourArr?.forEach((item, index) => { arrStyle.push(item?.name) })
     arrValueStyle = arrStyle.join(",")
 
-    detail?.countriesTourArr?.forEach((item,index) =>{arrCountry.push(item?.name)})
+    detail?.countriesTourArr?.forEach((item, index) => { arrCountry.push(item?.name) })
     arrValueCountry = arrCountry.join(", ")
-
   }
   // init value
   const INITAL_FORM_STATE = {
@@ -77,30 +77,31 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
     date: null,
     destination: arrCountry,
     accommodation: '',
-    typeOfTrip: arrValueStyle,
+    typeOfTrip: arrStyle,
     message: '',
     budget: '',
     confirm: false
   }
   //validate
   const FORM_VALIDATION = Yup.object().shape({
-    nationality: Yup.string(),
-    fullName: Yup.string(),
+    nationality: Yup.string().required(dictionary?.message?.is_required),
+    fullName: Yup.string().required(dictionary?.message?.is_required),
     telephone: Yup.string()
-      .matches(/^[0-9]+$/, 'Enter a valid number')
-      .min(9, 'Must have 9 number')
-      .required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    email: Yup.string().email('Invalid email.'),
-    confirmEmail: Yup.string().oneOf([Yup.ref('email'), null], 'Email must match'),
-    numberAdult: Yup.number().min(0),
-    numberChildren: Yup.number().min(0),
-    date: Yup.date().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    destination: Yup.array().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    accommodation: Yup.array().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    typeOfTrip: Yup.mixed().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
+      .required(dictionary?.message?.is_required)
+      .matches(/^[0-9]+$/, dictionary?.message?.invalid_phone)
+      .min(9, dictionary?.message?.min_phone)
+      .required(dictionary?.message?.is_required),
+    email: Yup.string().email(dictionary?.message?.invalid_email).required(dictionary?.message?.is_required),
+    confirmEmail: Yup.string().oneOf([Yup.ref('email'), null], dictionary?.message?.is_match).required(dictionary?.message?.is_required),
+    numberAdult: Yup.number().min(0).required(dictionary?.message?.is_required),
+    numberChildren: Yup.number().min(0).required(dictionary?.message?.is_required),
+    date: Yup.date().required(dictionary?.message?.is_required),
+    destination: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
+    accommodation: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
+    typeOfTrip: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
     message: Yup.string(),
-    budget: Yup.number().integer().required(lang === 'en' ? 'Please fill in the blank here' : lang === 'it' ? 'Per favore, compila il campo vuoto qui.' : 'Veuillez remplir le champ vide ici.'),
-    confirm: Yup.boolean()
+    budget: Yup.number().integer().required(dictionary?.message?.is_required),
+    confirm: Yup.boolean().required(dictionary?.message?.is_required)
   })
 
   const dataBooktour = data?.data?.page?.booktour
@@ -108,12 +109,13 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
   const dataBooktourAge = data?.data?.page?.booktour?.participantage
   const dataParticipant = data?.data?.page?.booktour?.participants
 
+  const { BOOK_TOUR, PERSONALIZE } = FORM_IDS
   const handleForm = (values, resetForm) => {
-    if(capcha) {
+    if (capcha) {
       mutate({
         variables: {
           input: {
-            id: detail?.detail ? 4 : 3,
+            id: detail?.detail ? PERSONALIZE : BOOK_TOUR,
             fieldValues: [
               { id: 1, value: values.nationality },
               { id: 3, value: values.fullName },
@@ -124,11 +126,11 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
               { id: 21, value: values.date },
               { id: 24, value: detail?.detail === true ? arrValueCountry : values.destination.join(', ') },
               { id: 22, value: values.accommodation.join(', ') },
-              { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip.join(', ')},
+              { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip.join(', ') },
               { id: 14, value: values.message },
               { id: 15, value: values.budget },
               { id: 16, value: values.confirm },
-              { id: 26, value: detail?.detail ? nameTour : ''}
+              { id: 26, value: detail?.detail ? nameTour : '' }
             ]
           }
         }
@@ -267,6 +269,11 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
                                 name='nationality'
                                 options={data?.data?.allFromCountry?.nodes}
                               />
+                              <ErrorMessage
+                                name='nationality'
+                                component='div'
+                                className='md:text-[1rem] text-[3.2vw] text-[red]'
+                              />
                             </div>
                             <div className='flex flex-col md:gap-[0.5vw] inputField'>
                               <h4>{dataBooktourContact?.fullname?.labelname}</h4>
@@ -368,7 +375,7 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
                                 <DatePicker
                                   name='date'
                                   views={['month', 'year']}
-                                  format="MM/yyyy"
+                                  format="yyyy/MM"
                                   value={formik.values.date}
                                   onChange={(value) => formik.setFieldValue("date", value, true)}
                                   slotProps={{
@@ -376,11 +383,11 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
                                       variant: "outlined",
                                     }
                                   }}
-                                  defaultValue={[new Date()]} 
+                                  defaultValue={[new Date()]}
                                   // disableFuture
                                   minDate={new Date()}
                                   maxDate={timeBookTourFuture}
-                                  // disablePast
+                                // disablePast
                                 />
                               </LocalizationProvider>
                               <ErrorMessage
@@ -421,14 +428,14 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
                                 />
                               </div>
                             </div>)}
-                            
+
 
                             {/* radio group */}
                             <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full'>
                               <h4 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.accomodation?.labelaccom}` }}></h4>
                               <div
-                               role='group'
-                               aria-labelledby='checkbox-group'
+                                role='group'
+                                aria-labelledby='checkbox-group'
                                 className='radio-group'
                               >
                                 {dataParticipant?.accomodation?.acommodationchoice?.map((choice, index) => (
@@ -455,32 +462,32 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
                         {/* trip,note,budget */}
                         <div className='md:mt-[3vw] mt-[6.4vw] md:grid grid-cols-3 md:gap-[5.31vw] items-start trip flex flex-col gap-[6.4vw]'>
                           {detail?.detail === true ? "" : <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full'>
-                        <h4
-                          className=''
-                          dangerouslySetInnerHTML={{ __html: `${dataParticipant?.typeoftrip}` }}
-                        ></h4>
-                        <div
-                          role='group'
-                          aria-labelledby='checkbox-group'
-                          className='grid grid-cols-1 md:gap-[1vw] gap-[4.27vw] typeOfTrip 2xl:grid-cols-2'
-                        >
-                          {data?.data?.allTourStyle?.nodes?.map((tour, index) => (
-                            <label key={index}>
-                              <Field
-                                type='checkbox'
+                            <h4
+                              className=''
+                              dangerouslySetInnerHTML={{ __html: `${dataParticipant?.typeoftrip}` }}
+                            ></h4>
+                            <div
+                              role='group'
+                              aria-labelledby='checkbox-group'
+                              className='grid grid-cols-1 md:gap-[1vw] gap-[4.27vw] typeOfTrip 2xl:grid-cols-2'
+                            >
+                              {data?.data?.allTourStyle?.nodes?.map((tour, index) => (
+                                <label key={index}>
+                                  <Field
+                                    type='checkbox'
+                                    name='typeOfTrip'
+                                    value={tour?.name}
+                                  />
+                                  <span className='md:text-[1rem] font-medium md:leading-[1.5] whitespace-nowrap'>{tour?.name}</span>
+                                </label>
+                              ))}
+                              <ErrorMessage
                                 name='typeOfTrip'
-                                value={tour?.name}
+                                component='div'
+                                className='md:text-[0.8vw] text-[3.2vw] text-[red]'
                               />
-                              <span className='md:text-[1.2rem] font-medium md:leading-[1.5] whitespace-nowrap'>{tour?.name}</span>
-                            </label>
-                          ))}
-                          <ErrorMessage
-                                  name='typeOfTrip'
-                                  component='div'
-                                  className='md:text-[0.8vw] text-[3.2vw] text-[red]'
-                                />
-                        </div>
-                      </div>}
+                            </div>
+                          </div>}
 
                           {/* Budget */}
                           <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full budgetTour'>
@@ -538,7 +545,7 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
                           />
                         </div>
                         <div className='mt-[2.5vw]'>
-                          <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPCHA_SITE_KEY} onChange={setCapcha}/>
+                          <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPCHA_SITE_KEY} onChange={setCapcha} />
                           <p className='error-capcha md:text-[1rem] text-[3.2vw] text-[red]'>{errCapcha}</p>
                         </div>
                       </div>
@@ -557,11 +564,11 @@ function BookTour({ data, setOpenModal, lang,detail, nameTour }) {
           </div>
         </DialogContent>
         {/* Capcha */}
-        </Dialog>
+      </Dialog>
 
 
       <Notification
-        lang = {lang}
+        lang={lang}
         openNoti={openNoti}
         setOpenNoti={setOpenNoti}
         msg={msg}
