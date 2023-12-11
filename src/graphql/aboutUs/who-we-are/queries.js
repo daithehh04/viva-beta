@@ -93,6 +93,9 @@ export const GET_DATA_MENU_WWR = `query($language: LanguageCodeEnum!) {
 export const WHO_ARE_WE_SLUG = `query($language: LanguageCodeEnum!) {
   page(id: "cG9zdDoxMTg2") {
     translation(language: $language) {
+      language {
+        id
+      }
       who_we_are {
         banner {
           slug

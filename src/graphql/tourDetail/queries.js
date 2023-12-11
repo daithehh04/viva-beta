@@ -399,6 +399,9 @@ export const PROMOTION_TOUR_SLUGS = `query ($language: LanguageCodeEnum!) {
       translation(language: $language) {
         slug
         date
+        language {
+          id
+        }
       }
     }
   }

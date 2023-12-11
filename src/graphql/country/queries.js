@@ -7,6 +7,9 @@ query country($language: LanguageCodeFilterEnum){
       slug
       name
       description
+      language {
+        id
+      }
       country {
         priority
         flag {
