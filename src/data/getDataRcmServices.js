@@ -31,6 +31,10 @@ export const SERVICES_SLUG_QUERY = `
     categories(where: {language: $language}) {
       nodes {
         slug
+        language {
+          id
+          name
+        }
       }
     }
   }

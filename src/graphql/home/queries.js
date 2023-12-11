@@ -413,6 +413,9 @@ blogs {
     translation(language: $language) {
       slug
       date
+      language {
+        id
+      }
     }
   }
 }

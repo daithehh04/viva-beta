@@ -5,6 +5,10 @@ import { BLOGS_SLUG_QUERY } from "@/graphql/home/queries"
 import { TRAVEL_STYLE_SLUG_QUERY } from "@/graphql/travelStyle/queries"
 import { DATA_MENU_COUNTRY } from "@/graphql/country/queries"
 import { SERVICES_SLUG_QUERY } from "@/data/getDataRcmServices"
+import { RESPONSIBLE_TRAVEL_SLUG } from "@/graphql/aboutUs/responsible-travel/queries"
+import { WHO_ARE_WE_SLUG } from "@/graphql/aboutUs/who-we-are/queries"
+import { REVIEWS_SLUG_QUERY } from "@/graphql/aboutUs/reviews/queries"
+import { RECOMMENDED_SERVICES_POST_SLUGS } from "@/graphql/post/queries"
 
 const GET_POSTS = `{
   posts(first: 100){
@@ -22,6 +26,9 @@ query ($language: LanguageCodeEnum!) {
       translation(language: $language) {
         slug
         date
+        language {
+          id
+        }
       }
     }
   }
@@ -31,6 +38,7 @@ query ($language: LanguageCodeEnum!) {
 export default async function sitemap() {
   const { locales } = i18n
   const posts = await fetchData(GET_POSTS)
+  const arrLocales = [{ value: 'en', id: 'TGFuZ3VhZ2U6ZW4=' }, { value: 'it', id: 'TGFuZ3VhZ2U6aXQ=' }, { value: 'fr', id: 'TGFuZ3VhZ2U6ZnI=' }]
 
   const [
     countriesEn,
@@ -51,6 +59,15 @@ export default async function sitemap() {
     categoriesIt,
     hotDealsIt,
     recommendServiceIt,
+    aboutUsTravelEn,
+    aboutUsReviewsEn,
+    aboutUsWhoAreWeEn,
+    aboutUsTravelFr,
+    aboutUsReviewsFr,
+    aboutUsWhoAreWeFr,
+    aboutUsTravelIt,
+    aboutUsReviewsIt,
+    aboutUsWhoAreWeIt,
   ] = await Promise.all([
     fetchData(DATA_MENU_COUNTRY, { language: "EN" }),
     fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: "EN" }),
@@ -72,7 +89,50 @@ export default async function sitemap() {
     fetchData(BLOGS_SLUG_QUERY, { language: "IT" }),
     fetchData(PROMOTION_TOUR_SLUGS, { language: "IT" }),
     fetchData(SERVICES_SLUG_QUERY, { language: "IT" }),
+
+    fetchData(RESPONSIBLE_TRAVEL_SLUG, { language: "EN" }),
+    fetchData(REVIEWS_SLUG_QUERY, { language: "EN" }),
+    fetchData(WHO_ARE_WE_SLUG, { language: "EN" }),
+    fetchData(RESPONSIBLE_TRAVEL_SLUG, { language: "FR" }),
+    fetchData(REVIEWS_SLUG_QUERY, { language: "FR" }),
+    fetchData(WHO_ARE_WE_SLUG, { language: "FR" }),
+    fetchData(RESPONSIBLE_TRAVEL_SLUG, { language: "IT" }),
+    fetchData(REVIEWS_SLUG_QUERY, { language: "IT" }),
+    fetchData(WHO_ARE_WE_SLUG, { language: "IT" })
   ])
+  let initArrRecommendDetail = [];
+
+  let mergeArrRecommendService = recommendServiceEn?.data?.categories?.nodes.concat(
+    recommendServiceFr?.data?.categories?.nodes,
+    recommendServiceIt?.data?.categories?.nodes);
+
+  const recommendPost = arrLocales.map(lang => {
+    return mergeArrRecommendService?.map(item => ({
+      lang: lang?.value,
+      category: item?.slug,
+      slug: RECOMMENDED_SERVICES_POST_SLUGS,
+      variables: { categorySlug: item?.slug, language: lang?.value?.toUpperCase() }
+    })
+    )
+  })
+  const flatArr = recommendPost.flat()
+  const dataRecommends = await Promise.all(flatArr.map(item => fetchData(item.slug, item.variables)))
+
+  const rcPosts = dataRecommends.map(({ data }) => data?.posts?.nodes)
+
+  rcPosts.forEach((post, index) => {
+    post.forEach(e => {
+      if(e?.translation){
+        initArrRecommendDetail.push({
+          url: `${process.env.DOMAIN}${flatArr[index].lang === "en" ? '' : `/${flatArr[index].lang}`}/recommended-services/${flatArr[index].category}/${e?.translation?.slug}`,
+          lastModified: new Date(),
+          priority: 0.8
+        })
+      }
+    })
+
+  })
+
   let mergeArrCountry = countriesEn?.data?.allCountries?.nodes.concat(
     countriesFr?.data?.allCountries?.nodes,
     countriesIt?.data?.allCountries?.nodes);
@@ -93,9 +153,19 @@ export default async function sitemap() {
     allToursFr?.data?.allTours?.nodes,
     allToursIt?.data?.allTours?.nodes);
 
-  let mergeArrRecommendService = recommendServiceEn?.data?.categories?.nodes.concat(
-    recommendServiceFr?.data?.categories?.nodes,
-    recommendServiceIt?.data?.categories?.nodes);
+  let mergeArrAboutUsReview = [].concat(
+    aboutUsReviewsEn?.data?.page?.translation,
+    aboutUsReviewsFr?.data?.page?.translation,
+    aboutUsReviewsIt?.data?.page?.translation);
+
+  let mergeArrAboutUsWhoAreWe = [].concat(
+    aboutUsWhoAreWeEn?.data?.page?.translation,
+    aboutUsWhoAreWeFr?.data?.page?.translation,
+    aboutUsWhoAreWeIt?.data?.page?.translation);
+
+  let mergeArrAboutUsTravel = [].concat(aboutUsTravelEn?.data?.page.translation,
+    aboutUsTravelFr?.data?.page.translation,
+    aboutUsTravelIt?.data?.page.translation)
 
   let initArrCommon = [];
 
@@ -105,12 +175,15 @@ export default async function sitemap() {
   let initArrHotDeal = [];
   let initAllTour = [];
   let initArrRecommendService = [];
+  let initArrAboutUsReview = [];
+  let initArrAboutUsWhoAreWe = [];
+  let initArrAboutUsTravel = [];
 
-  locales.map((lang) => {
+  arrLocales?.map(async (lang) => {
     mergeArrCountry?.map((e) => {
-      if (e) {
+      if (e && lang?.id === e?.language?.id) {
         initArrCountry.push({
-          url: `${process.env.DOMAIN}/destinations${lang === "en" ? '' : `/${lang}`}/${e?.slug}`,
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/destinations/${e?.slug}`,
           lastModified: new Date(),
           priority: 0.8
         })
@@ -118,9 +191,9 @@ export default async function sitemap() {
     })
 
     mergeArrStyle?.map((e) => {
-      if (e?.translation) {
+      if (e?.translation && lang?.id === e?.translation?.language?.id) {
         initArrStyle.push({
-          url: `${process.env.DOMAIN}/types-of-trips${lang === "en" ? '' : `/${lang}`}/${e?.translation?.slug}`,
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/types-of-trips/${e?.translation?.slug}`,
           lastModified: new Date(),
           priority: 0.8
         })
@@ -128,9 +201,9 @@ export default async function sitemap() {
     })
 
     mergeArrHotDeal?.map((e) => {
-      if (e?.translation) {
+      if (e?.translation && lang?.id === e?.translation?.language?.id) {
         initArrHotDeal.push({
-          url: `${process.env.DOMAIN}/hot-deals${lang === "en" ? '' : `/${lang}`}/${e?.translation?.slug}`,
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/hot-deals/${e?.translation?.slug}`,
           lastModified: e?.translation?.date,
           priority: 0.8
         })
@@ -138,9 +211,9 @@ export default async function sitemap() {
     })
 
     mergeArrCategory?.map((e) => {
-      if (e?.translation) {
+      if (e?.translation && lang?.id === e?.translation?.language?.id) {
         initArrCategory.push({
-          url: `${process.env.DOMAIN}/blog${lang === "en" ? '' : `/${lang}`}/${e?.translation?.slug}`,
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/blog/${e?.translation?.slug}`,
           lastModified: e?.translation?.date,
           priority: 0.8
         })
@@ -148,9 +221,9 @@ export default async function sitemap() {
     })
 
     mergeArrAllTour?.map((e) => {
-      if (e?.translation) {
+      if (e?.translation && lang?.id === e?.translation?.language?.id) {
         initAllTour.push({
-          url: `${process.env.DOMAIN}${lang === "en" ? '' : `/${lang}`}/${e?.translation?.slug}`,
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/${e?.translation?.slug}`,
           lastModified: e?.translation?.date,
           priority: 0.8
         })
@@ -158,17 +231,44 @@ export default async function sitemap() {
     })
 
     mergeArrRecommendService?.map((e) => {
-      if (e) {
+      if (e && lang?.id === e?.language?.id) {
         initArrRecommendService.push({
-          url: `${process.env.DOMAIN}/recommended-services${lang === "en" ? '' : `/${lang}`}/${e?.slug}`,
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/recommended-services/${e?.slug}`,
+          lastModified: new Date(),
+          priority: 0.8
+        })
+      }
+    })
+
+    mergeArrAboutUsReview?.map((e) => {
+      if (e && lang?.id === e?.language?.id) {
+        initArrAboutUsReview.push({
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/about-us/${e?.aboutUsReviews.banner?.slug}`,
+          lastModified: new Date(),
+          priority: 0.8
+        })
+      }
+    })
+    mergeArrAboutUsTravel?.map((e) => {
+      if (e && lang?.id === e?.language?.id) {
+        initArrAboutUsTravel.push({
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/about-us/${e?.responsibleTravel.banner?.slug}`,
+          lastModified: new Date(),
+          priority: 0.8
+        })
+      }
+    })
+    mergeArrAboutUsWhoAreWe?.map((e) => {
+      if (e && lang?.id === e?.language?.id) {
+        initArrAboutUsWhoAreWe.push({
+          url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/about-us/${e?.who_we_are.banner?.slug}`,
           lastModified: new Date(),
           priority: 0.8
         })
       }
     })
   })
-
-  const DEFAULT_VALUE_DOMAIN = ['hot-deals', 'check-visa', 'blog', 'about-us/who-we-are', 'about-us/responsible-travel', 'about-us/reviews']
+  const DEFAULT_VALUE_DOMAIN = ['hot-deals', 'check-visa', 'blog']
   locales?.map((lang) => {
     const langDomain = `${process.env.DOMAIN}${lang === 'en' ? '' : `/${lang}`}`
     DEFAULT_VALUE_DOMAIN.map((value) => {
@@ -193,6 +293,10 @@ export default async function sitemap() {
     ...initArrStyle,
     ...initArrCategory,
     ...initArrHotDeal,
-    ...initArrRecommendService
+    ...initArrRecommendService,
+    ...initArrAboutUsReview,
+    ...initArrAboutUsTravel,
+    ...initArrAboutUsWhoAreWe,
+    ...initArrRecommendDetail
   ]
 }

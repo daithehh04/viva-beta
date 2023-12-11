@@ -15,6 +15,9 @@ export const ABOUT_US_QUERY = `{
 export const RESPONSIBLE_TRAVEL_SLUG = `query($language: LanguageCodeEnum!) {
   page(id: "cG9zdDoxMjg1") {
     translation(language: $language) {
+      language {
+        id
+      }
       responsibleTravel {
         banner {
           slug

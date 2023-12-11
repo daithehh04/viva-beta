@@ -91,6 +91,9 @@ query ($language: LanguageCodeEnum!) {
     nodes {
       translation(language: $language) {
         slug
+        language {
+          id
+        }
       }
     }
   }
