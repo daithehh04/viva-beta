@@ -29,6 +29,7 @@
     "not_found_information": "Not found information about this country !!!",
     "is_required": "Please fill in the blank here",
     "is_match": "Email must match",
+    "is_number": "It must be a number type",
     "invalid_email": "Invalid email.",
     "invalid_phone": "Enter a valid number",
     "min_phone": "Must have 9 number"

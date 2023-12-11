@@ -2,7 +2,7 @@
 
 import subBannerBg from '@/assets/images/about/subBannerBg.png'
 import subBannerBg2 from '@/assets/images/about/subBannerBg2.png'
-import imgPerson from '@/assets/images/survey-person.png'
+import subBannerBg3 from '@/assets/images/subBannerBg3.png'
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -50,8 +50,8 @@ export default function SubBanner({ data = {}, className, lang }) {
       </div>
 
       <Image
-        src={subBannerBg2}
-        alt='subBannerBg2'
+        src={subBannerBg3}
+        alt='subBannerBg3'
         className='md:w-[56.73%] w-full md:h-[83.28%] h-[64vw] object-cover md:absolute relative bottom-0 right-0 z-10 md:rounded-[10px]'
       />
     </section>
