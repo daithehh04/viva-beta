@@ -32,27 +32,47 @@ export default async function sitemap() {
   const { locales } = i18n
   const posts = await fetchData(GET_POSTS)
 
-  const countriesEn = await fetchData(DATA_MENU_COUNTRY, { language: "EN" })
-  const tourStylesEn = await fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: "EN" })
-  const allToursEn = await fetchData(TOURS_SLUG_QUERY, { language: "EN" })
-  const categoriesEn = await fetchData(BLOGS_SLUG_QUERY, { language: "EN" })
-  const hotDealsEn = await fetchData(PROMOTION_TOUR_SLUGS, { language: "EN" })
-  const recommendServiceEn = await fetchData(SERVICES_SLUG_QUERY, { language: "EN" })
+  const [
+    countriesEn,
+    tourStylesEn,
+    allToursEn,
+    categoriesEn,
+    hotDealsEn,
+    recommendServiceEn,
+    countriesFr,
+    tourStylesFr,
+    allToursFr,
+    categoriesFr,
+    hotDealsFr,
+    recommendServiceFr,
+    countriesIt,
+    tourStylesIt,
+    allToursIt,
+    categoriesIt,
+    hotDealsIt,
+    recommendServiceIt,
+  ] = await Promise.all([
+    fetchData(DATA_MENU_COUNTRY, { language: "EN" }),
+    fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: "EN" }),
+    fetchData(TOURS_SLUG_QUERY, { language: "EN" }),
+    fetchData(BLOGS_SLUG_QUERY, { language: "EN" }),
+    fetchData(PROMOTION_TOUR_SLUGS, { language: "EN" }),
+    fetchData(SERVICES_SLUG_QUERY, { language: "EN" }),
 
-  const countriesFr = await fetchData(DATA_MENU_COUNTRY, { language: "FR" })
-  const tourStylesFr = await fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: "FR" })
-  const allToursFr = await fetchData(TOURS_SLUG_QUERY, { language: "FR" })
-  const categoriesFr = await fetchData(BLOGS_SLUG_QUERY, { language: "FR" })
-  const hotDealsFr = await fetchData(PROMOTION_TOUR_SLUGS, { language: "FR" })
-  const recommendServiceFr = await fetchData(SERVICES_SLUG_QUERY, { language: "FR" })
+    fetchData(DATA_MENU_COUNTRY, { language: "FR" }),
+    fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: "FR" }),
+    fetchData(TOURS_SLUG_QUERY, { language: "FR" }),
+    fetchData(BLOGS_SLUG_QUERY, { language: "FR" }),
+    fetchData(PROMOTION_TOUR_SLUGS, { language: "FR" }),
+    fetchData(SERVICES_SLUG_QUERY, { language: "FR" }),
 
-  const countriesIt = await fetchData(DATA_MENU_COUNTRY, { language: "IT" })
-  const tourStylesIt = await fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: "IT" })
-  const allToursIt = await fetchData(TOURS_SLUG_QUERY, { language: "IT" })
-  const categoriesIt = await fetchData(BLOGS_SLUG_QUERY, { language: "IT" })
-  const hotDealsIt = await fetchData(PROMOTION_TOUR_SLUGS, { language: "IT" })
-  const recommendServiceIt = await fetchData(SERVICES_SLUG_QUERY, { language: "IT" })
-
+    fetchData(DATA_MENU_COUNTRY, { language: "IT" }),
+    fetchData(TRAVEL_STYLE_SLUG_QUERY, { language: "IT" }),
+    fetchData(TOURS_SLUG_QUERY, { language: "IT" }),
+    fetchData(BLOGS_SLUG_QUERY, { language: "IT" }),
+    fetchData(PROMOTION_TOUR_SLUGS, { language: "IT" }),
+    fetchData(SERVICES_SLUG_QUERY, { language: "IT" }),
+  ])
   let mergeArrCountry = countriesEn?.data?.allCountries?.nodes.concat(
     countriesFr?.data?.allCountries?.nodes,
     countriesIt?.data?.allCountries?.nodes);
