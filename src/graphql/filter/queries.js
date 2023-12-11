@@ -117,7 +117,7 @@ export const getDataBestSeller = (bestSellerSlug) => {
             ${isBestSeller ? '{ taxonomy: BESTSELLER, operator: IN, terms: $bestSellerSlug, field: SLUG }' : ''}
           ]
         }
-        orderby: { field: DATE, order: DESC }
+        orderby: { field: MODIFIED, order: DESC }
       }
     ) {
       pageInfo {

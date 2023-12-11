@@ -17,27 +17,22 @@ async function SlideDestination({ lang, slug }) {
       arraySlugCountry.push(value.slug)
     }
   })
-  const [
-    dataOtherTypeTrip,
-    dataBestSeller,
-    dataCountry,
-  ] = await Promise.all([
+  const [dataOtherTypeTrip, dataBestSeller, dataCountry] = await Promise.all([
     fetchData(DATA_SLIDE_OTHER_TOUR, {
       language: lang?.toUpperCase(),
       taxonomyValue: arraySlugCountry,
-      taxonomyName: 'COUNTRIES',
+      taxonomyName: 'COUNTRIES'
     }),
     fetchData(GET_DATA_BEST_SELLER_OURTOUR, {
       language: lang?.toUpperCase(),
       taxonomyValue: arraySlugCountry,
-      taxonomyName: 'COUNTRIES',
+      taxonomyName: 'COUNTRIES'
     }),
     fetchData(DATA_COUNTRY_TITLE, {
       language: lang?.toUpperCase(),
       taxonomyValue: slug
     })
   ])
-
 
   const dataTitle = dataCountry?.data?.countries?.translation
 
@@ -50,22 +45,11 @@ async function SlideDestination({ lang, slug }) {
   return (
     <div className='relative'>
       <div className='absolute inset-0 z-[-1] slideDestination md:block hidden'></div>
-      <div className="flex flex-col md:mt-[6.94vw] content">
-        <span className='heading-1 md:mb-[3vw] md:pl-0 pl-[4.27vw]'>{dataTitle?.ourTour?.titleTrips}</span>
-        <div className='max-md:mt-[6.4vw]'>
-          <SlideTour
-            data={dataOtherType}
-            lang={lang}
-          />
-        </div>
-        <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
-          <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?country=${dataTitle?.name}`}>
-            <Button className='btn-secondary' content={dataTitle?.ourTour?.btn}><span>{dataTitle?.ourTour?.btn}</span></Button>
-          </Link>
-        </div>
-
-        <div className='flex flex-col md:mt-[7.5vw] mt-[11.2vw] '>
-          {dataTours?.length !== 0 && <span className='heading-1 md:mb-[3vw] md:pl-0 pl-[4.27vw]'>{dataTitle?.ourTour?.titleTours}</span>}
+      <div className='flex flex-col md:mt-[6.94vw] content'>
+        <div className='flex flex-col'>
+          {dataTours?.length !== 0 && (
+            <span className='heading-1 md:mb-[3vw] md:pl-0 pl-[4.27vw]'>{dataTitle?.ourTour?.titleTours}</span>
+          )}
           <div>
             <div className='grid md:grid-cols-4 gap-x-[2.5vw] gap-y-[3vw] md:bg-transparent bg-[#F3F6FB]'>
               {dataTours?.map((tour, index) => {
@@ -100,7 +84,9 @@ async function SlideDestination({ lang, slug }) {
                     </span>
                     <div className='flex justify-center mt-[1.25vw]'>
                       <Link
-                        href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&country=${dataTitle?.name}`}
+                        href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&country=${
+                          dataTitle?.name
+                        }`}
                         className='btn-secondary'
                         content={dataTitle?.ourTour?.btn}
                       >
@@ -111,15 +97,44 @@ async function SlideDestination({ lang, slug }) {
                 </div>
               )}
             </div>
-
           </div>
         </div>
-        {totalTour <= 7 && <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
-          {totalTour > 0 && <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&country=${dataTitle?.name}`}>
-            <Button className='btn-secondary' content={dataTitle?.ourTour?.btn}><span>{dataTitle?.ourTour?.btn}</span></Button>
-          </Link>}
+        {totalTour <= 7 && (
+          <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
+            {totalTour > 0 && (
+              <Link
+                href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours&country=${dataTitle?.name}`}
+              >
+                <Button
+                  className='btn-secondary'
+                  content={dataTitle?.ourTour?.btn}
+                >
+                  <span>{dataTitle?.ourTour?.btn}</span>
+                </Button>
+              </Link>
+            )}
+          </div>
+        )}
 
-        </div>}
+        <span className='heading-1 md:mb-[3vw]  md:mt-[7.5vw] mt-[11.2vw]  md:pl-0 pl-[4.27vw]'>
+          {dataTitle?.ourTour?.titleTrips}
+        </span>
+        <div className='max-md:mt-[6.4vw]'>
+          <SlideTour
+            data={dataOtherType}
+            lang={lang}
+          />
+        </div>
+        <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
+          <Link href={`${lang !== 'en' ? `/${lang}` : ''}/search?country=${dataTitle?.name}`}>
+            <Button
+              className='btn-secondary'
+              content={dataTitle?.ourTour?.btn}
+            >
+              <span>{dataTitle?.ourTour?.btn}</span>
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   )
@@ -129,13 +144,14 @@ SlideDestination.Skeleton = function SlideDestinationSkeleton() {
   return (
     <div className='relative'>
       <div className='absolute inset-0 z-[-1] slideDestination md:block hidden'></div>
-      <div className="flex flex-col md:mt-[6.94vw] content">
+      <div className='flex flex-col md:mt-[6.94vw] content'>
         <span className='heading-1 md:mb-[3vw] md:pl-0 pl-[4.27vw]'>
           <Skeleton
             variant='text'
-            width="50%"
+            width='50%'
             height={100}
-          /></span>
+          />
+        </span>
         <div className='max-md:mt-[6.4vw] flex place-self-start gap-8'>
           {[...Array(10)].map((_, index) => (
             <Skeleton
@@ -146,8 +162,7 @@ SlideDestination.Skeleton = function SlideDestinationSkeleton() {
             />
           ))}
         </div>
-        <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'>
-        </div>
+        <div className='flex justify-center md:mt-[3.5vw] mt-[10.1vw]'></div>
       </div>
     </div>
   )

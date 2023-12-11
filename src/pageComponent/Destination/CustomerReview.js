@@ -27,7 +27,7 @@ async function CustomerReview({lang, slug }) {
 
   if (data.length === 0) return null
   return (
-    <div className='relative'>
+    <div className='relative mb-5'>
       <Image
         alt='bannerReview'
         src={bannerReview}

@@ -122,7 +122,7 @@ export const DATA_COUNTRY_BANNER = `query getInfoCountry($taxonomyValue: ID!,$la
 }
 `
 
-export const DATA_COUNTRY_TITLE =  `query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
+export const DATA_COUNTRY_TITLE = `query getInfoCountry($taxonomyValue: ID!,$language: LanguageCodeEnum!) {
   countries(id: $taxonomyValue, idType: SLUG) {
     translation(language: $language) {
       name
@@ -195,7 +195,15 @@ const DATA_SLIDE_OTHER_TOUR = `
 query getTourStyle($language: LanguageCodeFilterEnum!, $taxonomyValue: [String!], $taxonomyName: TaxonomyEnum) {
   allTours(
     first: 8
-    where: {taxQuery: {taxArray: {terms: $taxonomyValue, taxonomy: $taxonomyName, operator: NOT_IN, field: SLUG}, relation: AND}, language: $language}
+    where: {
+      taxQuery: {
+        taxArray: {terms: $taxonomyValue, taxonomy: $taxonomyName, operator: NOT_IN, field: SLUG
+        }, 
+        relation: AND
+      }, 
+      language: $language, 
+      orderby: {field: MODIFIED, order: DESC}
+    }
   ) {
     nodes {
         slug
@@ -235,7 +243,7 @@ query getTourStyle($language: LanguageCodeFilterEnum!, $taxonomyValue: [String!]
       {taxArray: [
         {terms: $taxonomyValue, taxonomy: $taxonomyName, field: SLUG, operator: NOT_IN}, 
         {taxonomy: BESTSELLER, operator: IN, terms: "best-seller-tours", field: SLUG}], relation: AND}, 
-      language: $language}
+      language: $language, orderby: {field: MODIFIED, order: DESC}}
   ) {
     pageInfo {
       offsetPagination {
