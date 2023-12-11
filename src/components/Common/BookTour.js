@@ -93,14 +93,14 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
       .required(dictionary?.message?.is_required),
     email: Yup.string().email(dictionary?.message?.invalid_email).required(dictionary?.message?.is_required),
     confirmEmail: Yup.string().oneOf([Yup.ref('email'), null], dictionary?.message?.is_match).required(dictionary?.message?.is_required),
-    numberAdult: Yup.number().min(0).required(dictionary?.message?.is_required),
-    numberChildren: Yup.number().min(0).required(dictionary?.message?.is_required),
+    numberAdult: Yup.number().typeError(dictionary?.message?.is_number).min(0).required(dictionary?.message?.is_required),
+    numberChildren: Yup.number().typeError(dictionary?.message?.is_number).min(0).required(dictionary?.message?.is_required),
     date: Yup.date().required(dictionary?.message?.is_required),
     destination: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
     accommodation: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
     typeOfTrip: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
     message: Yup.string(),
-    budget: Yup.number().integer().required(dictionary?.message?.is_required),
+    budget: Yup.number().typeError(dictionary?.message?.is_number).integer().required(dictionary?.message?.is_required),
     confirm: Yup.boolean().required(dictionary?.message?.is_required)
   })
 
@@ -374,8 +374,8 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                               <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
                                   name='date'
-                                  views={['month', 'year']}
-                                  format="yyyy/MM"
+                                  views={['year','month']}
+                                  format="MM/yyyy"
                                   value={formik.values.date}
                                   onChange={(value) => formik.setFieldValue("date", value, true)}
                                   slotProps={{
@@ -384,10 +384,8 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                                     }
                                   }}
                                   defaultValue={[new Date()]}
-                                  // disableFuture
                                   minDate={new Date()}
                                   maxDate={timeBookTourFuture}
-                                // disablePast
                                 />
                               </LocalizationProvider>
                               <ErrorMessage

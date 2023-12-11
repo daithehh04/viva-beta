@@ -412,6 +412,7 @@ blogs {
   nodes {
     translation(language: $language) {
       slug
+      date
     }
   }
 }
