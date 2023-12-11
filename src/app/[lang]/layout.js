@@ -15,9 +15,26 @@ export function generateViewport() {
 const RootLayout = async ({ children, params }) => {
   return (
     <html lang={params.lang}>
-      <body suppressHydrationWarning={true}>
-        {children}</body></html>
-
+      <head>
+        <meta
+          name='google-site-verification'
+          content='3Aim5tZRr39Pzh_cf54NCK_Rgx80kLtJp_ggnUkeL3Q'
+        />
+      </head>
+      <body suppressHydrationWarning={true}>{children}</body>
+      <Script
+        strategy='lazyOnload'
+        src={`https://www.googletagmanager.com/gtag/js?id=G-F9VNYCVPJ9`}
+      ></Script>
+      <Script strategy='lazyOnload'>
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-F9VNYCVPJ9');
+          `}
+      </Script>
+    </html>
   )
 }
 
