@@ -1,6 +1,7 @@
 import React from 'react'
 import './globals.css'
 import { i18n } from '../../../i18n-config'
+import Script from 'next/script'
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }))
