@@ -12,7 +12,8 @@
   "nav": {
     "booking_button": "Request A Quote",
     "hot": "Hot",
-    "all_our_tours": "All Our Tours"
+    "all_our_tours": "All Our Tours",
+    "filter": "Filter"
   },
   "about_us": {
     "destination": "Destination",

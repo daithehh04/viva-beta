@@ -12,7 +12,8 @@
   "nav": {
     "booking_button": "Richiedi Un Preventivo",
     "hot": "Speciali",
-    "all_our_tours": "Tutti I Nostri Viaggi"
+    "all_our_tours": "Tutti I Nostri Viaggi",
+    "filter": "Filtro"
   },
   "about_us": {
     "destination": "Destinazione",
