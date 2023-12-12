@@ -30,10 +30,11 @@ const RootLayout = async ({ children, params }) => {
       </head> */}
       <body suppressHydrationWarning={true}>{children}</body>
       <Script
+        id='google-script'
         strategy='lazyOnload'
         src={`https://www.googletagmanager.com/gtag/js?id=G-F9VNYCVPJ9`}
       ></Script>
-      <Script strategy='lazyOnload'>
+      <Script id='ga-script' strategy='lazyOnload'>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
