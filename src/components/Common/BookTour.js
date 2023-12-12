@@ -129,7 +129,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
               { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip.join(', ') },
               { id: 14, value: values.message },
               { id: 15, value: values.budget },
-              { id: 16, value: values.confirm },
+              { id: 16, value: values.confirm ? 'Yes' : 'No' },
               { id: 26, value: detail?.detail ? nameTour : '' }
             ]
           }

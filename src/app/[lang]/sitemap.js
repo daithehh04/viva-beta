@@ -204,7 +204,7 @@ export default async function sitemap() {
       if (e?.translation && lang?.id === e?.translation?.language?.id) {
         initArrHotDeal.push({
           url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/hot-deals/${e?.translation?.slug}`,
-          lastModified: e?.translation?.date,
+          lastModified: new Date(),
           priority: 0.8
         })
       }
@@ -214,7 +214,7 @@ export default async function sitemap() {
       if (e?.translation && lang?.id === e?.translation?.language?.id) {
         initArrCategory.push({
           url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/blog/${e?.translation?.slug}`,
-          lastModified: e?.translation?.date,
+          lastModified: new Date(),
           priority: 0.8
         })
       }
@@ -224,7 +224,7 @@ export default async function sitemap() {
       if (e?.translation && lang?.id === e?.translation?.language?.id) {
         initAllTour.push({
           url: `${process.env.DOMAIN}${lang.value === "en" ? '' : `/${lang.value}`}/${e?.translation?.slug}`,
-          lastModified: e?.translation?.date,
+          lastModified: new Date(),
           priority: 0.8
         })
       }
