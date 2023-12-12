@@ -12,7 +12,8 @@
   "nav": {
     "booking_button": "Demander Un Devis",
     "hot": "Hot",
-    "all_our_tours": "Tous Nos Voyages"
+    "all_our_tours": "Tous Nos Voyages",
+    "filter": "Filtre"
   },
   "about_us": {
     "destination": "Destination",

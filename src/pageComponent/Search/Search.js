@@ -132,7 +132,9 @@ const Search = ({ lang, searchInfo, dictionary }) => {
         <h1 className='text-[4vw] font-optima leading-[4.4vw] capitalize font-semibold md:mb-[3.44vw]'>
           {searchInfo?.title}
         </h1>
-        <div className='flex md:hidden gap-[1.6vw] items-center'>
+        <div className='flex md:hidden gap-[1.6vw] items-center' onClick={() => {
+          setIsOpenModal(true)
+        }}>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             className='w-[4.26667vw] h-[4.26667vw]'
@@ -148,11 +150,8 @@ const Search = ({ lang, searchInfo, dictionary }) => {
           </svg>
           <p
             className='text-[3.73333vw] leading-[160%] text-textColor'
-            onClick={() => {
-              setIsOpenModal(true)
-            }}
           >
-            Filter
+            {dictionary?.nav?.filter}
           </p>
         </div>
       </div>
@@ -171,7 +170,7 @@ const Search = ({ lang, searchInfo, dictionary }) => {
                 width={20}
                 height={20}
                 className='md:hidden absolute md:top-[4.53vw] top-[2.5vw] right-[4.53vw] 
-              max-md:w-[4vw] max-md:right-[10vw] max-md:top-[5vw] max-md:h-[4vw]'
+              max-md:w-[4vw] max-md:right-[10vw] max-md:top-[5vw] max-md:h-[4vw] z-50'
                 onClick={handleCloseFilter}
               />
             </div>
@@ -187,6 +186,7 @@ const Search = ({ lang, searchInfo, dictionary }) => {
               onTravelStyle={(data) => setTravelStyle(data)}
               onBudget={(data) => setBud(data)}
               onBestSeller={(data) => setSeller(data)}
+              dictionary={dictionary}
             />
             <div className='mx-[4.26vw] w-auto my-[8vw] bg-white md:hidden'>
               <Button
