@@ -62,7 +62,7 @@ function ReviewItem({ className, data, lang, dictionary }) {
           </div>
 
           <div className='relative'>
-            <p className='lg:text-[0.875vw] md:text-[1.1vw] text-[3.73vw] opacity-60 md:opacity-70 leading-normal mt-[3.2vw] md:mt-0 lg:line-clamp-4 line-clamp-3 text-review' dangerouslySetInnerHTML={{ __html: `${data?.translation?.customerReview?.content}` }}>
+            <p className=' text-review lg:text-[0.875vw] md:text-[1.1vw] text-[3.73vw] opacity-60 md:opacity-70 leading-normal mt-[3.2vw] md:mt-0 lg:line-clamp-4 line-clamp-3' dangerouslySetInnerHTML={{ __html: `${data?.translation?.customerReview?.content}` }}>
             </p>
             <Image
               src={commaRes}
