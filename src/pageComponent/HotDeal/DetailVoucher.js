@@ -9,6 +9,8 @@ import * as Yup from 'yup'
 import { gql, useMutation } from '@apollo/client'
 import Notification from '@/components/Common/Notification'
 import { useRef, useState } from 'react'
+import { FORM_IDS } from '@/configs/global-config'
+import logo from '@/assets/images/VIVA-LOGO-02.png'
 
 // css for label + placeholder + error msg
 const labelStyle =
@@ -18,18 +20,6 @@ const labelInputStyle =
 const placeholderStyle =
   'absolute pointer-events-none pl-[1.5vw] top-[50%] translate-y-[-50%] left-0 opacity-0.5 font-normal text-[1vw] text-[#838383] max-md:text-[3.73vw] max-md:pl-[5.3vw] max-md:leading-normal max-lg:text-[1.4vw] '
 const errorStyle = 'text-red-300 text-[1vw] max-md:text-[3.73vw] mb-[0.62vw] max-md:mb-[3.2vw] max-lg:text-[1.4vw]'
-//validate
-const schema = Yup.object().shape({
-  fullname: Yup.string().required('Tên là trường bắt buộc'),
-  email: Yup.string().email('Email không hợp lệ').required('Email là trường bắt buộc'),
-  phone: Yup.string()
-    .matches(/^[0-9]+$/, 'Phải là số')
-    .min(9, 'Phải có ít nhất 9 số')
-    .required('Số điện thoại là trường bắt buộc'),
-  participantsNumber: Yup.string()
-    .matches(/^[0-9]+$/, 'Phải là số')
-    .required('Số  người tham gia là trường bắt buộc')
-})
 
 // queries form
 const SUBMIT_FORM = gql`
@@ -45,7 +35,7 @@ const SUBMIT_FORM = gql`
   }
 `
 
-const DetailVocher = ({ headerData = {}, data, lang }) => {
+const DetailVocher = ({ headerData = {}, data, lang, dictionary }) => {
   const itemRef = useRef()
   const [openNoti, setOpenNoti] = useState(false)
   const [msg, setMsg] = useState('')
@@ -53,6 +43,18 @@ const DetailVocher = ({ headerData = {}, data, lang }) => {
   const [isError, setIsError] = useState(false)
   const [isDone, setIsDone] = useState(false) // check when successful noti or error noti appeared
 
+  //validate
+const schema = Yup.object().shape({
+  fullname: Yup.string().required(dictionary?.message?.is_required),
+  email: Yup.string().email(dictionary?.message?.invalid_email).required(dictionary?.message?.is_required),
+  phone: Yup.string()
+    .matches(/^[0-9]+$/, dictionary?.message?.invalid_phone)
+    .min(9, dictionary?.message?.min_phone)
+    .required(dictionary?.message?.is_required),
+  participantsNumber: Yup.string()
+    .matches(/^[0-9]+$/, dictionary?.message?.is_number)
+    .required(dictionary?.message?.is_required)
+})
   // useClickOutside(itemRef, (e) => {
   //   e.preventDefault()
   //   e.stopPropagation()
@@ -72,13 +74,17 @@ const DetailVocher = ({ headerData = {}, data, lang }) => {
     mode: 'onChange',
     resolver: yupResolver(schema)
   })
+
+  const { HOT_DEAL_EN, HOT_DEAL_FR, HOT_DEAL_IT } = FORM_IDS
+  let idFormVoucher = lang === 'en' ? HOT_DEAL_EN : lang === 'fr' ? HOT_DEAL_FR : HOT_DEAL_IT;
+  
   const [mutate, { loading }] = useMutation(SUBMIT_FORM)
   const onSubmit = (data) => {
     setIsDone(false)
     mutate({
       variables: {
         input: {
-          id: 2,
+          id: idFormVoucher,
           fieldValues: [
             {
               id: 1,
@@ -89,8 +95,8 @@ const DetailVocher = ({ headerData = {}, data, lang }) => {
               value: data.phone
             },
             {
-              id: 4,
-              value: data.email
+              id: 7,
+              emailValues: { value: values.email,} 
             },
             {
               id: 5,
@@ -272,9 +278,12 @@ const DetailVocher = ({ headerData = {}, data, lang }) => {
           </button>
         </form>
         <Image
-          src={detailVocherImg}
+          // src={detailVocherImg}
+          src={data?.detailImage?.sourceUrl || logo} 
           alt='Detail voucher'
-          className='w-[29.1875vw] h-[33.5vw] max-md:hidden'
+          width={235} 
+          height={170} 
+          className='w-[29.1875vw] h-[33.5vw] max-md:hidden object-cover rounded-lg'
         />
       </div>
 

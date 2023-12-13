@@ -35,7 +35,7 @@ const SUBMIT_FORM = gql`
   }
 `
 
-function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
+function ApplyVisa({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
   const [capcha, setCapcha] = useState(null)
   const [errCapcha, setErrCapcha] = useState("")
   const [open, setOpen] = useState(true);
@@ -57,13 +57,9 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
     setIsConfirm(true)
     setOpenNoti(true)
   };
-  let arrValueStyle = ""
-  let arrStyle = []
   let arrValueCountry = ""
   let arrCountry = []
   if (detail?.detail === true) {
-    detail?.styleTourArr?.forEach((item, index) => { arrStyle.push(item?.name) })
-    arrValueStyle = arrStyle.join(",")
 
     detail?.countriesTourArr?.forEach((item, index) => { arrCountry.push(item?.name) })
     arrValueCountry = arrCountry.join(", ")
@@ -74,16 +70,10 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
     fullName: '',
     telephone: '',
     email: '',
-    confirmEmail: '',
-    numberAdult: '',
-    numberChildren: '',
+    participantsNumber: '',
+    numberTrip: '',
     date: null,
     destination: arrCountry,
-    accommodation: '',
-    typeOfTrip: arrStyle,
-    message: '',
-    budget: '',
-    confirm: false
   }
   //validate
   const FORM_VALIDATION = Yup.object().shape({
@@ -95,41 +85,26 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
       .min(9, dictionary?.message?.min_phone)
       .required(dictionary?.message?.is_required),
     email: Yup.string().email(dictionary?.message?.invalid_email).required(dictionary?.message?.is_required),
-    confirmEmail: Yup.string().oneOf([Yup.ref('email'), null], dictionary?.message?.is_match).required(dictionary?.message?.is_required),
-    numberAdult: Yup.number().typeError(dictionary?.message?.is_number).min(0).required(dictionary?.message?.is_required),
-    numberChildren: Yup.number().typeError(dictionary?.message?.is_number).min(0).required(dictionary?.message?.is_required),
+    participantsNumber: Yup.string()
+    .matches(/^[0-9]+$/, dictionary?.message?.is_number)
+    .required(dictionary?.message?.is_required),
+    numberTrip: Yup.string()
+    .matches(/^[0-9]+$/, dictionary?.message?.is_number)
+    .required(dictionary?.message?.is_required),
     date: Yup.date().required(dictionary?.message?.is_required),
     destination: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
-    accommodation: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
-    typeOfTrip: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
-    message: Yup.string(),
-    budget: Yup.number().typeError(dictionary?.message?.is_number).integer().required(dictionary?.message?.is_required),
-    confirm: Yup.boolean().required(dictionary?.message?.is_required)
   })
 
-  const dataBooktour = data?.data?.page?.booktour
   const dataBooktourContact = data?.data?.page?.booktour?.contactdetail
-  const dataBooktourAge = data?.data?.page?.booktour?.participantage
   const dataParticipant = data?.data?.page?.booktour?.participants
 
-  const { BOOK_TOUR_EN,
-    BOOK_TOUR_FR,
-    BOOK_TOUR_IT,
-    PERSONALIZE_EN,
-    PERSONALIZE_FR,
-    PERSONALIZE_IT,
-    PROMOTION_EN,
-    PROMOTION_FR,
-    PROMOTION_IT } = FORM_IDS
+  const { APPLY_VISA_EN,
+    APPLY_VISA_FR,
+    APPLY_VISA_IT,
+     } = FORM_IDS
 
-    let idForm = '';
-    if(lang === "en"){
-      idForm = !detail?.detail ? BOOK_TOUR_EN : pathName.includes('hot-deal') ? PROMOTION_EN : PERSONALIZE_EN
-    }else if(lang === "fr"){
-      idForm = !detail?.detail ? BOOK_TOUR_FR : pathName.includes('hot-deal') ? PROMOTION_FR : PERSONALIZE_FR
-    }else if(lang === 'it'){
-      idForm = !detail?.detail ? BOOK_TOUR_IT : pathName.includes('hot-deal') ? PROMOTION_IT : PERSONALIZE_IT
-    }
+  let idForm = lang === "en" ? APPLY_VISA_EN : lang === "fr" ? APPLY_VISA_FR : APPLY_VISA_IT;
+
   const handleForm = (values, resetForm) => {
     if (capcha) {
       mutate({
@@ -137,20 +112,14 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
           input: {
             id: idForm,
             fieldValues: [
-              { id: 1, value: values.nationality },
-              { id: 3, value: values.fullName },
-              { id: 17, value: values.telephone },
-              { id: 27, emailValues: { value: values.email,} },
-              { id: 19, value: values.numberChildren },
-              { id: 20, value: values.numberAdult },
-              { id: 21, value: values.date },
-              { id: 24, value: detail?.detail === true ? arrValueCountry : values.destination.join(', ') },
-              { id: 22, value: values.accommodation.join(', ') },
-              { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip.join(', ') },
-              { id: 14, value: values.message },
-              { id: 15, value: values.budget },
-              { id: 16, value: `${values.confirm}` === 'true' ? 'Yes' : 'No' },
-              { id: 26, value: detail?.detail ? nameTour : '' }
+              { id: 7, value: values.nationality },
+              { id: 1, value: values.fullName },
+              { id: 3, value: values.telephone },
+              { id: 10, emailValues: { value: values.email,} },
+              { id: 5, value: values.participantsNumber },
+              { id: 9, value: values.numberTrip },
+              { id: 6, value: values.date },
+              { id: 8, value: detail?.detail === true ? arrValueCountry : values.destination.join(', ') },
             ]
           }
         }
@@ -215,7 +184,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
           />
           <div
             // ref={formRef}
-            className='md:w-[82.6875vw] md:h-[95.5vw] w-full h-full overflow-auto hidden-scroll relative booktour block'
+            className='md:w-[82.6875vw] md:h-[75.5vw] w-full h-full overflow-auto hidden-scroll relative booktour block'
           >
             <div className='relative w-full h-full md:pt-[3.59vw] md:pl-[3.75vw] md:pr-[4.06vw] md:pb-[6.25vw] px-[4.27vw] pb-[22.29vw] pt-[8.8vw]'>
               <svg
@@ -261,7 +230,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                       className='max-md:pb-[3vw]'
                     >
                       <div className='block md:pt-[3.28vw] md:mb-[3.5vw] mb-[10.67vw]'>
-                        <h2 className='text-white heading-1'>{detail?.detail ? dictionary?.nav?.title_personalize : dictionary?.nav?.title_quote}</h2>
+                        <h2 className='text-white heading-1'>{dictionary?.check_visa?.title_form}</h2>
                         {/* Contact Detail */}
                         <div className='flex flex-col md:gap-[1.5vw] md:mt-[3.5vw] mt-[10.67vw]'>
                           <div className='flex items-center max-md:justify-between'>
@@ -317,84 +286,26 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                               />
                             </div>
                             <div className='flex flex-col md:gap-[0.5vw] inputField'>
-                              <h4>{dataBooktourContact?.confirmemail?.labelconfirm}</h4>
+                              <h4>{dictionary?.check_visa?.number_participants}</h4>
                               <TextFiledWrapper
-                                name='confirmEmail'
-                                placeholder={dataBooktourContact?.confirmemail?.placeholderconfirm}
+                                name='participantsNumber'
+                                placeholder={'0'}
                               />
                             </div>
-                          </div>
-                        </div>
-
-                        {/* Participant 1 */}
-
-                        <div className='flex flex-col md:gap-[1.5vw] md:mt-[2.5vw] md:mb-[3.75vw] my-[14.93vw] agePicker'>
-                          <div className='flex max-md:justify-between  max-md:mb-[6.4vw]'>
-                            <h3 className='text-white md:text-[2.5vw] font-[500] leading-[1.1]'>
-                              {dataBooktourAge?.title}
-                            </h3>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='w-[4.26667vw] h-[4.26667vw] md:hidden'
-                              width='16'
-                              height='16'
-                              viewBox='0 0 16 16'
-                              fill='none'
-                            >
-                              <path
-                                d='M13.0053 5.14211C13.1947 4.95263 13.5105 4.95263 13.7 5.14211C13.8895 5.33158 13.8895 5.64737 13.7 5.83684L8.26842 11.2053C8.07895 11.3947 7.76316 11.3947 7.57368 11.2053L2.14211 5.83684C1.95263 5.64737 1.95263 5.33158 2.14211 5.14211C2.33158 4.95263 2.64737 4.95263 2.83684 5.14211L7.95263 10.0684L13.0053 5.14211Z'
-                                fill='white'
+                            <div className='flex flex-col md:gap-[0.5vw] inputField'>
+                              <h4>{dictionary?.check_visa?.number_trip}</h4>
+                              <TextFiledWrapper
+                                name='numberTrip'
+                                placeholder={'0'}
                               />
-                            </svg>
-                          </div>
-                          <p className='md:text-[1.125vw] leading-[150%] text-white md:mb-[0.63vw] max-md:hidden'>
-                            {dataBooktourAge?.subtitle}
-                          </p>
-                          <div className='md:grid grid-cols-3 grid-rows-1 md:gap-[5.31vw] flex flex-col gap-[6.4vw]'>
-                            <div className='flex flex-col md:gap-[0.5vw] gap-[2.13vw]'>
-                              <span className='md:text-white text-[#DFDFDF] md:text-[0.9375vw] text-[3.73333vw] md:font-[500] font-[400] leading-[150%]'>
-                                {dataBooktourAge?.adult?.labeladult}
-                              </span>
-                              <TextFiledWrapper name='numberAdult' />
                             </div>
-                            <div className='flex flex-col md:gap-[0.5vw] gap-[2.13vw]'>
-                              <span className='md:text-white text-[#DFDFDF] md:text-[0.9375vw] text-[3.73333vw] md:font-[500] font-[400] leading-[150%]'>
-                                {dataBooktourAge?.children?.labelchild}
-                              </span>
-                              <TextFiledWrapper name='numberChildren' />
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* participant 2 */}
-
-                        <div className='flex flex-col md:gap-[1.5vw] participant2'>
-                          <div className='flex max-md:justify-between max-md:mb-[6.4vw]'>
-                            <h3 className='text-white md:text-[2.5vw] font-[500] leading-[1.1]'>
-                              {dataParticipant?.title}
-                            </h3>
-                            <svg
-                              xmlns='http://www.w3.org/2000/svg'
-                              className='w-[4.26667vw] h-[4.26667vw] md:hidden'
-                              width='16'
-                              height='16'
-                              viewBox='0 0 16 16'
-                              fill='none'
-                            >
-                              <path
-                                d='M13.0053 5.14211C13.1947 4.95263 13.5105 4.95263 13.7 5.14211C13.8895 5.33158 13.8895 5.64737 13.7 5.83684L8.26842 11.2053C8.07895 11.3947 7.76316 11.3947 7.57368 11.2053L2.14211 5.83684C1.95263 5.64737 1.95263 5.33158 2.14211 5.14211C2.33158 4.95263 2.64737 4.95263 2.83684 5.14211L7.95263 10.0684L13.0053 5.14211Z'
-                                fill='white'
-                              />
-                            </svg>
-                          </div>
-                          <div className='md:grid grid-cols-3 grid-rows-1 md:gap-[5.31vw] flex flex-col gap-[6.4vw] '>
-                            <div className='flex flex-col md:gap-[0.5vw] gap-[2.13vw] max-md:w-full'>
-                              <h4 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.time}` }}></h4>
+                            <div className='flex flex-col md:gap-[0.5vw] inputField'>
+                              <h4 className='title' dangerouslySetInnerHTML={{ __html: `${dataParticipant?.time}` }}></h4>
                               {/* <DatePickerCustom name='date' /> */}
                               <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
                                   name='date'
-                                  views={['year','month']}
+                                  views={['year', 'month']}
                                   format="MM/yyyy"
                                   value={formik.values.date}
                                   onChange={(value) => formik.setFieldValue("date", value, true)}
@@ -414,18 +325,26 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                                 className='md:text-[1rem] text-[3.2vw] text-[red]'
                               />
                             </div>
+                          </div>
+                        </div>
+
+                        {/* Participant 1 */}
+
+                        <div className='flex flex-col md:gap-[1.5vw] participant2'>
+                          {/* <div className='md:grid grid-cols-1 grid-rows-1 md:gap-[5.31vw] flex flex-col gap-[6.4vw] '> */}
+                            
 
                             {/* checkboxx */}
 
-                            {detail?.detail ? "" : (<div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full'>
+                            <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full pt-4'>
                               <h4
-                                className='md:text-[1.125vw] text-[3.73333vw] text-[#fff] leading-[150%]'
+                                className='md:text-[1.125vw] text-[3.73333vw] text-[#fff] leading-[150%] title'
                                 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.destinationchoice}` }}
                               ></h4>
                               <div
                                 role='group'
                                 aria-labelledby='checkbox-group'
-                                className='grid grid-cols-2 grid-rows-2 md:gap-y-[1vw] md:gap-x-[1vw] gap-[4.27vw] items-center max-md:w-full '
+                                className='grid grid-cols-2 md:grid-cols-7 grid-rows-1 md:gap-y-[1vw] md:gap-x-[1vw] gap-[4.27vw] items-center max-md:w-full '
                               >
                                 {data?.data?.allCountries?.nodes?.map((des, index) => (
                                   <label key={index}>
@@ -439,129 +358,19 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                                     </span>
                                   </label>
                                 ))}
-                                <ErrorMessage
+                               
+                              </div>
+                              <ErrorMessage
                                   name='destination'
                                   component='div'
                                   className='md:text-[0.8vw] text-[3.2vw] text-[red]'
                                 />
-                              </div>
-                            </div>)}
-
-
-                            {/* radio group */}
-                            <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full'>
-                              <h4 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.accomodation?.labelaccom}` }}></h4>
-                              <div
-                                role='group'
-                                aria-labelledby='checkbox-group'
-                                className='radio-group'
-                              >
-                                {dataParticipant?.accomodation?.acommodationchoice?.map((choice, index) => (
-                                  <label key={index}>
-                                    <Field
-                                      type='checkbox'
-                                      name='accommodation'
-                                      value={choice?.listchoice}
-                                    />
-                                    <span className='md:text-[1rem] font-medium md:leading-[1.5]'>{choice?.listchoice}</span>
-                                  </label>
-                                ))}
-                              </div>
-                              <ErrorMessage
-                                  name='accommodation'
-                                  component='div'
-                                  className='md:text-[0.8vw] text-[3.2vw] text-[red]'
-                                />
                             </div>
 
-                            {/* type of trip */}
-                          </div>
+                          {/* </div> */}
                         </div>
                         {/* trip,note,budget */}
-                        <div className='md:mt-[3vw] mt-[6.4vw] md:grid grid-cols-3 md:gap-[5.31vw] items-start trip flex flex-col gap-[6.4vw]'>
-                          {detail?.detail === true ? "" : <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full'>
-                            <h4
-                              className=''
-                              dangerouslySetInnerHTML={{ __html: `${dataParticipant?.typeoftrip}` }}
-                            ></h4>
-                            <div
-                              role='group'
-                              aria-labelledby='checkbox-group'
-                              className='grid grid-cols-1 md:gap-[1vw] gap-[4.27vw] typeOfTrip 2xl:grid-cols-2'
-                            >
-                              {data?.data?.allTourStyle?.nodes?.map((tour, index) => (
-                                <label key={index}>
-                                  <Field
-                                    type='checkbox'
-                                    name='typeOfTrip'
-                                    value={tour?.name}
-                                  />
-                                  <span className='md:text-[1rem] font-medium md:leading-[1.5] whitespace-nowrap'>{tour?.name}</span>
-                                </label>
-                              ))}
-                              <ErrorMessage
-                                name='typeOfTrip'
-                                component='div'
-                                className='md:text-[0.8vw] text-[3.2vw] text-[red]'
-                              />
-                            </div>
-                          </div>}
-
-                          {/* Budget */}
-                          <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] max-md:w-full budgetTour'>
-                            <h4 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.budget?.label}` }}></h4>
-                            <TextFiledWrapper
-                              name='budget'
-                              placeholder='8888'
-                            />
-                          </div>
-
-                          {/* note */}
-                          <div className='flex flex-col md:gap-[0.5vw] gap-[3.2vw] message max-md:w-full'>
-                            <h4 dangerouslySetInnerHTML={{ __html: `${dataParticipant?.message?.label}` }}></h4>
-                            {/* <TextFiledWrapper
-                              name='message'
-                              placeholder={dataParticipant?.message?.placeholdermessage}
-                            /> */}
-                            <TextareaAutosize
-                              minRows={4}
-                              name='message'
-                              placeholder={dataParticipant?.message?.placeholdermessage} />
-                          </div>
-                        </div>
-
-                        <div className='md:mt-[2.5vw] mt-[6.4vw] md:w-[25.8vw] '>
-                          <h4 className='md:mb-[1.03vw] mb-[3.2vw]'>{dataParticipant?.ready?.label}</h4>
-                          <div
-                            role='group'
-                            aria-labelledby='my-radio-group'
-                            className='confirm'
-                          >
-                            <label>
-                              <Field
-                                type='radio'
-                                name='confirm'
-                                value='true'
-                              // parse={(value) => value === 'true'}
-                              />{' '}
-                              {dataParticipant?.ready?.confirm}
-                            </label>
-                            <label>
-                              <Field
-                                type='radio'
-                                name='confirm'
-                                value='false'
-                              // parse={(value) => value === 'true'}
-                              />{' '}
-                              {dataParticipant?.ready?.refuse}
-                            </label>
-                          </div>
-                          <ErrorMessage
-                            name='confirm'
-                            component='div'
-                            className='md:text-[0.8vw] text-[3.2vw] text-[red]'
-                          />
-                        </div>
+                        
                         <div className='mt-[2.5vw]'>
                           <ReCAPTCHA sitekey={process.env.NEXT_PUBLIC_RECAPCHA_SITE_KEY} onChange={setCapcha} />
                           <p className='error-capcha md:text-[1rem] text-[3.2vw] text-[red]'>{errCapcha}</p>
@@ -609,4 +418,4 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
   )
 }
 
-export default BookTour
+export default ApplyVisa
