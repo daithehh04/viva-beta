@@ -10,6 +10,8 @@
     "best_tour":"Best Tour"
   },
   "nav": {
+    "title_quote": "Request a quote",
+    "title_personalize": "Customized Tour",
     "booking_button": "Request A Quote",
     "hot": "Hot",
     "all_our_tours": "All Our Tours",
@@ -18,6 +20,12 @@
   "about_us": {
     "destination": "Destination",
     "years" : "Years" 
+  },
+  "check_visa":{
+    "title_form": "Visa Form To Apply",
+    "national_expect_travel":"The country you expect to travel",
+    "number_trip":"Length of your trip *",
+    "number_participants":"Number of participants *"
   },
   "service": {
     "destination": "Destination"
@@ -31,7 +39,7 @@
     "is_required": "Please fill in the blank here",
     "is_match": "Email must match",
     "is_number": "It must be a number type",
-    "invalid_email": "Invalid email.",
+    "invalid_email": "Invalid email format",
     "invalid_phone": "Enter a valid number",
     "min_phone": "Must have 9 number"
   }

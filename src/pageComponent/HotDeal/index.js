@@ -38,6 +38,7 @@ export default function Promotion({
               price: { header: bannerHeaders?.priceHeader, value: priceTour }
             }}
             onClick={() => setOpenModal(true)}
+            dictionary={dictionary}
           />
         </div>
         <div className='md:block hidden z-10 relative pt-[3.75vw] pb-[7.44vw]'>

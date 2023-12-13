@@ -10,6 +10,8 @@
     "best_tour": "Il miglior giro"
   },
   "nav": {
+    "title_quote": "Richiedi Un Preventivo",
+    "title_personalize": "Personalizza Questo Tour",
     "booking_button": "Richiedi Un Preventivo",
     "hot": "Speciali",
     "all_our_tours": "Tutti I Nostri Viaggi",
@@ -18,6 +20,12 @@
   "about_us": {
     "destination": "Destinazione",
     "years" : "Anno" 
+  },
+  "check_visa":{
+    "title_form": "Modulo di visto da applicare",
+    "national_expect_travel":"Il paese in cui ti aspetti di viaggiare",
+    "number_trip":"Durata del tuo viaggio *",
+    "number_participants":"Numero di partecipanti *"
   },
   "service": {
     "destination":"Destinazione"
@@ -31,7 +39,7 @@
     "is_required": "Per favore, compila il campo vuoto qui.",
     "is_match": "L'e-mail deve corrispondere",
     "is_number": "Deve essere un tipo di numero",
-    "invalid": "E-mail non valido.",
+    "invalid_email": "Formato email non valido",
     "invalid_phone": "Inserisci un numero valido",
     "min_phone": "Deve avere 9 numeri"
   }

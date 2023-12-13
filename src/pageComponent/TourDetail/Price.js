@@ -3,38 +3,37 @@
 import triangle from '@/assets/images/triangle.svg'
 import Image from 'next/image'
 
-export default function Price({ type, className, data, onClick }) {
+export default function Price({ type, className, data, onClick, dictionary }) {
   const lang = data?.lang
   let person = 'Pax'
   let sale = 'Hot Sale'
   let price = '€'
-  if(lang === 'en') {
+  if (lang === 'en') {
     price = '$'
   }
-  if(lang === 'fr') {
+  if (lang === 'fr') {
     person = 'Pax'
     sale = 'Les ventes chaudes'
   }
-  if(lang === 'it') {
+  if (lang === 'it') {
     person = 'Pax'
     sale = 'Vendita calda'
   }
   return (
     <div>
       <div
-        className={`${
-          className || ''
-        } relative hidden md:block w-full px-[4.5vw] py-[1.5vw] shadow-[0_2px_50px_0_rgba(0,0,0,0.03)] bg-white rounded-lg`}
+        className={`${className || ''
+          } relative hidden md:block w-full px-[4.5vw] py-[1.5vw] shadow-[0_2px_50px_0_rgba(0,0,0,0.03)] bg-white rounded-lg`}
       >
         <div className='flex mb-[1vw] gap-[0.62vw] font-bold leading-normal items-center'>
           <span className='text-[1vw] max-lg:text-[1.5vw]'>{data?.price?.header}:</span>
           <span className='capitalize text-[1.5vw] max-lg:text-[2.25vw]'>{data?.price?.value} {price} / {person} </span>
         </div>
         <button
-          className=' w-[15.375vw] max-lg:w-[17vw] h-[3.6875vw] flex items-center text-[1vw] max-lg:text-[1.25vw] px-[2.62vw] py-[1.25vw] bg-primaryColor rounded-xl max-lg:rounded cursor-pointer'
+          className=' w-[15.375vw] max-lg:w-[17vw] h-[3.6875vw] flex items-center justify-center font-semibold text-[1vw] max-lg:text-[1.25vw] px-[2.62vw] py-[1.25vw] bg-primaryColor rounded-xl max-lg:rounded cursor-pointer'
           onClick={onClick}
         >
-          {data?.button}
+          {dictionary?.nav?.title_personalize}
         </button>
 
         {type === 'promo' && (

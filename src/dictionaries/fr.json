@@ -10,6 +10,8 @@
     "best_tour":"Meilleure tournée"
   },
   "nav": {
+    "title_quote": "Demander Un Devis",
+    "title_personalize": "Personnaliser Ce Voyage",
     "booking_button": "Demander Un Devis",
     "hot": "Hot",
     "all_our_tours": "Tous Nos Voyages",
@@ -18,6 +20,12 @@
   "about_us": {
     "destination": "Destination",
     "years" : "Ans" 
+  },
+  "check_visa":{
+    "title_form": "Formulaire de visa pour postuler",
+    "national_expect_travel":"Le pays dans lequel vous comptez voyager",
+    "number_trip":"Durée de votre voyage *",
+    "number_participants":"Nombre de participants *"
   },
   "service": {
     "destination": "Destination"
@@ -31,7 +39,7 @@
     "is_required": "Veuillez remplir le champ vide ici.",
     "is_match": "L'e-mail doit correspondre",
     "is_number": "Ce doit être un type numérique",
-    "invalid": "Email invalide.",
+    "invalid_email": "Format d'email invalide",
     "invalid_phone": "Entrez un numéro valide",
     "min_phone": "Doit avoir le numéro 9"
   }

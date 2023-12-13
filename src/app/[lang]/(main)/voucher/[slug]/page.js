@@ -1,8 +1,8 @@
 import fetchData from "@/data/fetchData"
 import { getMeta } from "@/data/metaData/getMeta"
+import { getDictionary } from "@/get-dictionary"
 import { DATA_VOUCHER_DETAIL, GET_HOT_DEAL_DATA, VOUCHER_SLUG_QUERY } from "@/graphql/hotDeal/queries"
 import DetailVocher from "@/pageComponent/HotDeal/DetailVoucher"
-
 
 export async function generateMetadata({ params: { slug, lang } }) {
   const data = await fetchData(DATA_VOUCHER_DETAIL, { slug, language: lang?.toUpperCase() })
@@ -28,12 +28,15 @@ async function page({ params: { lang, slug } }) {
   ])
   const hotDeals = result?.data?.page?.translation?.hotDeals
   const dataVoucher = data?.data?.vouchers?.translation?.voucher
+  const dictionary = await getDictionary(lang)
+
   return (
     <div className='w-full h-full bg-white overflow-y-auto md:rounded-[16px] overflow-x-hidden'>
       <DetailVocher
         headerData={hotDeals?.voucherHeader?.detailHeader}
         data={dataVoucher}
         lang={lang}
+        dictionary={dictionary}
       />
     </div>
   )

@@ -571,6 +571,7 @@ export default function AboutTour(props) {
                   price: { header: bannerHeaders?.priceHeader, value: price }
                 }}
                 onClick={() => setOpenModal(true)}
+                dictionary={dictionary}
               />
             )}
 
