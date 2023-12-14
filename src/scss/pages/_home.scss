@@ -266,6 +266,14 @@
   }
 }
 
+.text-review p {
+  display: none;
+}
+
+.text-review p:first-child {
+  display: block;
+}
+
 // Review
 .custom-review {
   .title-review_home {

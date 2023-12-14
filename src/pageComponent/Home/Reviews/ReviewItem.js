@@ -89,7 +89,7 @@ function ReviewItem({ data, lang }) {
             href={`/${lang}/reviews/${data?.slug}`}
             className='text-white inline text-[1vw] font-[500] leading-normal ml-[-1.25vw] max-md:text-[3.2vw] max-lg:text-[1.2vw] title-review_home'
           >
-            <div className='line-clamp-2' dangerouslySetInnerHTML={{ __html: `${data?.customerReview?.content}`}}></div>
+            <div className='line-clamp-2 text-review' dangerouslySetInnerHTML={{ __html: `${data?.customerReview?.content}`}}></div>
           </Link>
         </div>
       </div>
