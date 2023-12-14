@@ -8,22 +8,22 @@ import Banner from "../HotDeal/Banner"
 import SlideTour from "@/components/Common/SlideTour"
 import Album from "./Album"
 
-function ReviewDetail({data,lang,dataTour}) {
+function ReviewDetail({ data, lang, dataTour }) {
   const dataReview = data?.customerReview
   let day = 'days'
   let review = 'Review Tour'
   let view = 'View tour'
   let related = 'Related Tour'
 
-  if(lang === 'fr' || lang === 'it') {
+  if (lang === 'fr' || lang === 'it') {
     day = 'jours'
   }
-  if(lang === 'fr') {
-    review='Visite de révision'
+  if (lang === 'fr') {
+    review = 'Visite de révision'
     view = 'Voir la visite'
-    related='Visite connexe'
+    related = 'Visite connexe'
   }
-  if(lang === 'it') {
+  if (lang === 'it') {
     review = 'Tour di revisione'
     view = 'Visualizza il tour'
     related = 'Tour correlato'
@@ -38,42 +38,44 @@ function ReviewDetail({data,lang,dataTour}) {
             <Button className='btn-primary' content={view}><span>{view}</span> </Button>
           </Link>
         </div>
-        <div className="flex items-center mt-[1.12vw]">
-          <div className="flex items-center mr-[1.8vw]">
-            <Image
-              src={locationIcon}
-              width={100}
-              height={100}
-              alt='location'
-              className='md:w-[1.875vw] md:h-[1.875vw] w-[3.73333vw] h-[3.73333vw] object-cover mr-[0.25vw]'
-            />
-            <span>{dataReview?.tours?.tourDetail?.banner?.location}</span>
+        <div className="flex flex-wrap items-center mt-[1.12vw] justify-between">
+          <div className="flex">
+            <div className="flex items-center mr-[1.8vw]">
+              <Image
+                src={locationIcon}
+                width={100}
+                height={100}
+                alt='location'
+                className='md:w-[1.875vw] md:h-[1.875vw] w-[3.73333vw] h-[3.73333vw] object-cover mr-[0.25vw]'
+              />
+              <span>{dataReview?.tours?.tourDetail?.banner?.location}</span>
+            </div>
+            <div className="flex items-center">
+              <Image
+                src={calendar}
+                width={100}
+                height={100}
+                alt='style'
+                className='md:w-[1.875vw] md:h-[1.875vw] w-[3.73333vw] h-[3.73333vw] object-cover mr-[0.25vw]'
+              />
+              <span>{dataReview?.time}</span>
+            </div>
           </div>
-          <div className="flex items-center">
-            <Image
-              src={calendar}
-              width={100}
-              height={100}
-              alt='style'
-              className='md:w-[1.875vw] md:h-[1.875vw] w-[3.73333vw] h-[3.73333vw] object-cover mr-[0.25vw]'
-            />
-            <span>{dataReview?.time}</span>
-          </div>
-          <Link href={`/${lang}/${dataReview?.tours?.slug}`} className="hidden ml-auto max-md:block">
+          <Link href={`/${lang}/${dataReview?.tours?.slug}`} className="hidden max-md:block">
             <Button className='btn-primary' content={view}><span>{view}</span> </Button>
           </Link>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: `${dataReview?.content}`}} className="mt-[2vw] max-md:mt-[6.27vw] max-md:text-[3.733vw] text-editor text-[1.125vw] text-[#171717]"></div>
+        <div dangerouslySetInnerHTML={{ __html: `${dataReview?.content}` }} className="mt-[2vw] max-md:mt-[6.27vw] max-md:text-[3.733vw] text-editor text-[1.125vw] text-[#171717]"></div>
         <div className='z-10 relative pt-[3.75vw]'>
-          {dataReview?.albumImage?.length && <Album album={dataReview?.albumImage} lang={lang}/> }
+          {dataReview?.albumImage?.length && <Album album={dataReview?.albumImage} lang={lang} />}
         </div>
       </div>
       {/* List tour */}
       <h2 className='relative z-10 heading-1 md:mt-[5.25vw] mt-[12.8vw] md:pl-[8.06vw] pl-[4.27vw] mb-[3.5vw]'>
-          {related}
+        {related}
       </h2>
       <div className='md:px-[8.06vw]'>
-          <SlideTour data={dataTour} lang={lang}/>
+        <SlideTour data={dataTour} lang={lang} />
       </div>
       <div className='hidden h-auto md:block'>
         <Image

@@ -27,6 +27,15 @@
     "number_trip":"Durée de votre voyage *",
     "number_participants":"Nombre de participants *"
   },
+  "promotion": {
+    "title_form": "Remplissez le formulaire de renseignements",
+    "full_name": "Nom et prénom",
+    "phone": "Numéro de téléphone",
+    "email": "E-mail",
+    "number_participants": "Nombre de participants",
+    "date": "Date",
+    "nationality":"Ta nationalité"
+  },
   "service": {
     "destination": "Destination"
   },

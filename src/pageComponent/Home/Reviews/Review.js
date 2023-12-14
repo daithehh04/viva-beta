@@ -6,6 +6,7 @@ import SlideReview from './SlideReview'
 import VideoReview from './VideoReview'
 
 function Review({ data, button, lang }) {
+  console.log("data: ",data);
   return (
     <div>
       <div className='flex gap-x-[2vw] items-end overflow-hidden relative custom-review pt-[9.37vw]'>

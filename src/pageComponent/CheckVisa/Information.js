@@ -10,6 +10,7 @@ import { useRef, useState } from 'react'
 import ModalCustom from '@/components/Common/ModalCustom'
 import BookTour from '@/components/Common/BookTour'
 import ApplyVisa from '@/components/Common/ApplyVisa'
+import subBannerBg3 from '@/assets/images/subBannerBg3.png'
 
 function Information({ data, lang, dataBookTour, dictionary }) {
   const { dataB, isInitPage } = useData()
@@ -52,10 +53,10 @@ function Information({ data, lang, dataBookTour, dictionary }) {
           <div className='max-md:my-[8vw]'>
             <Image
               alt='checkvisaimg'
-              src={data?.checkvisa?.ready?.image?.sourceUrl}
+              src={subBannerBg3}
               width={400}
               height={400}
-              className='object-cover md:w-[29.33038vw] md:h-[33.81563vw]'
+              className='object-cover md:w-full md:h-[33.81563vw]'
               quality={100}
             />
           </div>

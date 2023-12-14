@@ -15,9 +15,10 @@ const COUNTRY_FROM = `
 query($language: LanguageCodeFilterEnum!) {
   allFromCountry(first: 50, where : {language: $language}) {
     nodes {
-     name
+      name
       slug
       description
+      taxonomyName
     }
   }
 }`

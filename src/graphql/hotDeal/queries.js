@@ -88,6 +88,7 @@ export const GET_HOT_DEAL_DATA = `query ($language: LanguageCodeEnum!) {
                     max
                     title
                     value
+                    description
                   }
                   detailImage {
                     altText

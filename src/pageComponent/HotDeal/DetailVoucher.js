@@ -11,6 +11,8 @@ import Notification from '@/components/Common/Notification'
 import { useRef, useState } from 'react'
 import { FORM_IDS } from '@/configs/global-config'
 import logo from '@/assets/images/VIVA-LOGO-02.png'
+import SelectField from '@/components/FormBookTour/SelectField'
+import { ErrorMessage } from 'formik'
 
 // css for label + placeholder + error msg
 const labelStyle =
@@ -35,7 +37,7 @@ const SUBMIT_FORM = gql`
   }
 `
 
-const DetailVocher = ({ headerData = {}, data, lang, dictionary }) => {
+const DetailVocher = ({ headerData = {}, data, lang, dictionary, dataCountry }) => {
   const itemRef = useRef()
   const [openNoti, setOpenNoti] = useState(false)
   const [msg, setMsg] = useState('')
@@ -44,17 +46,18 @@ const DetailVocher = ({ headerData = {}, data, lang, dictionary }) => {
   const [isDone, setIsDone] = useState(false) // check when successful noti or error noti appeared
 
   //validate
-const schema = Yup.object().shape({
-  fullname: Yup.string().required(dictionary?.message?.is_required),
-  email: Yup.string().email(dictionary?.message?.invalid_email).required(dictionary?.message?.is_required),
-  phone: Yup.string()
-    .matches(/^[0-9]+$/, dictionary?.message?.invalid_phone)
-    .min(9, dictionary?.message?.min_phone)
-    .required(dictionary?.message?.is_required),
-  participantsNumber: Yup.string()
-    .matches(/^[0-9]+$/, dictionary?.message?.is_number)
-    .required(dictionary?.message?.is_required)
-})
+  const schema = Yup.object().shape({
+    fullname: Yup.string().required(dictionary?.message?.is_required),
+    email: Yup.string().email(dictionary?.message?.invalid_email).required(dictionary?.message?.is_required),
+    phone: Yup.string()
+      .matches(/^[0-9]+$/, dictionary?.message?.invalid_phone)
+      .min(9, dictionary?.message?.min_phone)
+      .required(dictionary?.message?.is_required),
+    participantsNumber: Yup.string()
+      .matches(/^[0-9]+$/, dictionary?.message?.is_number)
+      .required(dictionary?.message?.is_required),
+    nationality: Yup.string().required(dictionary?.message?.is_required),
+  })
   // useClickOutside(itemRef, (e) => {
   //   e.preventDefault()
   //   e.stopPropagation()
@@ -77,7 +80,7 @@ const schema = Yup.object().shape({
 
   const { HOT_DEAL_EN, HOT_DEAL_FR, HOT_DEAL_IT } = FORM_IDS
   let idFormVoucher = lang === 'en' ? HOT_DEAL_EN : lang === 'fr' ? HOT_DEAL_FR : HOT_DEAL_IT;
-  
+
   const [mutate, { loading }] = useMutation(SUBMIT_FORM)
   const onSubmit = (data) => {
     setIsDone(false)
@@ -96,7 +99,7 @@ const schema = Yup.object().shape({
             },
             {
               id: 7,
-              emailValues: { value: values.email,} 
+              emailValues: { value: data.email, }
             },
             {
               id: 5,
@@ -105,7 +108,11 @@ const schema = Yup.object().shape({
             {
               id: 6,
               value: data.date
-            }
+            },
+            {
+              id: 8,
+              value: data.nationality
+            },
           ]
         }
       }
@@ -189,10 +196,10 @@ const schema = Yup.object().shape({
           className='flex flex-col'
         >
           <h2 className='text-[2rem] font-bold leading-[2.6vw] mb-[2.2vw] max-md:mb-[5.33vw] max-md:text-[5.3vw] max-md:leading-normal max-lg:leading-[4vw]'>
-            {headerData?.form?.heading}
+            {dictionary?.promotion?.title_form}
           </h2>
 
-          <label className={labelStyle}>{headerData?.form?.name?.header}</label>
+          <label className={labelStyle}>{dictionary?.promotion?.full_name}</label>
           <div className='relative '>
             <input
               className={labelInputStyle}
@@ -208,7 +215,23 @@ const schema = Yup.object().shape({
           </div>
           {<span className={errorStyle}>{errors?.fullname && errors?.fullname?.message}</span>}
 
-          <label className={labelStyle}>{headerData?.form?.phone?.header}</label>
+          <label className={labelStyle}>{dictionary?.promotion?.nationality}</label>
+          <div className='relative '>
+            <select
+              className={labelInputStyle}
+              id='nationality'
+              name='nationality'
+              options={dataCountry}
+              {...register('nationality')}
+            >
+              {dataCountry?.map((value, index) => (
+                <option key={index} value={value?.name}>{value?.name}</option>
+              ))}
+            </select>
+          </div>
+          {<span className={errorStyle}>{errors?.nationality && errors?.nationality?.message}</span>}
+
+          <label className={labelStyle}>{dictionary?.promotion?.phone}</label>
           <div className='relative '>
             <input
               className={labelInputStyle}
@@ -224,7 +247,7 @@ const schema = Yup.object().shape({
           </div>
           {<span className={errorStyle}>{errors.phone && errors.phone.message}</span>}
 
-          <label className={labelStyle}>{headerData?.form?.email?.header}</label>
+          <label className={labelStyle}>{dictionary?.promotion?.email}</label>
           <div className='relative '>
             <input
               className={labelInputStyle}
@@ -240,7 +263,7 @@ const schema = Yup.object().shape({
           </div>
           {<span className={errorStyle}>{errors?.email && errors.email.message}</span>}
 
-          <label className={labelStyle}>{headerData?.form?.participantsnumber?.header}</label>
+          <label className={labelStyle}>{dictionary?.promotion?.number_participants}</label>
           <div className='relative '>
             <input
               className={labelInputStyle}
@@ -256,7 +279,7 @@ const schema = Yup.object().shape({
           </div>
           {<span className={errorStyle}>{errors.participantsNumber && errors.participantsNumber.message}</span>}
 
-          <label className={labelStyle}>{headerData?.form?.date?.header}</label>
+          <label className={labelStyle}>{dictionary?.promotion?.date}</label>
           <div className='relative mb-[0.62vw] max-md:mb-[3.2vw]'>
             <input
               className={labelInputStyle}
@@ -264,7 +287,7 @@ const schema = Yup.object().shape({
               name='date'
               {...register('date')}
             />
-            {!watch('date') && <label className={placeholderStyle}>{headerData?.form?.date?.placeholder}</label>}
+            {!watch('date') && <label className={placeholderStyle}>{'01/01/2023'}</label>}
           </div>
 
           <button
@@ -279,16 +302,16 @@ const schema = Yup.object().shape({
         </form>
         <Image
           // src={detailVocherImg}
-          src={data?.detailImage?.sourceUrl || logo} 
+          src={data?.detailImage?.sourceUrl || logo}
           alt='Detail voucher'
-          width={235} 
-          height={170} 
+          width={235}
+          height={170}
           className='w-[29.1875vw] h-[33.5vw] max-md:hidden object-cover rounded-lg'
         />
       </div>
 
       <Notification
-        lang = {lang}
+        lang={lang}
         openNoti={openNoti}
         setOpenNoti={setOpenNoti}
         msg={msg}

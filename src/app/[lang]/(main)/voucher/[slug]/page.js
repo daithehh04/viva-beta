@@ -1,6 +1,7 @@
 import fetchData from "@/data/fetchData"
 import { getMeta } from "@/data/metaData/getMeta"
 import { getDictionary } from "@/get-dictionary"
+import { COUNTRY_FROM } from "@/graphql/checkVisa/queries"
 import { DATA_VOUCHER_DETAIL, GET_HOT_DEAL_DATA, VOUCHER_SLUG_QUERY } from "@/graphql/hotDeal/queries"
 import DetailVocher from "@/pageComponent/HotDeal/DetailVoucher"
 
@@ -22,14 +23,16 @@ export async function generateStaticParams({ params }) {
 }
 
 async function page({ params: { lang, slug } }) {
-  const [result, data] = await Promise.all([
+  const [result, data, dataCountryFrom] = await Promise.all([
     fetchData(GET_HOT_DEAL_DATA, { language: lang?.toUpperCase() }),
-    fetchData(DATA_VOUCHER_DETAIL, { slug: slug, language: lang?.toUpperCase() })
+    fetchData(DATA_VOUCHER_DETAIL, { slug: slug, language: lang?.toUpperCase() }),
+    fetchData(COUNTRY_FROM, { language: lang?.toUpperCase() }),
   ])
   const hotDeals = result?.data?.page?.translation?.hotDeals
   const dataVoucher = data?.data?.vouchers?.translation?.voucher
   const dictionary = await getDictionary(lang)
 
+const dataCountry = dataCountryFrom?.data?.allFromCountry?.nodes
   return (
     <div className='w-full h-full bg-white overflow-y-auto md:rounded-[16px] overflow-x-hidden'>
       <DetailVocher
@@ -37,6 +40,7 @@ async function page({ params: { lang, slug } }) {
         data={dataVoucher}
         lang={lang}
         dictionary={dictionary}
+        dataCountry={dataCountry}
       />
     </div>
   )
