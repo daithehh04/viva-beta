@@ -273,30 +273,12 @@ query GetFilterTour(
 `
 
 const DATA_PROMOTION_TOUR = gql`
-query GetPromotionTour(
-  $language: LanguageCodeEnum!
-  $countrySlug: [String!]
-  $styleTourSlug: [String!]
-  $budget: [String!]
-  $duration: [String!]
-  $bestseller: [String!]
-  
-  $offset: Int!
-  $size: Int!
-) {
+query GetPromotionTour($language: LanguageCodeFilterEnum!, $offset: Int!, $size: Int!) {
   promotionTours(
     where: {
-      offsetPagination: { offset: $offset, size: $size }
-      taxQuery: {
-        taxArray: [
-          { taxonomy: COUNTRIES, operator: IN, terms: $countrySlug, field: NAME }
-          { taxonomy: TOURSTYLE, operator: IN, terms: $styleTourSlug, field: SLUG }
-          { taxonomy: BUDGET, operator: IN, terms: $budget, field: NAME }
-          { taxonomy: DURATION, operator: IN, terms: $duration, field: NAME }
-          { taxonomy: BESTSELLER, operator: IN, terms: $bestseller, field: SLUG }
-        ]
-      }
-      orderby: { field: DATE, order: DESC }
+      offsetPagination: {offset: $offset, size: $size}, 
+      orderby: {field: MODIFIED, order: DESC}, 
+      language: $language
     }
   ) {
     pageInfo {
@@ -305,34 +287,31 @@ query GetPromotionTour(
       }
     }
     nodes {
-      translation(language: $language) {
-        id
-        title
-        slug
-        bestSeller {
-          nodes {
+      id
+      title
+      slug
+    
+      countries {
+        edges {
+          node {
+            id
             name
           }
         }
-        tourStyle {
-          nodes {
-            slug
-          }
-        }
-        tourDetail {
-          priceTour
-          numberDay
-          banner {
+      }
+      tourDetail {
+        priceTour
+        numberDay
+        banner {
+          title
+          gallery {
+            sourceUrl
+            altText
             title
-            gallery {
-              sourceUrl
-              altText
-              title
-            }
-            location
-            rate
-            icons
           }
+          location
+          rate
+          icons
         }
       }
     }

@@ -8,55 +8,10 @@ import { useQuery } from '@apollo/client'
 
 export default function HotDeal({ hotDeals, menu, lang, onCloseMenu, dictionary }) {
   const listVoucher = hotDeals?.voucherHeader?.listVoucher
-  const { data: budgetData } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
-  const { data: dataDurations } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
-  const { data: dataCountries } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
-  const { data: dataStyle } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
-
-  function handleTaxonomiesSlug(data) {
-    const newArrDataTaxonomies = []
-    data?.map((item) => {
-      newArrDataTaxonomies.push(item?.slug)
-    })
-    return newArrDataTaxonomies
-  }
-
-  function handleTaxonomiesName(data) {
-    const newArrDataTaxonomies = []
-    data?.map((item) => {
-      newArrDataTaxonomies.push(item?.name)
-    })
-    return newArrDataTaxonomies
-  }
-  const newArrDataTaxonomiesCountry = handleTaxonomiesName(dataCountries?.allCountries?.nodes)
-  const newArrDataTaxonomiesStyleTravel = handleTaxonomiesSlug(dataStyle?.allTourStyle?.nodes)
-  const newArrDataTaxonomiesBudget = handleTaxonomiesName(budgetData?.allBudget?.nodes)
-  const newArrDataTaxonomiesDuration = handleTaxonomiesName(dataDurations?.allDuration?.nodes)
 
   const { data: dataPromotionTour, refetch, loading } = useQuery(DATA_PROMOTION_TOUR, {
     variables: {
       language: lang?.toUpperCase(),
-      countrySlug: newArrDataTaxonomiesCountry,
-      styleTourSlug: newArrDataTaxonomiesStyleTravel,
-      bestseller: ['best-seller-tours'],
-      budget: newArrDataTaxonomiesBudget,
-      duration: newArrDataTaxonomiesDuration,
       offset: 0,
       size: 8,
     }
