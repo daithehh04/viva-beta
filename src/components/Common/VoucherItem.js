@@ -11,7 +11,7 @@ function VoucherItem({ className, headerData = {}, data = {}, lang, dictionary }
       <div
         className={`${className || ''} flex voucher-item max-md:flex-shrink-0 cursor-pointer h-[13.625rem]`}
       >
-        <div className='voucher-discount-info md:w-[50%] bg-bgGreen text-[#fff] flex flex-col items-center justify-center'>
+        <div className='voucher-discount-info md:w-[50%] bg-bgGreen text-[#fff] flex flex-col items-center justify-center !p-0'>
           {/* <span className='text-[3.75vw] font-[700] leading-none max-md:text-[4.8vw]'>
             {voucherData?.content?.value}%
           </span>
@@ -35,7 +35,7 @@ function VoucherItem({ className, headerData = {}, data = {}, lang, dictionary }
           <span className='text-[0.75vw] leading-[1.16] mt-[0.5vw] text-textColor max-md:text-[2.66vw] max-md:mt-[2.13vw] max-lg:text-[1.4vw]'>
             {dictionary?.home?.date}: {expireDate}
           </span>
-          <span className='line-clamp-3 text-[0.75vw] leading-[1.16] mt-[0.5vw] text-textColor max-md:text-[2.66vw] max-md:mt-[2.13vw] max-lg:text-[1.4vw]'>
+          <span className='line-clamp-6 text-[0.75vw] leading-[1.16] mt-[0.5vw] text-textColor max-md:text-[2.66vw] max-md:mt-[2.13vw] max-lg:text-[1.4vw]'>
             {voucherData?.content?.description}
           </span>
           <button className='bg-primaryColor max-md:font-medium flex items-center justify-center rounded-[0.25vw] 

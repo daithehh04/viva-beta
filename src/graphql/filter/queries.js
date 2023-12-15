@@ -92,6 +92,52 @@ query durationTaxonomies {
   }
 }`
 
+export const DATA_TAXONOMIES_COUNTRY_GQL_SERVER = `
+query countriesTaxonomies($language: LanguageCodeFilterEnum) {
+  allCountries(where: {language: $language}) {
+    nodes {
+      name
+      slug
+      country {
+        priority
+      }
+    }
+  }
+}`
+
+export const DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER = `
+query countriesTaxonomies($language: LanguageCodeFilterEnum) {
+  allTourStyle(where: {language: $language}) {
+    nodes {
+      name
+      slug
+      banner {
+        travelStyleInfo {
+          priority
+        }
+      }
+    }
+  }
+}`
+
+export const DATA_TAXONOMIES_BUDGET_GQL_SERVER = `
+query budgetTaxonomies {
+  allBudget {
+    nodes {
+      name
+    }
+  }
+}`
+
+export const DATA_TAXONOMIES_DURATION_GQL_SERVER = `
+query durationTaxonomies {
+  allDuration {
+    nodes {
+      name
+    }
+  }
+}`
+
 export const getDataBestSeller = (bestSellerSlug) => {
   const isBestSeller = bestSellerSlug && bestSellerSlug.length !== 0
   return gql`

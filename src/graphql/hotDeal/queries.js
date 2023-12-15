@@ -212,6 +212,7 @@ export const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
           max
           title
           value
+          description
         }
         detailImage {
           altText

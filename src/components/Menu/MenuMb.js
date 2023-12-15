@@ -43,10 +43,10 @@ function MenuMb({
   }
 
   let all = 'See all'
-  if(lang === 'it') {
+  if (lang === 'it') {
     all = 'Vedi tutto'
   }
-  if(lang === 'fr') {
+  if (lang === 'fr') {
     all = 'Voir tout'
   }
 
@@ -162,52 +162,15 @@ function MenuMb({
           </div>
         </div>
         {/* Item 3 */}
-        <div className='border-b border-solid row-menu border-textColor border-opacity-20'>
+        <div className='row-menu border-textColor border-opacity-20'>
           <div
             className={`flex items-center justify-between mt-[3.73vw] ${selected === 3 ? 'active' : ''}`}
             onClick={() => handleSelect(3)}
           >
-            <h3 className='text-[5.33vw] leading-[1.2] capitalize opacity-60'>{dataHome?.nav3}</h3>
-            <Image src={iconDropdown} width={11} height={8} alt='img' className='drop-down max-lg:w-[3vw]' />
-          </div>
-          <div
-            className='mt-[3.73vw] menu-mb_item '
-            ref={contentEle3}
-            style={
-              selected === 3
-                ? {
-                  height: contentEle3.current.scrollHeight,
-                  overflow: 'visible'
-                }
-                : { height: '0px', overflow: 'hidden' }
-            }
-          >
-            <span className='text-[3.73vw] opacity-40  font-[500] block'>{hotDeals?.voucherHeader?.listHeader}</span>
-            <div className='hidden-scroll flex overflow-x-auto gap-[3.73vw] mt-[3.2vw] max-lg:w-full'>
-              {hotDeals?.voucherHeader?.listVoucher?.map((item, index) => (
-                <VoucherItem key={index} data={item} headerData={hotDeals?.voucherHeader?.detailHeader} />
-              ))}
-            </div>
-            <span className='text-[3.73vw] opacity-40 font-[500] block mt-[6.4vw]'>
-              {hotDeals?.promotionHeader || ''}
-            </span>
-            <div className='hidden-scroll flex overflow-x-auto gap-[4.27vw] mt-[3.2vw] max-lg:w-screen max-md:ml-[-4.27vw]'>
-              {hotDeals?.promotionList?.map((item, index) => (
-                <div
-                  key={index}
-                  className={`${index === 0 && 'max-md:ml-[4.27vw]'} ${index === hotDeals?.promotionList?.length - 1 && 'max-md:mr-[4.27vw]'
-                    }`}
-                >
-                  <TourItem data={item} lang={lang} menu={menu} />
-                </div>
-              ))}
-            </div>
-
-            <div className='flex items-center justify-center mt-[6.4vw] '>
-              <Link href={`/${lang}/hot-deals`} onClick={onCloseMenu} className='btn-secondary menu-table'>
-                {all}
-              </Link>
-            </div>
+            <h3 className='text-[5.33vw] leading-[1.2] capitalize opacity-60'>
+              <Link href={`/${lang}/hot-deals`} onClick={onCloseMenu} >
+                {dataHome?.nav3}
+              </Link></h3>
           </div>
         </div>
         {/* Item 4 */}

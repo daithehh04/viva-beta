@@ -5,6 +5,7 @@ import { LANGUAGE_BOOK_IDS, LANGUAGE_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
 import { getDictionary } from '@/get-dictionary'
+import { DATA_TAXONOMIES_BUDGET_GQL_SERVER, DATA_TAXONOMIES_COUNTRY_GQL_SERVER, DATA_TAXONOMIES_DURATION_GQL_SERVER, DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER } from '@/graphql/filter/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { GET_DATA_iNSEPECT, GET_HOME_PAGE, GET_INITIAL_FILTER, GET_META_DATA, GET_NEXT_STEP } from '@/graphql/home/queries'
 import Banner from '@/pageComponent/Home/Banner'
@@ -37,12 +38,22 @@ export default async function page({ params, searchParams }) {
     nextStep,
     data,
     dataBookTour,
-    dataInit
+    dataInit,
+    budgets,
+    durations,
+    styles,
+    countries,
   ] = await Promise.all([
     fetchData(GET_NEXT_STEP, { language }),
     fetchData(GET_HOME_PAGE, { id: LANGUAGE_IDS[lang] }),
     fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language }),
-    fetchData(GET_INITIAL_FILTER, { language })
+    fetchData(GET_INITIAL_FILTER, { language }),
+
+    fetchData(DATA_TAXONOMIES_BUDGET_GQL_SERVER, { language }),
+    fetchData(DATA_TAXONOMIES_DURATION_GQL_SERVER, { language }),
+    fetchData(DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER, { language }),
+    fetchData(DATA_TAXONOMIES_COUNTRY_GQL_SERVER , { language }),
+
   ])
 
   const metaDestination = dataInit?.data?.allCountries?.nodes || []
@@ -69,11 +80,18 @@ export default async function page({ params, searchParams }) {
   const button = finalData?.groupbutton
   const dictionary = await getDictionary(lang)
 
+  const dataFilter = {
+    countries: countries?.data?.allCountries?.nodes,
+    style: styles?.data?.allTourStyle?.nodes,
+    budget: budgets?.data?.allBudget?.nodes,
+    duration: durations?.data?.allDuration?.nodes
+  }
   return (
     <main>
       <Banner
         lang={lang}
         data={banner}
+        dataFilter={dataFilter}
       />
       <div id='home-wrapper' className='body-wrapper'>
         <div className='style-mb'>
@@ -104,6 +122,7 @@ export default async function page({ params, searchParams }) {
             finalData={finalData}
             button={button}
             dictionary={dictionary}
+            dataFilter={dataFilter}
           />
           <TravelStyle
             data={travelStyleList?.travelStyleList}

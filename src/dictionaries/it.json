@@ -34,7 +34,8 @@
     "email": "E-mail",
     "number_participants": "Numero di partecipanti",
     "date": "Data",
-    "nationality":"La tua nazionalità"
+    "nationality":"La tua nazionalità",
+    "send": "Invia informazioni"
   },
   "service": {
     "destination":"Destinazione"
