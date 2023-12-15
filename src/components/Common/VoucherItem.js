@@ -38,12 +38,12 @@ function VoucherItem({ className, headerData = {}, data = {}, lang, dictionary }
           <span className='line-clamp-6 text-[0.75vw] leading-[1.16] mt-[0.5vw] text-textColor max-md:text-[2.66vw] max-md:mt-[2.13vw] max-lg:text-[1.4vw]'>
             {voucherData?.content?.description}
           </span>
-          <button className='bg-primaryColor max-md:font-medium flex items-center justify-center rounded-[0.25vw] 
+          {/* <button className='bg-primaryColor max-md:font-medium flex items-center justify-center rounded-[0.25vw] 
           px-[4vw] py-[0.5vw] max-md:mt-[3.2vw] text-[1vw] leading-[1.25] 
           mt-auto text-textColor max-md:text-[2.66vw] max-md:py-[1.89vw] max-md:rounded-[1.26vw]
            max-lg:text-[1.6vw] max-lg:py-[1vw] max-lg:rounded-md max-lg:mt-[1vw]'>
             {headerData?.voucherButton}
-          </button>
+          </button> */}
         </div>
       </div>
     </Link>
