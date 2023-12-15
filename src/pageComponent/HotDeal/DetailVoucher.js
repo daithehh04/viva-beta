@@ -157,6 +157,9 @@ const DetailVocher = ({ headerData = {}, data, lang, dictionary, dataCountry }) 
           <p className='font-bold leading-[1.3vw] w-[40.8125vw] text-[2vw] mb-[1.625vw] max-md:text-[0.875vw] max-md:opacity-70 max-md:hidden'>
             {data?.content?.extraDiscount}
           </p>
+          <p>
+            {data?.content?.description}
+          </p>
           <div className='text-[1vw]'>
             <h4 className='font-bold leading-normal mb-[0.5vw] mt-[1.5vw] max-md:mb-[4.27vw] max-md:text-[4.267vw] max-md:mt-[5.3vw] opacity-70 uppercase max-lg:text-[1.6vw]'>
               {headerData?.expiryDateHeader}:
@@ -297,7 +300,7 @@ const DetailVocher = ({ headerData = {}, data, lang, dictionary, dataCountry }) 
                 max-lg:py-[1.4vw] max-lg:px-[3vw] max-lg:text-[1.4vw] max-lg:w-auto max-lg:h-fit'
             disabled={loading}
           >
-            {headerData?.form?.button} {loading && '...'}
+            {dictionary?.promotion?.send} {loading && '...'}
           </button>
         </form>
         <Image

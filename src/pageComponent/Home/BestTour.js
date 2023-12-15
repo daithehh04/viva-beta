@@ -16,6 +16,7 @@ function BestTour({
   button,
   finalData,
   dictionary,
+  dataFilter
 }) {
   const { lang } = useParams()
   const [destination] = useQueryState('destination')
@@ -23,27 +24,6 @@ function BestTour({
   const [duration] = useQueryState('duration')
   const [style] = useQueryState('style')
 
-  const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
-  const { data: durations } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
-
-  const { data: countries } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
-  const { data: styles } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
-    variables: {
-      language: lang?.toUpperCase(),
-    }
-  })
   function handleTaxonomiesSlug(data) {
     const newArrDataTaxonomies = []
     data?.map((item) => {
@@ -59,18 +39,18 @@ function BestTour({
     })
     return newArrDataTaxonomies
   }
-  const newArrDataTaxonomiesCountry = handleTaxonomiesName(countries?.allCountries?.nodes)
-  const newArrDataTaxonomiesStyleTravel = handleTaxonomiesSlug(styles?.allTourStyle?.nodes)
-  const newArrDataTaxonomiesBudget = handleTaxonomiesName(budgets?.allBudget?.nodes)
-  const newArrDataTaxonomiesDuration = handleTaxonomiesName(durations?.allDuration?.nodes)
+  const newArrDataTaxonomiesCountry = handleTaxonomiesName(dataFilter?.countries)
+  const newArrDataTaxonomiesStyleTravel = handleTaxonomiesSlug(dataFilter?.style)
+  const newArrDataTaxonomiesBudget = handleTaxonomiesName(dataFilter?.budget)
+  const newArrDataTaxonomiesDuration = handleTaxonomiesName(dataFilter?.duration)
   // =================================================================
 
-  const dataFilter = {
-    countries: countries?.allCountries?.nodes,
-    style: styles?.allTourStyle?.nodes,
-    budget: budgets?.allBudget?.nodes,
-    duration: durations?.allDuration?.nodes
-  }
+  // const dataFilter = {
+  //   countries: countries?.allCountries?.nodes,
+  //   style: styles?.allTourStyle?.nodes,
+  //   budget: budgets?.allBudget?.nodes,
+  //   duration: durations?.allDuration?.nodes
+  // }
   const { data: bestTours, loading } = useQuery(DATA_BEST_TOUR_HOME_PAGE, {
     variables: {
       language: lang?.toUpperCase(),

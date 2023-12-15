@@ -61,6 +61,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
   let arrStyle = []
   let arrValueCountry = ""
   let arrCountry = []
+  let valueTrip = detail?.detail ? 0 : ''
   if (detail?.detail === true) {
     detail?.styleTourArr?.forEach((item, index) => { arrStyle.push(item?.name) })
     arrValueStyle = arrStyle.join(",")
@@ -83,7 +84,8 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
     typeOfTrip: arrStyle,
     message: '',
     budget: '',
-    confirm: false
+    confirm: false,
+    numberTrip: valueTrip,
   }
   //validate
   const FORM_VALIDATION = Yup.object().shape({
@@ -104,7 +106,10 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
     typeOfTrip: Yup.array().min(1, dictionary?.message?.is_required).required(dictionary?.message?.is_required),
     message: Yup.string(),
     budget: Yup.number().typeError(dictionary?.message?.is_number).integer().required(dictionary?.message?.is_required),
-    confirm: Yup.boolean().required(dictionary?.message?.is_required)
+    confirm: Yup.boolean().required(dictionary?.message?.is_required),
+    numberTrip: Yup.string()
+      .matches(/^[0-9]+$/, dictionary?.message?.is_number)
+      .required(dictionary?.message?.is_required),
   })
 
   const dataBooktour = data?.data?.page?.booktour
@@ -122,14 +127,14 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
     PROMOTION_FR,
     PROMOTION_IT } = FORM_IDS
 
-    let idForm = '';
-    if(lang === "en"){
-      idForm = !detail?.detail ? BOOK_TOUR_EN : pathName.includes('hot-deal') ? PROMOTION_EN : PERSONALIZE_EN
-    }else if(lang === "fr"){
-      idForm = !detail?.detail ? BOOK_TOUR_FR : pathName.includes('hot-deal') ? PROMOTION_FR : PERSONALIZE_FR
-    }else if(lang === 'it'){
-      idForm = !detail?.detail ? BOOK_TOUR_IT : pathName.includes('hot-deal') ? PROMOTION_IT : PERSONALIZE_IT
-    }
+  let idForm = '';
+  if (lang === "en") {
+    idForm = !detail?.detail ? BOOK_TOUR_EN : pathName.includes('hot-deal') ? PROMOTION_EN : PERSONALIZE_EN
+  } else if (lang === "fr") {
+    idForm = !detail?.detail ? BOOK_TOUR_FR : pathName.includes('hot-deal') ? PROMOTION_FR : PERSONALIZE_FR
+  } else if (lang === 'it') {
+    idForm = !detail?.detail ? BOOK_TOUR_IT : pathName.includes('hot-deal') ? PROMOTION_IT : PERSONALIZE_IT
+  }
   const handleForm = (values, resetForm) => {
     if (capcha) {
       mutate({
@@ -140,7 +145,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
               { id: 1, value: values.nationality },
               { id: 3, value: values.fullName },
               { id: 17, value: values.telephone },
-              { id: 27, emailValues: { value: values.email,} },
+              { id: 27, emailValues: { value: values.email, } },
               { id: 19, value: values.numberChildren },
               { id: 20, value: values.numberAdult },
               { id: 21, value: values.date },
@@ -150,7 +155,8 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
               { id: 14, value: values.message },
               { id: 15, value: values.budget },
               { id: 16, value: `${values.confirm}` === 'true' ? 'Yes' : 'No' },
-              { id: 26, value: detail?.detail ? nameTour : '' }
+              { id: 26, value: detail?.detail ? nameTour : '' },
+              { id: 28, value: !detail?.detail ? values.numberTrip : '' },
             ]
           }
         }
@@ -323,6 +329,13 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                                 placeholder={dataBooktourContact?.confirmemail?.placeholderconfirm}
                               />
                             </div>
+                            {!detail?.detail && <div className='flex flex-col md:gap-[0.5vw] inputField'>
+                              <h4>{dictionary?.check_visa?.number_trip}</h4>
+                              <TextFiledWrapper
+                                name='numberTrip'
+                                placeholder={'0'}
+                              />
+                            </div>}
                           </div>
                         </div>
 
@@ -394,7 +407,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                               <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DatePicker
                                   name='date'
-                                  views={['year','month']}
+                                  views={['year', 'month']}
                                   format="MM/yyyy"
                                   value={formik.values.date}
                                   onChange={(value) => formik.setFieldValue("date", value, true)}
@@ -468,10 +481,10 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                                 ))}
                               </div>
                               <ErrorMessage
-                                  name='accommodation'
-                                  component='div'
-                                  className='md:text-[0.8vw] text-[3.2vw] text-[red]'
-                                />
+                                name='accommodation'
+                                component='div'
+                                className='md:text-[0.8vw] text-[3.2vw] text-[red]'
+                              />
                             </div>
 
                             {/* type of trip */}

@@ -26,7 +26,7 @@ function SlideVoucher({ data, slug, isLoading, lang, dictionary }) {
     <div className='relative'>
       <Swiper
         breakpoints={{
-          414: {
+          300: {
             spaceBetween: vw(1),
             slidesPerView: 1
           },

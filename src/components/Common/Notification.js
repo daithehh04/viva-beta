@@ -137,7 +137,7 @@ export default function Notification(props) {
         {notification?.confirm?.text1}
         </div>
 
-        <div className='relative'>
+        <div className='relative !bg-white'>
           <Image
             src={notiIcon}
             alt='icon'
@@ -152,8 +152,8 @@ export default function Notification(props) {
 
         {/* button */}
         <div
-          className='md:px-[1.62vw] px-[2.5vw] md:py-[1.25vw] py-[3vw] flex md:gap-[0.75vw] gap-[2vw] justify-end'
-          style={{ background: 'rgb(169, 169, 169, 0.1)' }}
+          className='md:px-[1.62vw] px-[2.5vw] md:py-[1.25vw] py-[3vw] flex md:gap-[0.75vw] gap-[2vw] justify-end !bg-white rounded-b-[8px]'
+          style={{ background: 'rgb(169, 169, 169, 0.1) !important' }}
         >
           <button
             onClick={(e) => {

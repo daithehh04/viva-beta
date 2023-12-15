@@ -10,6 +10,7 @@ import Surveys from './Surveys'
 import TravelStyle from './TravelStyle/TravelStyle'
 import TravelStyleMb from './TravelStyle/TravelStyleMb'
 import { getDictionary } from '@/get-dictionary'
+import { DATA_TAXONOMIES_BUDGET_GQL_SERVER, DATA_TAXONOMIES_COUNTRY_GQL_SERVER, DATA_TAXONOMIES_DURATION_GQL_SERVER, DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER } from '@/graphql/filter/queries'
 export default async function Home({
   data,
   lang,
@@ -23,13 +24,32 @@ export default async function Home({
 
   // =================================================================
   const dictionary = await getDictionary(lang)
+  const [
+    budgets,
+    durations,
+    styles,
+    countries,
+  ] = await Promise.all([
 
+    fetchData(DATA_TAXONOMIES_BUDGET_GQL_SERVER, { language }),
+    fetchData(DATA_TAXONOMIES_DURATION_GQL_SERVER, { language }),
+    fetchData(DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER, { language }),
+    fetchData(DATA_TAXONOMIES_COUNTRY_GQL_SERVER , { language }),
 
+  ])
+
+  const dataFilter = {
+    countries: countries?.data?.allCountries?.nodes,
+    style: styles?.data?.allTourStyle?.nodes,
+    budget: budgets?.data?.allBudget?.nodes,
+    duration: durations?.data?.allDuration?.nodes
+  }
   return (
     <div>
       <Banner
         lang={lang}
         data={banner}
+        dataFilter={dataFilter}
       />
       <div className='body-wrapper'>
         <div className='style-mb'>
@@ -59,6 +79,7 @@ export default async function Home({
             finalData={finalData}
             button={button}
             dictionary={dictionary}
+            dataFilter={dataFilter}
           />
           <TravelStyle
             data={travelStyleList?.travelStyleList}
