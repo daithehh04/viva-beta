@@ -7,7 +7,8 @@
     "not_found_tour": "Not Found Tour !",
     "other": "Other tours",
     "date": "Date",
-    "best_tour": "Best Tour"
+    "best_tour": "Best Seller Tours",
+    "txt_price": "$"
   },
   "nav": {
     "title_quote": "Request a quote",

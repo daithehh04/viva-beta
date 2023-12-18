@@ -20,6 +20,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import addYears from 'date-fns/addYears'
 import { FORM_IDS } from '@/configs/global-config'
 import { useParams, usePathname } from 'next/navigation'
+import { format } from 'date-fns'
 
 // queries form
 const SUBMIT_FORM = gql`
@@ -106,6 +107,7 @@ function ApplyVisa({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
   let idForm = lang === "en" ? APPLY_VISA_EN : lang === "fr" ? APPLY_VISA_FR : APPLY_VISA_IT;
 
   const handleForm = (values, resetForm) => {
+    const dateTravel = format(values.date, 'MM/dd/yyyy')
     if (capcha) {
       mutate({
         variables: {
@@ -118,7 +120,7 @@ function ApplyVisa({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
               { id: 10, emailValues: { value: values.email,} },
               { id: 5, value: values.participantsNumber },
               { id: 9, value: values.numberTrip },
-              { id: 6, value: values.date },
+              { id: 6, value: dateTravel },
               { id: 8, value: detail?.detail === true ? arrValueCountry : values.destination.join(', ') },
             ]
           }

@@ -7,7 +7,8 @@
     "not_found_tour": "Visite introuvable !",
     "other" : "Autres visites",
     "date": "Date",
-    "best_tour":"Meilleure tournée"
+    "best_tour":"Best Seller Tours",
+    "txt_price": "€"
   },
   "nav": {
     "title_quote": "Demander Un Devis",
