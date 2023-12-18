@@ -69,7 +69,6 @@ function Banner({ data, dataFilter, lang }) {
     textCountry = 'Paese'
     choose = 'Per favore scegli il paese !!!'
   }
-
   return (
     <div className='relative'>
       <div className='md:h-[100vh] h-[216.53333vw] visaBanner relative flex md:items-center'>
@@ -81,14 +80,14 @@ function Banner({ data, dataFilter, lang }) {
           quality={100}
           className='h-full absolute w-full z-[1] object-cover'
         />
-        <Image
+        {dataBanner?.imageuser?.sourceUrl && <Image
           alt='banner'
           src={dataBanner?.imageuser?.sourceUrl}
           quality={100}
           width={200}
           height={200}
           className='md:w-[31.125vw] md:h-[41.875vw] w-[60.26667vw] h-[81.6vw] object-cover absolute bottom-0 md:right-[8vw] right-0 z-[3] '
-        />
+        />}
         <div className='bg-overlayBanner absolute right-0 h-[100vh] w-[47.93vw] top-0 z-[2] md:block hidden'></div>
         <div className='bg-overlayBanner2 absolute w-full md:h-[12.4375vw] h-[26.13333vw] bottom-0 z-[3]'></div>
         <div className='flex flex-col relative z-10 md:pl-[8.13vw] md:pt-0 pt-[27.73vw] md:pr-0 px-[4.27vw]'>

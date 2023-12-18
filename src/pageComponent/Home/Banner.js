@@ -4,7 +4,7 @@ import FilterBanner from './FilterBanner.js'
 import { getDictionary } from '@/get-dictionary.js'
 import ScrollDown from '@/components/Common/ScrollDown.js'
 
-async function Banner({ data, lang }) {
+async function Banner({ data, lang, dataFilter }) {
   const dictionary = await getDictionary(lang)
 
   return (
@@ -21,6 +21,7 @@ async function Banner({ data, lang }) {
         <div className='filter-tour flex  ml-auto mr-auto mt-[3.06vw] bg-white w-max py-[1.5vw] pl-[2.87vw] pr-[2vw] rounded-[1.125vw] max-lg:hidden'>
           <FilterBanner
             lang={lang}
+            dataFilter={dataFilter}
           />
         </div>
         <div
@@ -44,7 +45,7 @@ async function Banner({ data, lang }) {
               strokeWidth='2'
             />
           </svg>
-          <span className='md:block hidden text-center font-manrope text-[0.875vw] not-italic font-semibold tracking-[0.04375vw] uppercase text-[#fff] relative z-[99]' style={{textShadow: '1px 1px 2px #000, 0 0 1em #000, 0 0 0.2em #000'}}>
+          <span className='md:block hidden text-center font-manrope text-[0.875vw] not-italic font-semibold tracking-[0.04375vw] uppercase text-[#fff] relative z-[99]' style={{ textShadow: '1px 1px 2px #000, 0 0 1em #000, 0 0 0.2em #000' }}>
             {dictionary.home.banner_explore}
           </span>
         </div>

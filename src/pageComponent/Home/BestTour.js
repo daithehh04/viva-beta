@@ -4,7 +4,7 @@ import Button from '@/components/Common/Button'
 import FilterTour from '@/components/Common/FilterTour'
 import TourItem from '@/components/Common/TourItem'
 import TourItemMobile from '@/components/Common/TourItemMobile'
-import { DATA_BEST_TOUR_HOME_PAGE, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
+import { DATA_BEST_TOUR_HOME_PAGE } from '@/graphql/filter/queries'
 import { useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 import Image from 'next/image'
@@ -62,7 +62,7 @@ function BestTour({
     }
   })
 
-  let allTours = bestTours?.allTours?.nodes || []
+  let allTours = bestTours?.allTours?.nodes || Array(8)
   const totalTour = bestTours?.allTours?.pageInfo?.offsetPagination?.total
 
   return (

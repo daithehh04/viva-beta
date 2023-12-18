@@ -20,7 +20,7 @@ import ReCAPTCHA from 'react-google-recaptcha'
 import addYears from 'date-fns/addYears'
 import { FORM_IDS } from '@/configs/global-config'
 import { useParams, usePathname } from 'next/navigation'
-
+import { format } from 'date-fns'
 // queries form
 const SUBMIT_FORM = gql`
   mutation ($input: SubmitGfFormInput!) {
@@ -46,6 +46,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
   const [isError, setIsError] = useState(false)
   const [isConfirm, setIsConfirm] = useState(false)
   const [isDone, setIsDone] = useState(false) // check when successful noti or error noti appeared
+  const [messageAbout, setMessageAbout] = useState('')
 
   const formRef = useRef()
   const pathName = usePathname()
@@ -82,7 +83,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
     destination: arrCountry,
     accommodation: '',
     typeOfTrip: arrStyle,
-    message: '',
+    message: messageAbout,
     budget: '',
     confirm: false,
     numberTrip: valueTrip,
@@ -135,7 +136,12 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
   } else if (lang === 'it') {
     idForm = !detail?.detail ? BOOK_TOUR_IT : pathName.includes('hot-deal') ? PROMOTION_IT : PERSONALIZE_IT
   }
+
+  const handleChangeMess = (e) => {
+    setMessageAbout(e.target.value)
+  }
   const handleForm = (values, resetForm) => {
+    const dateTravel = format(values.date, 'MM/dd/yyyy')
     if (capcha) {
       mutate({
         variables: {
@@ -148,11 +154,11 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
               { id: 27, emailValues: { value: values.email, } },
               { id: 19, value: values.numberChildren },
               { id: 20, value: values.numberAdult },
-              { id: 21, value: values.date },
+              { id: 21, value: dateTravel },
               { id: 24, value: detail?.detail === true ? arrValueCountry : values.destination.join(', ') },
               { id: 22, value: values.accommodation.join(', ') },
               { id: 25, value: detail?.detail === true ? arrValueStyle : values.typeOfTrip.join(', ') },
-              { id: 14, value: values.message },
+              { id: 14, value: messageAbout },
               { id: 15, value: values.budget },
               { id: 16, value: `${values.confirm}` === 'true' ? 'Yes' : 'No' },
               { id: 26, value: detail?.detail ? nameTour : '' },
@@ -539,6 +545,7 @@ function BookTour({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
                             <TextareaAutosize
                               minRows={4}
                               name='message'
+                              onChange={(e) => handleChangeMess(e)}
                               placeholder={dataParticipant?.message?.placeholdermessage} />
                           </div>
                         </div>

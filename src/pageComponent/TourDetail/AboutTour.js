@@ -461,6 +461,7 @@ export default function AboutTour(props) {
               <TableData
                 data={brief?.row}
                 header={contentHeader?.briefTableHeader}
+                dictionary={dictionary}
               />
             </div>
 
@@ -551,6 +552,15 @@ export default function AboutTour(props) {
                 type={true}
                 data={accommodation?.row}
                 header={contentHeader?.accommodationTableHeader}
+                isShowMobile={true}
+                dataPrice={{
+                  lang : lang,
+                  button: data?.map?.button,
+                  price: { header: bannerHeaders?.priceHeader, value: price },
+                  map: data?.map?.image
+                }}
+                onClick={() => setOpenModal(true)}
+                dictionary={dictionary}
               />
 
               <div className='md:mt-[3.5vw]' dangerouslySetInnerHTML={{ __html: tourContent }}></div>

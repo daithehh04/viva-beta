@@ -5,8 +5,6 @@ import searchIcon from '@/assets/images/search-normal.svg'
 import styleIcon from '@/assets/images/style-travel.svg'
 import wallet from '@/assets/images/wallet.svg'
 import Button from '@/components/Common/Button'
-import { DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
-import { useQuery } from '@apollo/client'
 import { createTheme } from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
@@ -15,7 +13,7 @@ import { sortBy } from 'lodash'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-function FilterBanner({ lang, onClose }) {
+function FilterBanner({ lang, onClose, dataFilter }) {
   const [destination, setDestination] = useState('')
   const [travelStyle, setTravelStyle] = useState('')
   const [duration, setDuration] = useState('')
@@ -24,37 +22,16 @@ function FilterBanner({ lang, onClose }) {
 
   const lng = lang?.toUpperCase()
 
-  const { data: dataTaxonomiesCountry } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
-    variables: {
-      language: lng,
-    }
-  })
-  const { data: dataTaxonomiesStyleTour } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
-    variables: {
-      language: lng,
-    }
-  })
-  const { data: dataTaxonomiesBudget } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
-    variables: {
-      language: lng,
-    }
-  })
-  const { data: dataTaxonomiesDuration } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
-    variables: {
-      language: lng,
-    }
-  })
-
-  const allBudget = dataTaxonomiesBudget?.allBudget?.nodes
-  const allDuration = dataTaxonomiesDuration?.allDuration?.nodes
-  const allCountries = dataTaxonomiesCountry?.allCountries?.nodes
-  const allTourStyle = dataTaxonomiesStyleTour?.allTourStyle?.nodes
+  const allBudget = dataFilter?.budget
+  const allDuration = dataFilter?.duration
+  const allCountries = dataFilter?.countries
+  const allTourStyle = dataFilter?.style
 
   const handleSort = (fn = []) => {
     let clone = [...fn]
     if (clone?.length > 0) {
       clone = sortBy(clone, item => {
-        return +item?.name.split('-')[0]
+        return +item?.name?.split('-')[0]
       })
     }
     return clone
@@ -108,7 +85,7 @@ function FilterBanner({ lang, onClose }) {
           }
         }
       });
-      console.log({resultObject});
+      console.log({ resultObject });
       const queryString = new URLSearchParams(resultObject).toString();
       let link = `/search?&${queryString}`
       if (lang !== 'en') {
