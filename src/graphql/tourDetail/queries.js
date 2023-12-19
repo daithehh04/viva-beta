@@ -318,12 +318,6 @@ export const GET_RELATED_PROMOTION_TOUR = `query($language: LanguageCodeEnum!, $
       translation(language: $language) {
         id
         slug
-        bestSeller {
-          nodes {
-            name
-            id
-          }
-        }
         tourDetail {
           priceTour
           banner {

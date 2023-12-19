@@ -36,7 +36,9 @@
     "number_participants": "Numero di partecipanti",
     "date": "Data",
     "nationality":"La tua nazionalità",
-    "send": "Invia informazioni"
+    "send": "Invia informazioni",
+    "txt_title_promotion" : "Tour Promozionali",
+    "txt_title_voucher" : "Voucher Sconti"
   },
   "service": {
     "destination":"Destinazione"

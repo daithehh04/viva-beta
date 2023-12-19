@@ -36,7 +36,9 @@
     "number_participants": "Number of participants",
     "date": "Date",
     "nationality":"Your nationality",
-    "send": "Send information"
+    "send": "Send information",
+    "txt_title_promotion" : "Promotional Tours",
+    "txt_title_voucher" : "Vouchers"
   },
   "service": {
     "destination": "Destination"

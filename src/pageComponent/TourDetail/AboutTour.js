@@ -23,7 +23,7 @@ import Link from 'next/link'
 import ZoomImg from './ZoomImg'
 
 export default function AboutTour(props) {
-  const { type, data, headerData = {}, relatedTours = [], lang, dataBookTour, price, tourContent,styleTourArr,countriesTourArr, dictionary } = props
+  const { type, data, headerData = {}, relatedTours = [], lang, dataBookTour, price, tourContent, styleTourArr, countriesTourArr, dictionary } = props
   const { contentHeader, relatedTourHeader, bannerHeaders } = headerData
   const { reviews, banner, content = {} } = data || []
 
@@ -232,7 +232,7 @@ export default function AboutTour(props) {
   const stepIconMbRef = useRef()
   const { overviewRef, briefRef, tourDetailRef, roleRef, accomRef } = sectionRefs
 
-  
+
   // handle Scroll event => add new class when scroll to section
   useEffect(() => {
     const handleScroll = () => {
@@ -303,8 +303,8 @@ export default function AboutTour(props) {
 
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [activeIcon, accomRef, briefRef, overviewRef, roleRef, tourDetailRef,onlySmallScreen])
-  
+  }, [activeIcon, accomRef, briefRef, overviewRef, roleRef, tourDetailRef, onlySmallScreen])
+
   const handleClickMap = (e) => {
     e.stopPropagation();
   }
@@ -333,7 +333,7 @@ export default function AboutTour(props) {
                         <div
                           className='step-icon flex md:gap-[0.5vw] gap-[1vw] cursor-pointer md:px-0 px-[2vw]'
                           key={index}
-                          onClick={() => scrollDown(sectionRefs[step.key],'start')}
+                          onClick={() => scrollDown(sectionRefs[step.key], 'start')}
                         >
                           <div className='flex flex-col items-center justify-start'>
                             <svg
@@ -411,7 +411,7 @@ export default function AboutTour(props) {
                         <div
                           className='step-icon flex md:gap-[0.5vw] gap-[1vw] cursor-pointer'
                           key={index}
-                          onClick={() => scrollDown(sectionRefs[step.key],'start')}
+                          onClick={() => scrollDown(sectionRefs[step.key], 'start')}
                         >
                           <div className='flex flex-col items-center justify-start'>
                             <svg
@@ -474,7 +474,7 @@ export default function AboutTour(props) {
               <TourDetailStep
                 data={tourDetailed?.content}
                 // icons={banner?.icons}
-                iconsDefault = {contentHeader?.icons}
+                iconsDefault={contentHeader?.icons}
               />
             </div>
 
@@ -554,7 +554,7 @@ export default function AboutTour(props) {
                 header={contentHeader?.accommodationTableHeader}
                 isShowMobile={true}
                 dataPrice={{
-                  lang : lang,
+                  lang: lang,
                   button: data?.map?.button,
                   price: { header: bannerHeaders?.priceHeader, value: price },
                   map: data?.map?.image
@@ -633,30 +633,31 @@ export default function AboutTour(props) {
       </div>
 
       {/* Tour Slide */}
-      <div
-        className='mb-[14.93vw] md:mb-[8.69vw] md:px-[6.38vw] md:mt-[6.31vw] mt-[15vw]'
-        ref={relatedTourRef}
-      >
-        <h4 className='heading-1 md:mb-[3.5vw] mb-[6.4vw] max-md:mx-[4.27vw]'>{relatedTourHeader?.heading}</h4>
-        <SlideTour
-          data={relatedTours}
-          slug={type === 'promo' && 'hot-deals'}
-          lang={lang}
-        />
-        <Link
-          href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}
-          className='btn-secondary mx-auto mt-[9.83vw] md:mt-[3.5vw] md:w-[10vw] w-[35.6vw] flex justify-center'
-          content={relatedTourHeader?.buttonContent}
+      {relatedTours?.length !== 0 &&
+        <div
+          className='mb-[14.93vw] md:mb-[8.69vw] md:px-[6.38vw] md:mt-[6.31vw] mt-[15vw]'
+          ref={relatedTourRef}
         >
-          <span>{relatedTourHeader?.buttonContent}</span>
-        </Link>
-      </div>
-
+          <h4 className='heading-1 md:mb-[3.5vw] mb-[6.4vw] max-md:mx-[4.27vw]'>{relatedTourHeader?.heading}</h4>
+          <SlideTour
+            data={relatedTours}
+            slug={type === 'promo' && 'hot-deals'}
+            lang={lang}
+          />
+          <Link
+            href={`${lang !== 'en' ? `/${lang}` : ''}/search?seller=best-seller-tours`}
+            className='btn-secondary mx-auto mt-[9.83vw] md:mt-[3.5vw] md:w-[10vw] w-[35.6vw] flex justify-center'
+            content={relatedTourHeader?.buttonContent}
+          >
+            <span>{relatedTourHeader?.buttonContent}</span>
+          </Link>
+        </div>
+      }
       {/* footer in mb */}
       {onlySmallScreen && (
         <PriceMb
           data={{
-            lang : lang,
+            lang: lang,
             button: data?.map?.button,
             price: { header: bannerHeaders?.priceHeader, value: price },
             map: data?.map?.image
@@ -669,7 +670,7 @@ export default function AboutTour(props) {
         <div className='fixed max-md:hidden bg-black bg-opacity-25 backdrop-blur-[4px] w-[100vw] h-[100vh] top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-[200]' onClick={handleClickOut}>
           <div className='w-[30vw] h-[75vh] bg-white top-1/2 md:mt-[2vw] -translate-y-1/2 left-1/2 -translate-x-1/2 fixed max-md:w-[90%]' onClick={handleClickMap}>
             <div className='w-full h-full'>
-              <ZoomImg img={data?.map?.image}/>
+              <ZoomImg img={data?.map?.image} />
             </div>
           </div>
         </div>
@@ -682,7 +683,7 @@ export default function AboutTour(props) {
         >
           <div className='w-full h-full overflow-y-auto md:rounded-[16px] overflow-x-hidden'>
             <BookTour
-              detail={{detail: true, styleTourArr, countriesTourArr}}
+              detail={{ detail: true, styleTourArr, countriesTourArr }}
               nameTour={data?.banner?.title}
               data={dataBookTour}
               setOpenModal={setOpenModal}

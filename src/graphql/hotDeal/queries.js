@@ -132,6 +132,33 @@ export const GET_HOT_DEAL_DATA = `query ($language: LanguageCodeEnum!) {
   }
 }`
 
+export const GET_ALL_VOUCHER = `query ($language: LanguageCodeFilterEnum!) {
+  allVouchers(where: {language: $language}) {
+    nodes {
+      slug
+      voucher {
+        content {
+          description
+          expireDate
+          extraDiscount
+          fieldGroupName
+          title
+          max
+        }
+        detailImage {
+          altText
+          sourceUrl
+        }
+        rules {
+          conditions {
+            condition
+          }
+        }
+      }
+    }
+  }
+}`
+
 export const GET_LIST_PROMOTION_TOUR = `query ($language: LanguageCodeEnum!) {
     page(id: "cG9zdDoxMTAy", idType: ID) {     
         hotDeals {
@@ -180,7 +207,7 @@ export const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
     }
   }`
 
-  export const DATA_POPUP_VOUCHER = `query($language: LanguageCodeEnum!){
+export const DATA_POPUP_VOUCHER = `query($language: LanguageCodeEnum!){
     page(id: "cG9zdDo0NzU5") {
       translation(language: $language) {
         slug
@@ -200,7 +227,7 @@ export const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
     }
   }`
 
-  export const DATA_VOUCHER_DETAIL = `query getVoucherDetail($slug: ID!, $language: LanguageCodeEnum!){
+export const DATA_VOUCHER_DETAIL = `query getVoucherDetail($slug: ID!, $language: LanguageCodeEnum!){
     vouchers(id:$slug,idType: URI) {
       translation(language:$language) {
         slug

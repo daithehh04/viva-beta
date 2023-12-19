@@ -1,13 +1,12 @@
 'use client'
-import ListVoucher from '../../pageComponent/HotDeal/ListVoucher'
-import ListPromotionTour from '../../pageComponent/HotDeal/ListPromotionTour'
-import Image from 'next/image'
 import imageSrc from '@/assets/images/bg-hotdeals.png'
-import { DATA_BEST_TOUR_HOME_PAGE, DATA_PROMOTION_TOUR, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
+import { DATA_PROMOTION_TOUR } from '@/graphql/filter/queries'
 import { useQuery } from '@apollo/client'
+import Image from 'next/image'
+import ListPromotionTour from '../../pageComponent/HotDeal/ListPromotionTour'
+import ListVoucher from '../../pageComponent/HotDeal/ListVoucher'
 
-export default function HotDeal({ hotDeals, menu, lang, onCloseMenu, dictionary }) {
-  const listVoucher = hotDeals?.voucherHeader?.listVoucher
+export default function HotDeal({ listVoucher, menu, lang, onCloseMenu, dictionary }) {
 
   const { data: dataPromotionTour, refetch, loading } = useQuery(DATA_PROMOTION_TOUR, {
     variables: {
@@ -31,11 +30,11 @@ export default function HotDeal({ hotDeals, menu, lang, onCloseMenu, dictionary 
           className={`heading-1 ${menu ? 'md:mb-[1.5vw]' : 'md:mb-[2.5vw]'}  mb-[4.267vw] text-textColor`}
           style={menu && { fontSize: '2.5vw' }}
         >
-          {hotDeals?.voucherHeader?.listHeader}
+          {dictionary?.promotion?.txt_title_voucher}
         </h2>
         <ListVoucher
           isSubNav={true}
-          headerData={hotDeals?.voucherHeader?.detailHeader}
+          headerData={dictionary?.promotion?.txt_title_voucher}
           listVoucher={listVoucher}
           lang={lang}
           dictionary={dictionary}
@@ -46,7 +45,7 @@ export default function HotDeal({ hotDeals, menu, lang, onCloseMenu, dictionary 
           className={`${menu ? 'mb-[1.5vw]' : 'mb-[3.12vw]'} heading-1 content text-textColor`}
           style={menu && { fontSize: '2.5vw' }}
         >
-          {hotDeals?.promotionHeader || ''}
+          {dictionary?.promotion?.txt_title_promotion || ''}
         </h2>
         <ListPromotionTour quantity={3}
           promotionList={promotionTours}

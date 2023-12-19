@@ -1,4 +1,3 @@
-import { TOURS_SLUG_QUERY } from '@/app/[lang]/sitemap'
 import NotFound from '@/components/Common/NotFound'
 import { LANGUAGE_BOOK_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
@@ -7,7 +6,7 @@ import { getDictionary } from '@/get-dictionary'
 import { GET_ALL_REVIEWS } from '@/graphql/customersReview/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { GET_TOUR_META_DATA } from '@/graphql/metaData/queries'
-import { GET_RANDOM_TOUR, GET_RELATED_TOUR, GET_PROMOTION_TOUR_DETAIL, GET_TOUR_DETAIL_HEADER, GET_RANDOM_PROMOTION_TOUR, GET_RELATED_PROMOTION_TOUR, PROMOTION_TOUR_SLUGS } from '@/graphql/tourDetail/queries'
+import { GET_PROMOTION_TOUR_DETAIL, GET_RANDOM_PROMOTION_TOUR, GET_RELATED_PROMOTION_TOUR, GET_TOUR_DETAIL_HEADER, PROMOTION_TOUR_SLUGS } from '@/graphql/tourDetail/queries'
 import TourDetail from '@/pageComponent/TourDetail'
 
 export async function generateMetadata({ params: { slug, lang } }) {
@@ -60,6 +59,7 @@ export default async function page({ params: { lang, slug } }) {
     language: lang?.toUpperCase()
   })
   const relatedTours = result2?.data?.promotionTours?.nodes?.filter((item) => item?.translation?.id !== tourId)
+  const listRandomTour = randomTour?.filter((value) => value?.translation && value)
   if (!tourId) {
     return <NotFound lang={lang} />
   }
@@ -68,7 +68,7 @@ export default async function page({ params: { lang, slug } }) {
       data={tourDetailData}
       tourContent={tourContent}
       headerData={headerData?.data?.page?.translation?.tourDetailHeading}
-      relatedTours={!relatedTours || relatedTours?.length === 0 ? randomTour : relatedTours}
+      relatedTours={!relatedTours || relatedTours?.length === 0 ? listRandomTour : relatedTours}
       tourId={tourId}
       reviewsList={reviewsList}
       lang={lang}
