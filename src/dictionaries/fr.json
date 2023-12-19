@@ -36,7 +36,9 @@
     "number_participants": "Nombre de participants",
     "date": "Date",
     "nationality":"Ta nationalité",
-    "send": "Envoyer une information"
+    "send": "Envoyer une information",
+    "txt_title_promotion" : "Visites promotionnelles",
+    "txt_title_voucher" : "Bons de réduction"
   },
   "service": {
     "destination": "Destination"

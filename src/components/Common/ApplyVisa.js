@@ -107,7 +107,7 @@ function ApplyVisa({ data, setOpenModal, lang, detail, nameTour, dictionary }) {
   let idForm = lang === "en" ? APPLY_VISA_EN : lang === "fr" ? APPLY_VISA_FR : APPLY_VISA_IT;
 
   const handleForm = (values, resetForm) => {
-    const dateTravel = format(values.date, 'MM/dd/yyyy')
+    const dateTravel = format(values.date, 'MM/yyyy')
     if (capcha) {
       mutate({
         variables: {

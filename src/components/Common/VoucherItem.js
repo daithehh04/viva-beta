@@ -3,11 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link'
 import logo from '@/assets/images/VIVA-LOGO-02.png'
 
-function VoucherItem({ className, headerData = {}, data = {}, lang, dictionary }) {
-  const voucherData = data?.translation?.voucher || {}
-  const expireDate = voucherData?.content?.expireDate.slice(0, voucherData?.content?.expireDate?.indexOf(' '))
+function VoucherItem({ className, data = {}, lang, dictionary }) {
+  const voucherData = data?.voucher || {}
+  const expireDate = voucherData?.content?.expireDate?.slice(0, voucherData?.content?.expireDate?.indexOf(' '))
   return (
-    <Link href={`/${lang}/voucher/${data?.translation?.slug}`}>
+    <Link href={`/${lang}/voucher/${data?.slug}`}>
       <div
         className={`${className || ''} flex voucher-item max-md:flex-shrink-0 cursor-pointer h-[13.625rem]`}
       >

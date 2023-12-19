@@ -25,6 +25,12 @@
       color: #fff;
     }
   }
+
+  .bannerCheckVisa {
+    @media screen and (max-width: 769px) {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 45%);
+    }
+  }
 }
 
 .mui-pwxzbm {

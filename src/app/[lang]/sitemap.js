@@ -287,6 +287,16 @@ export default async function sitemap() {
       lastModified: new Date(),
       priority: 1
     },
+    {
+      url: `${process.env.DOMAIN}/fr`,
+      lastModified: new Date(),
+      priority: 1
+    },
+    {
+      url: `${process.env.DOMAIN}/it`,
+      lastModified: new Date(),
+      priority: 1
+    },
     ...initArrCommon,
     ...initAllTour,
     ...initArrCountry,
