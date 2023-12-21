@@ -12,6 +12,7 @@ function TourItemMobile({ data, lang, loading }) {
   const tourData = data?.translation?.tourDetail?.banner || data?.tourDetail?.banner
   const checkBestTour = data?.translation?.bestSeller?.nodes || data?.bestSeller?.nodes
   const price = data?.translation?.tourDetail?.priceTour || data?.tourDetail?.priceTour
+  const slugTour = data?.translation?.slug || data?.slug
   let listRate = null
   if (tourData?.rate) listRate = new Array(Math.round(tourData?.rate)).fill(0)
   const pathName = usePathname()
@@ -31,10 +32,9 @@ function TourItemMobile({ data, lang, loading }) {
     tag = 'Best Seller'
     priceTour = '€'
   }
-  
   return (
     <Link
-      href={`/${lang}${isPromotion ? '/hot-deals' : ''}/${encodeURIComponent(data?.translation?.slug)}`}
+      href={`/${lang}${isPromotion ? '/hot-deals' : ''}/${encodeURIComponent(slugTour)}`}
       className={` p-[4.27vw] min-h-[46.4vw] h-auto flex gap-[4.27vw] bg-white`}
     >
       <div className='max-h-[54vw] w-[45%] rounded-[1.067vw]'>
