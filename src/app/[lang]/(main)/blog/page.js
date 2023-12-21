@@ -3,7 +3,8 @@ import { getMeta } from '@/data/metaData/getMeta'
 import { getDictionary } from '@/get-dictionary'
 import { GET_META_DATA_BLOG } from '@/graphql/metaData/queries'
 import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
-import Blog from '@/pageComponent/Blog'
+import BlogPage from '@/pageComponent/Blog'
+import { Suspense } from 'react'
 const GET_INITIAL_FILTER = `
 query($language : LanguageCodeFilterEnum!){
   allTopic(where:{language: $language}){
@@ -30,7 +31,6 @@ query($language : LanguageCodeFilterEnum!){
 }
 `
 
-
 export async function generateMetadata({ params: { lang } }) {
   const res = await fetchData(GET_META_DATA_BLOG, {
     language: lang?.toUpperCase()
@@ -51,14 +51,16 @@ async function Page({ params: { lang } }) {
 
   return (
     <div>
-      <Blog
-        lang={lang}
-        dataBestSeller={data}
-        initTopic={dataInit?.data?.allTopic}
-        initCategories={dataInit?.data?.categories}
-        allCountries={dataInit?.data?.allCountries}
-        dictionary={dictionary}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <BlogPage
+          lang={lang}
+          dataBestSeller={data}
+          initTopic={dataInit?.data?.allTopic}
+          initCategories={dataInit?.data?.categories}
+          allCountries={dataInit?.data?.allCountries}
+          dictionary={dictionary}
+        />
+      </Suspense>
     </div>
   )
 }

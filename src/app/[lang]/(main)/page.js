@@ -5,9 +5,20 @@ import { LANGUAGE_BOOK_IDS, LANGUAGE_IDS } from '@/configs/global-config'
 import fetchData from '@/data/fetchData'
 import { getMeta } from '@/data/metaData/getMeta'
 import { getDictionary } from '@/get-dictionary'
-import { DATA_TAXONOMIES_BUDGET_GQL_SERVER, DATA_TAXONOMIES_COUNTRY_GQL_SERVER, DATA_TAXONOMIES_DURATION_GQL_SERVER, DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER } from '@/graphql/filter/queries'
+import {
+  DATA_TAXONOMIES_BUDGET_GQL_SERVER,
+  DATA_TAXONOMIES_COUNTRY_GQL_SERVER,
+  DATA_TAXONOMIES_DURATION_GQL_SERVER,
+  DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER
+} from '@/graphql/filter/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
-import { GET_DATA_iNSEPECT, GET_HOME_PAGE, GET_INITIAL_FILTER, GET_META_DATA, GET_NEXT_STEP } from '@/graphql/home/queries'
+import {
+  GET_DATA_iNSEPECT,
+  GET_HOME_PAGE,
+  GET_INITIAL_FILTER,
+  GET_META_DATA,
+  GET_NEXT_STEP
+} from '@/graphql/home/queries'
 import Banner from '@/pageComponent/Home/Banner'
 import BestTour from '@/pageComponent/Home/BestTour'
 import InspectionTrip from '@/pageComponent/Home/InspectionTrip/InspectionTrip'
@@ -16,6 +27,7 @@ import Review from '@/pageComponent/Home/Reviews/Review'
 import Surveys from '@/pageComponent/Home/Surveys'
 import TravelStyle from '@/pageComponent/Home/TravelStyle/TravelStyle'
 import TravelStyleMb from '@/pageComponent/Home/TravelStyle/TravelStyleMb'
+import { Suspense } from 'react'
 
 export async function generateMetadata({ params: { lang } }) {
   const res = await fetchData(GET_META_DATA, {
@@ -29,21 +41,11 @@ export async function generateMetadata({ params: { lang } }) {
   return getMeta(title, excerpt, featuredImage)
 }
 
-
 export default async function page({ params, searchParams }) {
   const lang = params?.lang
   const language = lang?.toUpperCase() || 'EN'
 
-  const [
-    nextStep,
-    data,
-    dataBookTour,
-    dataInit,
-    budgets,
-    durations,
-    styles,
-    countries,
-  ] = await Promise.all([
+  const [nextStep, data, dataBookTour, dataInit, budgets, durations, styles, countries] = await Promise.all([
     fetchData(GET_NEXT_STEP, { language }),
     fetchData(GET_HOME_PAGE, { id: LANGUAGE_IDS[lang] }),
     fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS[lang], language }),
@@ -52,8 +54,7 @@ export default async function page({ params, searchParams }) {
     fetchData(DATA_TAXONOMIES_BUDGET_GQL_SERVER, { language }),
     fetchData(DATA_TAXONOMIES_DURATION_GQL_SERVER, { language }),
     fetchData(DATA_TAXONOMIES_TOUR_STYLE_GQL_SERVER, { language }),
-    fetchData(DATA_TAXONOMIES_COUNTRY_GQL_SERVER , { language }),
-
+    fetchData(DATA_TAXONOMIES_COUNTRY_GQL_SERVER, { language })
   ])
 
   const metaDestination = dataInit?.data?.allCountries?.nodes || []
@@ -62,7 +63,7 @@ export default async function page({ params, searchParams }) {
   const arrayDesInit = metaDestination?.map((des) => des?.slug)
   const arrayCateInit = metaCategories?.map((cate) => cate?.slug)
 
-  const categorySlug = arrayCateInit.filter((item, index) => item !== "blog")
+  const categorySlug = arrayCateInit.filter((item, index) => item !== 'blog')
 
   const res = await fetchData(GET_DATA_iNSEPECT, { language, categorySlug, destinationSlug: arrayDesInit })
 
@@ -93,7 +94,10 @@ export default async function page({ params, searchParams }) {
         data={banner}
         dataFilter={dataFilter}
       />
-      <div id='home-wrapper' className='body-wrapper'>
+      <div
+        id='home-wrapper'
+        className='body-wrapper'
+      >
         <div className='style-mb'>
           <TravelStyleMb
             lang={lang}
@@ -118,12 +122,15 @@ export default async function page({ params, searchParams }) {
           />
         </div>
         <div className='bg-home34'>
-          <BestTour
-            finalData={finalData}
-            button={button}
-            dictionary={dictionary}
-            dataFilter={dataFilter}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <BestTour
+              finalData={finalData}
+              button={button}
+              dictionary={dictionary}
+              dataFilter={dataFilter}
+            />
+          </Suspense>
+
           <TravelStyle
             data={travelStyleList?.travelStyleList}
             title={travelStyleList?.title}

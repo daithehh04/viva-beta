@@ -1,12 +1,18 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import { createTheme, useMediaQuery } from '@mui/material'
 import { useQuery } from '@apollo/client'
 import TourItem from '@/components/Common/TourItem'
 import TourItemMobile from '@/components/Common/TourItemMobile'
 import FilterTour from '@/components/Common/FilterTour'
-import { DATA_BEST_TOUR, DATA_TAXONOMIES_BUDGET_GQL, DATA_TAXONOMIES_COUNTRY_GQL, DATA_TAXONOMIES_DURATION_GQL, DATA_TAXONOMIES_TOUR_STYLE_GQL } from '@/graphql/filter/queries'
+import {
+  DATA_BEST_TOUR,
+  DATA_TAXONOMIES_BUDGET_GQL,
+  DATA_TAXONOMIES_COUNTRY_GQL,
+  DATA_TAXONOMIES_DURATION_GQL,
+  DATA_TAXONOMIES_TOUR_STYLE_GQL
+} from '@/graphql/filter/queries'
 import { useQueryState } from 'next-usequerystate'
 const tourAll = new Array(8).fill(0)
 const theme = createTheme({
@@ -16,12 +22,7 @@ const theme = createTheme({
     }
   }
 })
-function TourSlide({
-  lang,
-  slug,
-  tourStyleName,
-  dictionary
-}) {
+function TourSlide({ lang, slug, tourStyleName, dictionary }) {
   const eleRef = useRef()
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const [activePage, setActivePage] = useState(0)
@@ -31,23 +32,23 @@ function TourSlide({
   const [style] = useQueryState('style')
   const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
     variables: {
-      language: lang?.toUpperCase(),
+      language: lang?.toUpperCase()
     }
   })
   const { data: durations } = useQuery(DATA_TAXONOMIES_DURATION_GQL, {
     variables: {
-      language: lang?.toUpperCase(),
+      language: lang?.toUpperCase()
     }
   })
 
   const { data: countries } = useQuery(DATA_TAXONOMIES_COUNTRY_GQL, {
     variables: {
-      language: lang?.toUpperCase(),
+      language: lang?.toUpperCase()
     }
   })
   const { data: styles } = useQuery(DATA_TAXONOMIES_TOUR_STYLE_GQL, {
     variables: {
-      language: lang?.toUpperCase(),
+      language: lang?.toUpperCase()
     }
   })
   function handleTaxonomiesSlug(data) {
@@ -78,7 +79,11 @@ function TourSlide({
     duration: durations?.allDuration?.nodes
   }
 
-  const {data:dataBestTours, refetch, loading} = useQuery(DATA_BEST_TOUR, {
+  const {
+    data: dataBestTours,
+    refetch,
+    loading
+  } = useQuery(DATA_BEST_TOUR, {
     variables: {
       language: lang?.toUpperCase(),
       countrySlug: destination ?? newArrDataTaxonomiesCountry,
@@ -107,8 +112,8 @@ function TourSlide({
   const pageInfo = dataBestTours?.allTours?.pageInfo?.offsetPagination?.total
   const totalPage = Math.ceil(pageInfo / 8)
   useEffect(() => {
-    window.scrollTo(0,0)
-  },[])
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div
       className='best-tours pt-[2.5vw] relative max-md:z-10 max-md:top-[-4vw] bg-white max-md:rounded-[4.27vw]'
@@ -117,15 +122,17 @@ function TourSlide({
       <div className='max-md:pl-[4.27vw] pl-[8.125vw] max-md:pr-[4.27vw] '>
         <h2 className='heading-1 max-md:mt-[9.12vw]'>{tourStyleName}</h2>
         <div className='bg-white mt-[2vw] w-max rounded-[1.125vw] px-[2.38vw] py-[1.19vw] max-md:mt-[4.27vw] max-md:p-0 max-md:bg-transparent max-md:w-full filter-tour'>
-          <FilterTour
-            dataFilter={dataFilter}
-            // onSelectDes={(data) => setDestination(data)}
-            // onSelectStyle={(data) => setTravelStyle(data)}
-            // onSelectBudget={(data) => setBudget(data)}
-            // onSelectDuration={(data) => setDuration(data)}
-            travelStyleSlug={slug}
-            className={'travelStyle-Mb'}
-          />
+          <Suspense fallback={<div>Loading...</div>}>
+            <FilterTour
+              dataFilter={dataFilter}
+              // onSelectDes={(data) => setDestination(data)}
+              // onSelectStyle={(data) => setTravelStyle(data)}
+              // onSelectBudget={(data) => setBudget(data)}
+              // onSelectDuration={(data) => setDuration(data)}
+              travelStyleSlug={slug}
+              className={'travelStyle-Mb'}
+            />
+          </Suspense>
         </div>
       </div>
       <div
@@ -171,10 +178,11 @@ function TourSlide({
           <div
             key={index}
             onClick={() => handleChangePage(index)}
-            className={`${totalPage > 1
-              ? 'cursor-pointer md:w-[2.125vw] md:h-[2.125vw] w-[9.07vw] h-[9.07vw] rounded-[50%] flex justify-center items-center bg-primaryColor'
-              : 'hidden'
-              }  ${activePage === index ? 'bg-textColor  opacity-[1]' : ' opacity-[0.1]'}`}
+            className={`${
+              totalPage > 1
+                ? 'cursor-pointer md:w-[2.125vw] md:h-[2.125vw] w-[9.07vw] h-[9.07vw] rounded-[50%] flex justify-center items-center bg-primaryColor'
+                : 'hidden'
+            }  ${activePage === index ? 'bg-textColor  opacity-[1]' : ' opacity-[0.1]'}`}
           >
             <span className={`${activePage === index ? 'text-white' : 'text-textColor'}`}>{index + 1}</span>
           </div>

@@ -12,7 +12,7 @@ import { GET_ALL_POST_FILTER, GET_BEST_TOUR_BLOG_BY_COUNTRY } from '@/graphql/po
 import { useQuery } from '@apollo/client'
 import { useQueryState } from 'next-usequerystate'
 
-function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, slug, dictionary }) {
+function BlogPage({ dataBestSeller, lang, initTopic, initCategories, allCountries, slug, dictionary }) {
   const [destinationPathname] = useQueryState('destination')
 
   const metaTopic = initTopic?.nodes
@@ -174,4 +174,4 @@ function Index({ dataBestSeller, lang, initTopic, initCategories, allCountries, 
   )
 }
 
-export default Index
+export default BlogPage
