@@ -15,7 +15,7 @@ export default async function fetchData(
       variables,
     }),
     // cache: 'no-store',
-    next: { revalidate: 3600 }
+    next: { revalidate: process.env.NEXT_PUBLIC_REVALIDATE || 3600 }
   })
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
