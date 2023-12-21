@@ -4,7 +4,8 @@ import { SERVICES_SLUG_QUERY } from '@/data/getDataRcmServices'
 import { getMeta } from '@/data/metaData/getMeta'
 import { getDictionary } from '@/get-dictionary'
 import { GET_ALL_TOURS_BESTSELLER } from '@/graphql/post/queries'
-import Service from '@/pageComponent/Service'
+import RecommendedService from '@/pageComponent/Service'
+import { Suspense } from 'react'
 
 const GET_INITIAL_FILTER = `
 query($language : LanguageCodeFilterEnum!){
@@ -84,14 +85,16 @@ async function Page({ params: { lang, slug } }) {
   const dictionary = await getDictionary(lang)
 
   return (
-    <Service lang={lang}
-      slug={slugRcm?.data?.category?.translation?.slug}
-      data1={data}
-      initDestination={dataInit?.data?.allCountries}
-      initCategories={dataInit?.data?.categories}
-      allCountries={dataInit?.data?.allCountries}
-      dictionary={dictionary}
-    />
+    <Suspense fallback={<div>Loading...</div>}>
+      <RecommendedService lang={lang}
+        slug={slugRcm?.data?.category?.translation?.slug}
+        data1={data}
+        initDestination={dataInit?.data?.allCountries}
+        initCategories={dataInit?.data?.categories}
+        allCountries={dataInit?.data?.allCountries}
+        dictionary={dictionary}
+      />
+    </Suspense>
   )
 }
 

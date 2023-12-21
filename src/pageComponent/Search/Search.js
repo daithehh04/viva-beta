@@ -27,7 +27,6 @@ const Search = ({ lang, searchInfo, dictionary }) => {
     country: des,
     seller: seller,
   }
-
   const { data: budgets } = useQuery(DATA_TAXONOMIES_BUDGET_GQL, {
     variables: {
       language: lang?.toUpperCase(),

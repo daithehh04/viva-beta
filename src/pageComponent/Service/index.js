@@ -13,7 +13,7 @@ import FilterService from './FilterService'
 import RecommendedServiceItem from '@/components/Common/RecommendedServiceItem'
 import { useQueryState } from 'next-usequerystate'
 
-function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) {
+function RecommendedService({ data1, lang, initCategories, allCountries, slug, dictionary }) {
     const [destinationPathname] = useQueryState('destination')
 
     const metaDestination = allCountries?.nodes
@@ -170,4 +170,4 @@ function Index({ data1, lang, initCategories, allCountries, slug, dictionary }) 
     )
 }
 
-export default Index
+export default RecommendedService
