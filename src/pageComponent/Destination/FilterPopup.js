@@ -45,10 +45,10 @@ function FilterPopup() {
   })
 
   // ==== Get name filter ====
-  const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.data?.allBudget?.nodes
-  const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.data?.allDuration?.nodes
-  const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.data?.allTourStyle?.nodes
-  const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.data?.allCountries?.nodes
+  const arrDataTaxonomiesBudget = dataTaxonomiesBudget?.allBudget?.nodes
+  const arrDataTaxonomiesDuration = dataTaxonomiesDuration?.allDuration?.nodes
+  const arrDataTaxonomiesStyleTour = dataTaxonomiesStyleTour?.allTourStyle?.nodes
+  const arrDataTaxonomiesCountry = dataTaxonomiesCountry?.allCountries?.nodes
 
   const dataFilter = {
     style: arrDataTaxonomiesStyleTour,
@@ -115,7 +115,7 @@ function FilterPopup() {
       }
       router.push(link)
     } else {
-      router.push(`${lang}/search`)
+      router.push(`/${lang}/search`)
     }
   }
 
