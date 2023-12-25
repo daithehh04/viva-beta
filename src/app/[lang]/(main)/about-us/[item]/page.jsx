@@ -15,6 +15,8 @@ import Responsible from '@/pageComponent/AboutUs/responsible-travel/Responsible'
 import { GET_REVIEWS_DATA, REVIEWS_SLUG_QUERY } from '@/graphql/aboutUs/reviews/queries'
 import { DATA_TAXONOMIES_COUNTRY } from '@/graphql/filter/queries'
 import IndexAboutUs from '@/pageComponent/AboutUs'
+import { LEGACY_DATA_QUERY, LEGACY_SLUG } from '@/graphql/aboutUs/legacy/queries'
+import Legacy from '@/pageComponent/AboutUs/legacy/Legacy'
 
 const getYearReview = `query {
   allYears {
@@ -26,16 +28,18 @@ const getYearReview = `query {
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams({ params }) {
-  const [{ data: responsible }, { data: reviews }, { data: whoRWe }] = await Promise.all([
+  const [{ data: responsible }, { data: reviews }, { data: whoRWe }, {data: legacy}] = await Promise.all([
     fetchData(RESPONSIBLE_TRAVEL_SLUG, { language: params.lang?.toUpperCase() }),
     fetchData(REVIEWS_SLUG_QUERY, { language: params.lang?.toUpperCase() }),
-    fetchData(WHO_ARE_WE_SLUG, { language: params.lang?.toUpperCase() })
+    fetchData(WHO_ARE_WE_SLUG, { language: params.lang?.toUpperCase() }),
+    fetchData(LEGACY_SLUG, { language: params.lang?.toUpperCase() })
   ])
   
   return [
     { item: responsible?.page?.translation?.responsibleTravel?.banner?.slug },
     { item: reviews?.page?.translation?.aboutUsReviews?.banner?.slug },
-    { item: whoRWe?.page?.translation?.who_we_are?.banner?.slug }
+    { item: whoRWe?.page?.translation?.who_we_are?.banner?.slug },
+    { item: legacy?.page?.translation?.alug}
   ]
 }
 
@@ -82,15 +86,25 @@ export default async function page({ params }) {
       />
     )
   }
-  const res = await fetchData(GET_WHO_WE_ARE_DATA, { language: params?.lang?.toUpperCase() })
-  const bannerData = res?.data?.page?.translation?.who_we_are?.banner
-  const contentData = res?.data?.page?.translation?.who_we_are?.content
-  return (
+
+  if(index === 0){
+    const res = await fetchData(GET_WHO_WE_ARE_DATA, { language: params?.lang?.toUpperCase() })
+    const bannerData = res?.data?.page?.translation?.who_we_are?.banner
+    const contentData = res?.data?.page?.translation?.who_we_are?.content
+    return (
+      <div className='w-full'>
+        <Banner data={bannerData} />
+        <Statistics data={contentData} />
+        <AboutVideo data={contentData?.descriptionVideo} />
+        <Staffs data={contentData?.staffs} />
+      </div>
+    )  
+  }
+
+  const res = await fetchData(LEGACY_DATA_QUERY, { language: params?.lang?.toUpperCase() })
+  return(
     <div className='w-full'>
-      <Banner data={bannerData} />
-      <Statistics data={contentData} />
-      <AboutVideo data={contentData?.descriptionVideo} lang={params?.lang}/>
-      <Staffs data={contentData?.staffs} />
+      <Legacy dataLegacy = {res?.data?.page?.translation?.content} />
     </div>
   )
 }

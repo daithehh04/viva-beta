@@ -23,7 +23,7 @@ import fetchData from '@/data/fetchData'
 import GET_SERVICE_BY_CATEGORY from '@/data/getDataRcmServices'
 import { GET_DATA_MENU_RT } from '@/graphql/aboutUs/responsible-travel/queries'
 import { GET_DATA_MENU_RV } from '@/graphql/aboutUs/reviews/queries'
-import { GET_DATA_MENU_WWR } from '@/graphql/aboutUs/who-we-are/queries'
+import { DATA_MENU_LEGACY_QUERY, GET_DATA_MENU_WWR } from '@/graphql/aboutUs/who-we-are/queries'
 import { DATA_MENU_COUNTRY } from '@/graphql/country/queries'
 import { GET_DATA_FORM_BOOKTOUR } from '@/graphql/formBookTour/queries'
 import { DATA_HEADER, GET_INFO_CONTACT, GET_SOCIAL_MOBILE } from '@/graphql/home/queries'
@@ -61,7 +61,8 @@ export default async function MainLayout({ children, params }) {
     wwrRes,
     rtRes,
     rvRes,
-    dictionary
+    dictionary,
+    lgRes
   ] = await Promise.all([
     fetchData(DATA_HEADER, { id: LANGUAGE_IDS[params?.lang] }),
     fetchData(GET_DATA_FORM_BOOKTOUR, { id: LANGUAGE_BOOK_IDS?.[params?.lang], language: params?.lang?.toUpperCase() }),
@@ -75,9 +76,10 @@ export default async function MainLayout({ children, params }) {
     fetchData(GET_DATA_MENU_WWR, { language: params?.lang?.toUpperCase() }),
     fetchData(GET_DATA_MENU_RT, { language: params?.lang?.toUpperCase() }),
     fetchData(GET_DATA_MENU_RV, { language: params?.lang?.toUpperCase() }),
-    getDictionary(params?.lang)
+    getDictionary(params?.lang),
+    fetchData(DATA_MENU_LEGACY_QUERY,{language:params?.lang?.toUpperCase() })
   ])
-
+  
   const dataHome = data?.data?.page?.home
   //get header of hotDeal
   const hotDeals = result?.data?.page?.translation?.hotDeals
@@ -105,7 +107,8 @@ export default async function MainLayout({ children, params }) {
           dataAboutUs={{
             wwrRes: wwrRes?.data?.page?.translation,
             rtRes: rtRes?.data?.page?.translation,
-            rvRes: rvRes?.data?.page?.translation
+            rvRes: rvRes?.data?.page?.translation,
+            lgRes: lgRes?.data?.page?.translation
           }}
         />
         <SearchButton lang={params.lang} />

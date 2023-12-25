@@ -9,10 +9,10 @@ function AboutItem({ data, slug, onCloseMenu, lang }) {
       onClick={onCloseMenu}
     >
       <Image
-        src={data?.backgroundMenu?.sourceUrl || 'https://res.cloudinary.com/asiavivatravel/images/v1699760680/La-baie-Vinh-Hy-Vietnam-1/La-baie-Vinh-Hy-Vietnam-1.jpg?_i=AA'}
+        src={data?.backgroundMenu?.sourceUrl || data?.image?.sourceUrl ||  'https://res.cloudinary.com/asiavivatravel/images/v1699760680/La-baie-Vinh-Hy-Vietnam-1/La-baie-Vinh-Hy-Vietnam-1.jpg?_i=AA'}
         width={200}
         height={200}
-        alt={data?.backgroundMenu?.altText}
+        alt={data?.backgroundMenu?.altText || data?.image?.altText}
         className='h-[19vw] w-full object-cover rounded-[0.625vw]'
       />
       <div className='absolute bottom-0 pb-[1.95vw] z-10 flex flex-col items-center justify-center w-full'>
@@ -23,7 +23,7 @@ function AboutItem({ data, slug, onCloseMenu, lang }) {
           alt='img'
           className='w-[3.56vw] h-[2.625vw] object-contain'
         />
-        <span className='text-[2vw] text-white uppercase font-optima mt-[0.68vw] block font-[600]'>{data?.title}</span>
+        <span className='text-[2vw] text-white text-center uppercase font-optima mt-[0.68vw] block font-[600]'>{data?.title}</span>
       </div>
       <div
         className='absolute bottom-0 left-0 right-0 h-[10.9375vw] rounded-[0.625vw] bg-menuOverlaySty'

@@ -21,6 +21,12 @@ function MenuAbout({ dataAboutUs,onCloseMenu,lang }) {
         onCloseMenu={onCloseMenu}
         lang={lang}
       />
+      <AboutItem
+        data={dataAboutUs?.lgRes?.aboutUsLegacy}
+        slug={`about-us/${dataAboutUs?.lgRes?.slug}`}
+        onCloseMenu={onCloseMenu}
+        lang={lang}
+      />
     </div>
   )
 }

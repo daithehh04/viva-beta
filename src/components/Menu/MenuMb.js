@@ -252,6 +252,14 @@ function MenuMb({
             >
               {titleAboutUs?.AboutUs}
             </Link>
+
+            <Link
+              href={`/${lang}/about-us/${titleAboutUs?.legacySlug}`}
+              className='text-[3.667vw] text-textColor opacity-70 uppercase'
+              onClick={onCloseMenu}
+            >
+              {titleAboutUs?.legacy}
+            </Link>
           </div>
         </div>
         {/* Item 7 */}

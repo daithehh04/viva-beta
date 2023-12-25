@@ -55,7 +55,9 @@ export default function Navbar({
     AboutUs: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.title,
     whoWeAreSlug: dataAboutUs?.wwrRes?.who_we_are?.banner?.slug,
     ResTravelSlug: dataAboutUs?.rtRes?.responsibleTravel?.banner?.slug,
-    AboutUsSlug: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.slug
+    AboutUsSlug: dataAboutUs?.rvRes?.aboutUsReviews?.banner?.slug,
+    legacy:dataAboutUs?.lgRes?.aboutUsLegacy?.title,
+    legacySlug:dataAboutUs?.lgRes?.slug
   }
   //check pathName
   const pathName = usePathname()

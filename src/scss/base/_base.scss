@@ -169,3 +169,11 @@ body {
   color: red !important;
 }
 
+.legacy {
+  figure{
+    width: 100% !important;
+    img{
+      width: 100%;
+    }
+  }
+}
