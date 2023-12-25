@@ -3,7 +3,16 @@ import { useRef, useState } from 'react'
 import Image from 'next/image'
 import playBtn from '@/assets/images/about/playBtn.svg'
 
-export default function AboutVideo({ data = {} }) {
+const dataVideo = {
+  linkEn: 'https://www.youtube.com/embed/jR9Pqqg27gI',
+  linkFr: 'https://www.youtube.com/embed/BmVU9HNZNiA',
+  linkIt: 'https://www.youtube.com/embed/Jx5i12dY-As',
+  titleEn: 'JOURNEY TO SOUTHEAST ASIA | Asia Viva Travel',
+  titleFr: 'VOYAGE EN INDOCHINE | Asia Viva Travel',
+  titleIt: 'VIAGGIO NEL SUD-EST ASIATICO | Asia Viva Travel',
+}
+
+export default function AboutVideo({ data = {}, lang }) {
   const imageRef = useRef()
   const videoRef = useRef()
 
@@ -11,7 +20,7 @@ export default function AboutVideo({ data = {} }) {
   return (
     <section className='relative w-full videoReview'>
       {/* video for PC */}
-      <video
+      {/* <video
         controls={isPlay}
         className='md:block hidden w-full md:h-[53.125vw] about-video z-0 object-fill'
         width={2000}
@@ -20,10 +29,18 @@ export default function AboutVideo({ data = {} }) {
         muted
       >
         <source src={data?.video?.mediaItemUrl} type={data?.video?.mimeType} className='w-full h-full ' />
-      </video>
+      </video> */}
+      <iframe
+        width={2000}
+        height={1000}
+        controls={isPlay}
+        className='md:block hidden w-full md:h-[53.125vw] about-video z-0 object-fill'
+        title={lang === 'en' ? dataVideo?.titleEn : lang === 'fr' ? dataVideo?.titleFr : dataVideo?.titleIt}
+        src={lang === 'en' ? dataVideo?.linkEn : lang === 'fr' ? dataVideo?.linkFr : dataVideo?.linkIt} frameborder="0" allowfullscreen>
+      </iframe>
       {/* video for mobile */}
 
-      <video
+      {/* <video
         controls={isPlay}
         className='md:hidden w-full h-[80vh] about-video z-0 object-fill'
         width={2000}
@@ -36,7 +53,15 @@ export default function AboutVideo({ data = {} }) {
           type={data?.videoMb?.mimeType || data?.videomb?.mimeType}
           className='w-full h-full'
         />
-      </video>
+      </video> */}
+      <iframe
+        width={2000}
+        height={1000}
+        controls={isPlay}
+        className='md:hidden w-full h-[80vh] about-video z-0 object-fill'
+        title={lang === 'en' ? dataVideo?.titleEn : lang === 'fr' ? dataVideo?.titleFr : dataVideo?.titleIt}
+        src={lang === 'en' ? dataVideo?.linkEn : lang === 'fr' ? dataVideo?.linkFr : dataVideo?.linkIt} frameborder="0" allowfullscreen>
+      </iframe>
       <div ref={imageRef} className={`${isPlay && 'hidden'} absolute top-0 left-0 z-10 w-full h-full`}>
         <Image
           src={data?.thumbnail?.sourceUrl || "https://res.cloudinary.com/asiavivatravel/images/v1699861252/Cascade-de-Thac-Bac-a-Sapa-Vietnam-1/Cascade-de-Thac-Bac-a-Sapa-Vietnam-1.jpg?_i=AA"}

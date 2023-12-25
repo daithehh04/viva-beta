@@ -92,7 +92,7 @@ export default async function Home({
           <TouristRepresentative data={representative} />
         </div>
         <div>
-          <AboutVideo data={aboutVideo} />
+          <AboutVideo data={aboutVideo} lang={lang}/>
         </div>
         <div className='review-wrapper'>
           <Review

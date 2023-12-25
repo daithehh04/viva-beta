@@ -89,7 +89,7 @@ export default async function page({ params }) {
     <div className='w-full'>
       <Banner data={bannerData} />
       <Statistics data={contentData} />
-      <AboutVideo data={contentData?.descriptionVideo} />
+      <AboutVideo data={contentData?.descriptionVideo} lang={params?.lang}/>
       <Staffs data={contentData?.staffs} />
     </div>
   )

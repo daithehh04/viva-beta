@@ -142,7 +142,7 @@ export default async function page({ params, searchParams }) {
           <TouristRepresentative data={representative} />
         </div>
         <div>
-          <AboutVideo data={aboutVideo} />
+          <AboutVideo data={aboutVideo} lang={lang}/>
         </div>
         <div className='review-wrapper'>
           <Review
