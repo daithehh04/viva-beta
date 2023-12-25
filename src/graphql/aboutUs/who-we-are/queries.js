@@ -89,6 +89,24 @@ export const GET_DATA_MENU_WWR = `query($language: LanguageCodeEnum!) {
     }
   }
 }`
+export const DATA_MENU_LEGACY_QUERY = `query ($language: LanguageCodeEnum!) {
+  page(id: "cG9zdDo5OTQ3") {
+    translation(language: $language) {
+      slug
+      aboutUsLegacy{
+        meta{
+          title
+          description
+        }
+        image{
+          altText
+          sourceUrl
+        }
+        title
+      }
+    }
+  }
+}`
 
 export const WHO_ARE_WE_SLUG = `query($language: LanguageCodeEnum!) {
   page(id: "cG9zdDoxMTg2") {

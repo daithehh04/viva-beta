@@ -128,7 +128,7 @@ function FilterTour({
             <Select
               value={destination || ''}
               onChange={(e) => {
-                console.log("searchParams", searchParams.get('destination'));
+                // console.log("searchParams", searchParams.get('destination'));
                 setDestination(e.target.value)
               }}
               displayEmpty

@@ -85,7 +85,7 @@ function FilterBanner({ lang, onClose, dataFilter }) {
           }
         }
       });
-      console.log({ resultObject });
+      // console.log({ resultObject });
       const queryString = new URLSearchParams(resultObject).toString();
       let link = `/search?&${queryString}`
       if (lang !== 'en') {

@@ -24,7 +24,7 @@ const Placeholder = ({ item, icon }) => (
   </div>
 )
 export default function OptionCustomer({ icon, list, defaultValue, onSelect, lang }) {
-  console.log({ defaultValue });
+  // console.log({ defaultValue });
   const onlySmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
   let placeholderDefault = "Destination"
   if (lang === 'it') {
