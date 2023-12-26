@@ -27,42 +27,37 @@ export async function generateStaticParams({ params }) {
   const countries = data?.allCountries?.nodes
 
   return countries.map((country) => ({
-    slug: country.slug,
+    slug: country.slug
   }))
 }
 
 function page({ params: { lang, slug } }) {
   return (
     <div>
-      <Suspense fallback={<Banner.Skeleton />}>
-        <Banner
-          slug={slug}
-          lang={lang}
-        />
-      </Suspense>
-      <FilterPopup />
+      <Banner
+        slug={slug}
+        lang={lang}
+      />
       <Suspense fallback={<SectionActions.Skeleton />}>
-        <SectionActions lang={lang} slug={slug} />
-      </Suspense>
-      <Suspense fallback={<SlideDestination.Skeleton />} >
-        <SlideDestination
-          lang={lang}
-          slug={slug}
-        />
-      </Suspense>
-      <Suspense fallback={<SectionActions.Skeleton />}>
-        <CustomerReview
-          lang={lang}
-          slug={slug}
-        />
-      </Suspense>
-      <Suspense fallback={<SectionActions.Skeleton />}>
-        <OurBlog
-          slug={slug}
-          lang={lang}
-        />
+        <FilterPopup />
       </Suspense>
 
+      <SectionActions
+        lang={lang}
+        slug={slug}
+      />
+      <SlideDestination
+        lang={lang}
+        slug={slug}
+      />
+      <CustomerReview
+        lang={lang}
+        slug={slug}
+      />
+      <OurBlog
+        slug={slug}
+        lang={lang}
+      />
     </div>
   )
 }
