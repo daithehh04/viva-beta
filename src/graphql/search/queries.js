@@ -10,7 +10,7 @@ query getTour($language: LanguageCodeFilterEnum) {
             gallery {
               altText
               title
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
             location
             title
@@ -40,7 +40,7 @@ const DATA_ALL_TOUR = gql`
             banner {
               title
               gallery {
-                sourceUrl
+                sourceUrl(size: MEDIUM_LARGE)
                 altText
                 title
               }
@@ -66,7 +66,7 @@ const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
       featuredImage {
         node {
           altText
-          sourceUrl
+          sourceUrl(size: MEDIUM_LARGE)
         }
       }
     }

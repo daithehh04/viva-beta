@@ -88,7 +88,7 @@ query GetAllPostByCountry(
         featuredImage {
           node {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
       }
@@ -113,7 +113,7 @@ export const DATA_COUNTRY_BANNER = `query getInfoCountry($taxonomyValue: ID!,$la
         }
         banner {
           img {
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
           explore
           nameCountry
@@ -182,7 +182,7 @@ query getTourStyle($language: LanguageCodeEnum!, $taxonomyValue: String, $taxono
               rate
               title
               gallery {
-                sourceUrl
+                sourceUrl(size: MEDIUM_LARGE)
                 altText
                 title
               }
@@ -227,7 +227,7 @@ query getTourStyle($language: LanguageCodeFilterEnum!, $taxonomyValue: [String!]
             rate
             title
             gallery {
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
               altText
               title
             }
@@ -272,7 +272,7 @@ query getTourStyle($language: LanguageCodeFilterEnum!, $taxonomyValue: [String!]
             rate
             title
             gallery {
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
               altText
               title
             }

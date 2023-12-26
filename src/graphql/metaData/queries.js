@@ -4,7 +4,7 @@ export const GET_TOUR_META_DATA = `query GetTourDetail($slug: ID!, $language: La
         featuredImage {
           node {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
         tourDetail {
@@ -29,7 +29,7 @@ export const GET_META_DATA_BLOG = `
       }
       featuredImage {
         node {
-          sourceUrl
+          sourceUrl(size: MEDIUM_LARGE)
           altText
 				  title
         }

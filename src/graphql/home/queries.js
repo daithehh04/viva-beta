@@ -60,12 +60,12 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
                 travelStyleName	
                 travelStyleImage {
                   altText
-                  sourceUrl
+                  sourceUrl(size: MEDIUM_LARGE)
                 }
                 textHomePage
                 imageHomePage {
                   id
-                  sourceUrl
+                  sourceUrl(size: MEDIUM_LARGE)
                   altText
                 }
               }
@@ -80,7 +80,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
         members {
           img {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
           name
           role
@@ -91,7 +91,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
         video {
           thumbnail {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
           label {
             line1
@@ -107,7 +107,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
           }
           thumbnailmb {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
         customerReview {
@@ -124,7 +124,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
                   name
                   thumbnail {
                     altText
-                    sourceUrl
+                    sourceUrl(size: MEDIUM_LARGE)
                   }
                 }
                 time
@@ -137,7 +137,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
                         gallery {
                           altText
                           title
-                          sourceUrl
+                          sourceUrl(size: MEDIUM_LARGE)
                         }
                         location
                         title
@@ -163,7 +163,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
                   name
                   thumbnail {
                     altText
-                    sourceUrl
+                    sourceUrl(size: MEDIUM_LARGE)
                   }
                 }
                 time
@@ -176,7 +176,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
                         gallery {
                           altText
                           title
-                          sourceUrl
+                          sourceUrl(size: MEDIUM_LARGE)
                         }
                         location
                         title
@@ -209,7 +209,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
               }
               featuredImage {
                 node {
-                  sourceUrl
+                  sourceUrl(size: MEDIUM_LARGE)
                   altText
                 }
               }
@@ -223,7 +223,7 @@ const GET_HOME_PAGE = `query getHomePageData($id:ID!) {
         footer {
           logoPartner {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM)
           }
           column1 {
             contact {
@@ -291,7 +291,7 @@ const GET_FOOTER = `query getHomePageData($language: LanguageCodeEnum!) {
           textDescription
           logoPartner {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM)
           }
           column1 {
             contact {
@@ -369,7 +369,7 @@ const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
       featuredImage {
         node {
           altText
-          sourceUrl
+          sourceUrl(size: MEDIUM)
         }
       }
     }
@@ -443,7 +443,7 @@ const GET_DATA_iNSEPECT = `query getDataInsepect(
         slug
         featuredImage{
           node{
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
             altText
             title
           }

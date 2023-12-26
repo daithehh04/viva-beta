@@ -60,7 +60,7 @@ query getInfoPageTravelStyle($taxonomyValue: [String!], $language: LanguageCodeE
           banner {
             title
             gallery {
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
               altText
               title
             }
@@ -110,7 +110,7 @@ const GET_LIST_TRAVEL_STYLE_NAME = `query getTourStyleName($language: LanguageCo
           priority
           travelStyleImage {
           altText
-          sourceUrl
+          sourceUrl(size: MEDIUM_LARGE)
         }
         travelStyleName
         }
@@ -147,7 +147,7 @@ const GET_LIST_TOUR_TRAVEL_STYLE_CLIENT = gql`
                 rate
                 title
                 gallery {
-                  sourceUrl
+                  sourceUrl(size: MEDIUM_LARGE)
                   altText
                   title
                 }

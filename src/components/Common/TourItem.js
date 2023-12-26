@@ -43,8 +43,8 @@ function TourItem({ data, menu, lang, loading, className, onCloseMenu }) {
         <div className='relative w-full h-full'>
           <Image
             src={tourData?.gallery?.length ? tourData?.gallery[0]?.sourceUrl : imgTour}
-            width={1000}
-            height={1000}
+            width={364}
+            height={471}
             priority
             alt={tourData?.gallery?.[0]?.altText || tourData?.gallery?.[0]?.title || 'thumb tour'}
             className='h-full object-cover w-full md:rounded-[1vw] rounded-[2.75vw] img-tour'

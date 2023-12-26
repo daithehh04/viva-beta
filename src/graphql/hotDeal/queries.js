@@ -92,7 +92,7 @@ export const GET_HOT_DEAL_DATA = `query ($language: LanguageCodeEnum!) {
                   }
                   detailImage {
                     altText
-                    sourceUrl
+                    sourceUrl(size: MEDIUM_LARGE)
                   }
                   rules {
                     conditions {
@@ -119,7 +119,7 @@ export const GET_HOT_DEAL_DATA = `query ($language: LanguageCodeEnum!) {
                   gallery {
                     title
                     altText
-                    sourceUrl
+                    sourceUrl(size: MEDIUM_LARGE)
                   }
                   icons
                 }
@@ -147,7 +147,7 @@ export const GET_ALL_VOUCHER = `query ($language: LanguageCodeFilterEnum!) {
         }
         detailImage {
           altText
-          sourceUrl
+          sourceUrl(size: MEDIUM_LARGE)
         }
         rules {
           conditions {
@@ -176,7 +176,7 @@ export const GET_LIST_PROMOTION_TOUR = `query ($language: LanguageCodeEnum!) {
                     gallery {
                       altText
                       title
-                      sourceUrl
+                      sourceUrl(size: MEDIUM_LARGE)
                     }
                     icons
                   }
@@ -200,7 +200,7 @@ export const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
         featuredImage {
           node {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
       }
@@ -214,7 +214,7 @@ export const DATA_POPUP_VOUCHER = `query($language: LanguageCodeEnum!){
         title
         popupPromotion {
           thumbPopup {
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
           voucher {
             ... on Vouchers {
@@ -243,7 +243,7 @@ export const DATA_VOUCHER_DETAIL = `query getVoucherDetail($slug: ID!, $language
         }
         detailImage {
           altText
-          sourceUrl
+          sourceUrl(size: MEDIUM_LARGE)
         }
         rules {
           conditions {

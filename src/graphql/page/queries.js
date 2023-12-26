@@ -51,7 +51,7 @@ query ($language: LanguageCodeEnum!) {
             sourceUrl
           }
           imagebannermobile {
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
         infodetail {
@@ -94,7 +94,7 @@ query ($language: LanguageCodeEnum!) {
           priceTour
             banner {
               gallery {
-                sourceUrl
+                sourceUrl(size: MEDIUM_LARGE)
                 altText
                 title
               }

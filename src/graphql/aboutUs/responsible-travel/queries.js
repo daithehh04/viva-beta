@@ -66,7 +66,7 @@ export const GET_DATA_MENU_RT = `query($language: LanguageCodeEnum!) {
           banner {
             title
             backgroundMenu{
-              sourceUrl
+              sourceUrl(size: MEDIUM)
               altText
             }
             slug
@@ -89,7 +89,7 @@ export const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
         featuredImage {
           node {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM)
           }
         }
       }

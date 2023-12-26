@@ -9,7 +9,7 @@ const GET_SERVICE_BY_CATEGORY = `
         recommendservice{
           related
           image{
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
       }

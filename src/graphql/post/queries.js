@@ -11,7 +11,7 @@ const GET_POST = `
           slug
           featuredImage {
             node {
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
           }
           language {
@@ -52,7 +52,7 @@ const GET_ALL_POST = `
         featuredImage {
           node {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
       }
@@ -105,7 +105,7 @@ export const FILTER_RECOMMENDED_SERVICE_QUERY = gql`
           featuredImage {
             node {
               altText
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
           }
         }
@@ -181,7 +181,7 @@ const GET_ALL_POST_FILTER = gql`
           featuredImage {
             node {
               altText
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
           }
         }
@@ -227,7 +227,7 @@ const GET_ALL_POST_FILTER_BY_COUNTRY = gql`
           featuredImage {
             node {
               altText
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
           }
         }
@@ -277,7 +277,7 @@ query GetAllBlog(
         featuredImage {
           node {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
       }
@@ -316,7 +316,7 @@ query ($language: LanguageCodeEnum!) {
             priceTour
               banner {
                 gallery {
-                  sourceUrl
+                  sourceUrl(size: MEDIUM_LARGE)
                   altText
                   title
                 }
@@ -348,7 +348,7 @@ query ($language: LanguageCodeEnum!, $lang: LanguageCodeFilterEnum!) {
         recommendservice{
           recommendservice{
             image{
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
             related
           }
@@ -397,7 +397,7 @@ allTours(
       banner {
         title
         gallery {
-          sourceUrl
+          sourceUrl(size: MEDIUM_LARGE)
           altText
           title
         }

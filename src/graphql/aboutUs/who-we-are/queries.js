@@ -79,7 +79,7 @@ export const GET_DATA_MENU_WWR = `query($language: LanguageCodeEnum!) {
         banner {
           title
           backgroundMenu{
-            sourceUrl
+            sourceUrl(size: MEDIUM)
             altText
           }
           slug
@@ -100,7 +100,7 @@ export const DATA_MENU_LEGACY_QUERY = `query ($language: LanguageCodeEnum!) {
         }
         image{
           altText
-          sourceUrl
+          sourceUrl(size: MEDIUM)
         }
         title
       }
@@ -136,7 +136,7 @@ export const GET_META_DATA = `query ($language: LanguageCodeEnum!) {
       featuredImage {
         node {
           altText
-          sourceUrl
+          sourceUrl(size: MEDIUM)
         }
       }
     }

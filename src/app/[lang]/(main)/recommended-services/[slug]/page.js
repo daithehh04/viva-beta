@@ -43,7 +43,7 @@ const GET_META_DATA_RCM_SERVICE = `
     translation(language: $language){
       featuredImage{
         node{
-          sourceUrl
+          sourceUrl(size: MEDIUM_LARGE)
           title
           altText
         }

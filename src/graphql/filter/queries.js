@@ -369,7 +369,7 @@ query GetFilterTour(
           banner {
             title
             gallery {
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
               altText
               title
             }

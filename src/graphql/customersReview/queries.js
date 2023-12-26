@@ -28,7 +28,7 @@ query GetDataPageReview($language: LanguageCodeEnum!, $offset: Int!, $size: Int!
                   gallery {
                     altText
                     title
-                    sourceUrl
+                    sourceUrl(size: MEDIUM_LARGE)
                   }
                   location
                   title
@@ -69,7 +69,7 @@ export const GET_REVIEWS = `query ($language: LanguageCodeEnum!) {
             name
             thumbnail {
               altText
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
           }
           content
@@ -101,7 +101,7 @@ export const GET_ALL_REVIEWS = `query GetAllCustomersReview($language: LanguageC
           name
           thumbnail {
             altText
-            sourceUrl
+            sourceUrl(size: MEDIUM_LARGE)
           }
         }
         tours {
@@ -112,7 +112,7 @@ export const GET_ALL_REVIEWS = `query GetAllCustomersReview($language: LanguageC
                 gallery {
                   altText
                   title
-                  sourceUrl
+                  sourceUrl(size: MEDIUM_LARGE)
                 }
                 location
                 title
@@ -176,7 +176,7 @@ query getReviewDetail($slug: ID!, $language: LanguageCodeEnum!){
                   gallery {
                     altText
                     title
-                    sourceUrl
+                    sourceUrl(size: MEDIUM_LARGE)
                   }
                   location
                   title
@@ -227,7 +227,7 @@ export const DATA_RELATED_TOUR_REVIEW = `query GetRelateTourReview(
           banner {
             title
             gallery {
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
               altText
               title
             }

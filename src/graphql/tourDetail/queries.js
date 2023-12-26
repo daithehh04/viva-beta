@@ -295,7 +295,7 @@ export const GET_RELATED_TOUR = `query($language: LanguageCodeEnum!, $taxonomyVa
             gallery {
               altText
               title
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
             icons
           }
@@ -327,7 +327,7 @@ export const GET_RELATED_PROMOTION_TOUR = `query($language: LanguageCodeEnum!, $
             gallery {
               altText
               title
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
             }
             icons
           }
@@ -347,7 +347,7 @@ export const GET_RANDOM_TOUR = `query ($language: LanguageCodeEnum!) {
           banner {
             gallery {
               altText
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
               title
             }
             icons
@@ -372,7 +372,7 @@ export const GET_RANDOM_PROMOTION_TOUR = `query ($language: LanguageCodeEnum!) {
           banner {
             gallery {
               altText
-              sourceUrl
+              sourceUrl(size: MEDIUM_LARGE)
               title
             }
             icons
